@@ -1,0 +1,9 @@
+MLSRID,Standard,StandardRefID,StandardRefName
+MLSR049,NIST,NIST SP 800-53 R4,Security and Privacy Controls for Federal Information Systems and Organizations
+MLSR050,NIST,NIST SP 800-171 R1,Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations
+MLSR055,ISO/IEC,IEC 27032,Information technology— Security techniques —Guidelines for cybersecurity
+MLSR065,Others,ENISA - Cloud,Cloud Computing - Information Assurance Framework
+MLSR074,ISO/IEC,ISO/IEC 27002,Information technology — Security techniques — Code of practice for information security controls
+MLSR078,ISO/IEC,IEC/TS 62443-1-1,Industrial communication networks – Network and system security – Terminology, concepts, and models
+MLSR079,ISO/IEC,IEC 62443-2-1,Industrial communication networks – Network and system security – Establishing an industrial automation and control system security program
+MLSR302,NIST,NIST SP 800-63B,Digital Identity Guidelines

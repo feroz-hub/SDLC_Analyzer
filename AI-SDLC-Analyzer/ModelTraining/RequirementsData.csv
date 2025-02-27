@@ -1,0 +1,12 @@
+ReferenceMLSRID,Requirement,Category,ChangeInRequirements
+MLSR049_161,"Develop feature in system to create, update and review user accounts","Identity Management","MLSR049_161: assign account managers to create/modify/disable accounts; MLSR049_183: create system accounts dynamically and validate privileges"
+MLSR049_174,"Develop feature in system to remove user accounts that are no longer needed","Access Control","MLSR049_174: disable inactive account after defined time period; MLSR049_190: disable account when found posing a risk"
+MLSR050_112,"Identify system users, processes acting on behalf of users and devices","Access Control","MLSR050_112: identify system users, processes acting on behalf of users and devices"
+MLSR079_1005,"Ensure every user is identifiable with separate access accounts","Identity Management","MLSR079_1005: ensure every user is identifiable with separate access accounts"
+MLSR079_1053,"Enforce to have individual user IDs and passwords for each operator in team environments","Authentication","MLSR079_1053: enforce to have individual user IDs and passwords for each operator in team environments"
+MLSR079_1010,"Maintain records of all access accounts and permissions","Identity Management","MLSR079_1010: maintain records of all access accounts and permissions"
+MLSR079_1021,"Review established access accounts on a regular basis","Access Control","MLSR079_1021: review established access accounts on regular basis"
+MLSR079_1022,"Reconfirm with appropriate manager if accounts are unused for an extended period of time","Access Control","MLSR079_1022: reconfirm with appropriate manager if accounts are unused for extended period of time"
+MLSR079_1028,"Allow users to have more than one account based on particular job-role at a particular time","Identity Management","MLSR079_1028: allow users to have more than one account based on particular job-role at particular time"
+MLSR302_223,"Ensure record created by CSP contains date and time when authenticator was bound to account","Authentication","MLSR302_223: ensure record created by CSP contains date and time when authenticator was bound to account"
+MLSR302_239,"Permit binding of additional authenticators and limit number of authenticators bound to subscriber's account","Authentication","MLSR302_239: permit binding of additional authenticators and limit number of authenticators bound to subscriber's account"
