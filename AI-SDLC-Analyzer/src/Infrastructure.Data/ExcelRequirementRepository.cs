@@ -17,7 +17,7 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
     private static readonly string ExcelFileName = "MLCR_Cybersecurity_Product_Requirements.xlsm";
     private static readonly string filePath = Path.Combine(InfrastructureResourcePath, ExcelFileName);
 
-    private const string SheetName = "Unique Requirement"; // Adjust as needed
+    private const string SheetName = "Unique_Requirements"; // Adjust as needed
 
     public List<StandardRequirement> GetAllStandardRequirements()
     {

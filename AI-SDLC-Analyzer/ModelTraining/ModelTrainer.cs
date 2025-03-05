@@ -14,8 +14,8 @@ public class ModelTrainer
     private static readonly string InfrastructureResourcePath =
         Path.Combine(ProjectRoot, "src/Infrastructure.Resource");
 
-    private static readonly string StandardsDataPath = "StandardsData.csv";
-    private static readonly string RequirementsDataPath = "RequirementsData.csv";
+    private const string StandardsDataPath = "StandardsData.csv";
+    private const string RequirementsDataPath = "RequirementsData.csv";
     private static readonly string ModelPath = Path.Combine(InfrastructureResourcePath, "ml_model.zip");
 
     private readonly MLContext _mlContext = new();

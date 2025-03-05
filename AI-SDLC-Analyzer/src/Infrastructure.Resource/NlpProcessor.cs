@@ -12,9 +12,17 @@ namespace Infrastructure.Resource
         private readonly MLContext _mlContext;
         private ITransformer _model;
         private PredictionEngine<NLPInput, NLPFeatures> _predictionEngine;
+        private static readonly string ProjectRoot =
+            Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../"));
 
-        private static readonly string ModelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../src/Infrastructure.Resource/ml_model.zip");
+        private static readonly string InfrastructureResourcePath =
+            Path.Combine(ProjectRoot, "src/Infrastructure.Resource/");
 
+        // ✅ Ensure the correct Excel file name is used
+        private static readonly string TrainingModel = "ml_model.zip";
+        
+        private static readonly string filePath = Path.Combine(InfrastructureResourcePath, TrainingModel);
+        
         public NlpProcessor()
         {
             _mlContext = new MLContext();
@@ -23,14 +31,13 @@ namespace Infrastructure.Resource
 
         private void LoadModel()
         {
-            if (!File.Exists(ModelPath))
+            if (!File.Exists(filePath))
             {
                 Console.WriteLine("❌ NLP Model not found. Train the model first.");
                 return;
             }
 
-            DataViewSchema schema;
-            _model = _mlContext.Model.Load(ModelPath, out schema);
+            _model = _mlContext.Model.Load(filePath, out _);
             _predictionEngine = _mlContext.Model.CreatePredictionEngine<NLPInput, NLPFeatures>(_model);
 
             Console.WriteLine("✅ NLP Model Loaded Successfully.");
