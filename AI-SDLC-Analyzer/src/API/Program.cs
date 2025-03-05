@@ -1,41 +1,53 @@
+using Infrastructure.Data;
+using Infrastructure.Resource;
+using Infrastructure.Services;
+using Domain.Interfaces;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// ✅ Add services to the DI container
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "AI-SDLC-Analyzer API",
+        Version = "v1",
+        Description = "API for AI-SDLC-Analyzer",
+    });
+});
+
+// ✅ Register Application Services
+builder.Services.AddSingleton<IRequirementRepository, ExcelRequirementRepository>();
+builder.Services.AddSingleton<IStandardRepository, ExcelStandardRepository>();
+builder.Services.AddSingleton<SemanticSearch>();
+builder.Services.AddSingleton<RequirementAnalyzerService>();
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "AI-SDLC-Analyzer API V1");
+    });
 }
+
+app.UseRouting();
+
+
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+// ✅ Start the application
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

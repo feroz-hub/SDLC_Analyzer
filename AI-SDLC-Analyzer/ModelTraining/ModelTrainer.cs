@@ -6,27 +6,26 @@ using System.IO;
 using System.Linq;
 using Microsoft.ML;
 
-
 public class ModelTrainer
 {
-    // ✅ Get absolute path to src/SentimentAPI/
-    private static readonly string ProjectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../"));
-    
-    private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src/Infrastructure.Resource");
+    private static readonly string ProjectRoot =
+        Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../"));
+
+    private static readonly string InfrastructureResourcePath =
+        Path.Combine(ProjectRoot, "src/Infrastructure.Resource");
+
     private static readonly string StandardsDataPath = "StandardsData.csv";
     private static readonly string RequirementsDataPath = "RequirementsData.csv";
-    //private static readonly string ModelPath = "ml_model.zip";
-    private static readonly string ModelPath =Path.Combine(InfrastructureResourcePath,"ml_model.zip");
+    private static readonly string ModelPath = Path.Combine(InfrastructureResourcePath, "ml_model.zip");
 
-    private MLContext _mlContext = new();
-    private Dictionary<string, float> _labelMapping = new(); // ✅ Label conversion dictionary
+    private readonly MLContext _mlContext = new();
 
     public void TrainAndSaveModel()
     {
-        //Console.WriteLine($"Saving model to: {ModelPath}");
         if (!Directory.Exists(InfrastructureResourcePath))
         {
-            Console.WriteLine($"❌ Error: Infrastructure resource directory does not exist at {InfrastructureResourcePath}");
+            Console.WriteLine(
+                $"❌ Error: Infrastructure resource directory does not exist at {InfrastructureResourcePath}");
             return;
         }
 
@@ -35,18 +34,20 @@ public class ModelTrainer
             Console.WriteLine("ℹ️ Existing model found. Deleting...");
             File.Delete(ModelPath);
         }
+
         var standards = LoadStandardsData();
         var requirements = LoadRequirementsData();
         var trainingData = JoinData(standards, requirements);
 
-        var sampleData = trainingData.Take(2000).ToList(); // Adjust size if needed
+        // ✅ Train-Test Split (80% Train, 20% Test)
+        var shuffledData = _mlContext.Data.LoadFromEnumerable(trainingData);
+        var trainTestSplit = _mlContext.Data.TrainTestSplit(shuffledData, testFraction: 0.2);
+        var trainData = trainTestSplit.TrainSet;
+        var testData = trainTestSplit.TestSet;
 
-        // ✅ Convert 'StandardRefID' to float (label encoding)
-        var encodedData = EncodeLabels(sampleData);
-
-        IDataView dataView = _mlContext.Data.LoadFromEnumerable(encodedData);
-        var model = TrainModel(dataView);
-        SaveModel(model, dataView.Schema);
+        var model = TrainModel(trainData);
+        EvaluateModel(model, testData);
+        SaveModel(model, trainData.Schema);
     }
 
     private List<Standard> LoadStandardsData()
@@ -68,6 +69,7 @@ public class ModelTrainer
                 StandardRefID = columns[2].Trim()
             });
         }
+
         return standards;
     }
 
@@ -86,11 +88,14 @@ public class ModelTrainer
             requirements.Add(new Requirement
             {
                 ReferenceMLSRID = columns[0].Trim(),
-                RequirementDescription = columns[1].Trim().Length > 500 ? columns[1].Trim().Substring(0, 500) : columns[1].Trim(),
+                RequirementDescription = columns[1].Trim().Length > 500
+                    ? columns[1].Trim().Substring(0, 500)
+                    : columns[1].Trim(),
                 Category = columns[2].Trim(),
                 ChangeInRequirements = columns[3].Trim()
             });
         }
+
         return requirements;
     }
 
@@ -114,69 +119,56 @@ public class ModelTrainer
                 });
             }
         }
+
         return trainingData;
     }
 
-    private List<EncodedTrainingData> EncodeLabels(List<TrainingData> data)
-    {
-        Console.WriteLine("🔢 Encoding Labels...");
-        int index = 1; // Start indexing from 1
-        foreach (var item in data)
-        {
-            if (!_labelMapping.ContainsKey(item.StandardRefID))
-            {
-                _labelMapping[item.StandardRefID] = index++;
-            }
-        }
-
-        return data.Select(d => new EncodedTrainingData
-        {
-            ReferenceMLSRID = d.ReferenceMLSRID,
-            Requirement = d.Requirement,
-            Category = d.Category,
-            ChangeInRequirements = d.ChangeInRequirements,
-            StandardRefID = _labelMapping[d.StandardRefID] // Convert to float
-        }).ToList();
-    }
-
-    private ITransformer TrainModel(IDataView dataView)
+    private ITransformer TrainModel(IDataView trainData)
     {
         Console.WriteLine("🚀 Training Model...");
 
-        var pipeline = _mlContext.Transforms.Text.FeaturizeText("RequirementFeatures", nameof(EncodedTrainingData.Requirement))
-                        .Append(_mlContext.Transforms.Text.FeaturizeText("CategoryFeatures", nameof(EncodedTrainingData.Category)))
-                        .Append(_mlContext.Transforms.Text.FeaturizeText("ChangeFeatures", nameof(EncodedTrainingData.ChangeInRequirements)))
-                        .Append(_mlContext.Transforms.Concatenate("Features", "RequirementFeatures", "CategoryFeatures", "ChangeFeatures"))
-                        .Append(_mlContext.Transforms.NormalizeMinMax("Features"))
-                        .Append(_mlContext.Regression.Trainers.FastTree(
-                                labelColumnName: nameof(EncodedTrainingData.StandardRefID), // ✅ Use numerical label
-                                featureColumnName: "Features",
-                                numberOfTrees: 50,
-                                numberOfLeaves: 10,
-                                learningRate: 0.2));
+        var pipeline = _mlContext.Transforms.Conversion
+            .MapValueToKey("Label", nameof(TrainingData.StandardRefID)) // ✅ Convert StandardRefID to Key
+            .Append(_mlContext.Transforms.Text.FeaturizeText("RequirementFeatures", nameof(TrainingData.Requirement)))
+            .Append(_mlContext.Transforms.Text.FeaturizeText("CategoryFeatures", nameof(TrainingData.Category)))
+            .Append(_mlContext.Transforms.Text.FeaturizeText("ChangeFeatures",
+                nameof(TrainingData.ChangeInRequirements)))
+            .Append(_mlContext.Transforms.Text.FeaturizeText("ReferenceMLSRIDFeatures",
+                nameof(TrainingData.ReferenceMLSRID))) // ✅ Featurize ReferenceMLSRID
+            .Append(_mlContext.Transforms.Concatenate("Features", "RequirementFeatures", "CategoryFeatures",
+                "ChangeFeatures", "ReferenceMLSRIDFeatures"))
+            .Append(_mlContext.Transforms.NormalizeMinMax("Features"))
+            .Append(_mlContext.MulticlassClassification.Trainers
+                .SdcaMaximumEntropy("Label", "Features")) // ✅ Use Classification Model
+            .Append(_mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
 
-        return pipeline.Fit(dataView);
+        return pipeline.Fit(trainData);
+    }
+
+    private void EvaluateModel(ITransformer model, IDataView testData)
+    {
+        Console.WriteLine("📊 Evaluating Model...");
+        var predictions = model.Transform(testData);
+        var metrics = _mlContext.MulticlassClassification.Evaluate(predictions, "Label");
+
+        Console.WriteLine($"🔍 Accuracy: {metrics.MicroAccuracy:P2} (Micro), {metrics.MacroAccuracy:P2} (Macro)");
+        Console.WriteLine($"🛠 Log Loss: {metrics.LogLoss:F4}");
     }
 
     private void SaveModel(ITransformer model, DataViewSchema schema)
     {
         Console.WriteLine("💾 Saving Model...");
         _mlContext.Model.Save(model, schema, ModelPath);
-
-      
         Console.WriteLine($"✅ Model saved at: {ModelPath}");
     }
+
+
+    public class TrainingData
+    {
+        public string ReferenceMLSRID { get; set; }
+        public string Requirement { get; set; }
+        public string Category { get; set; }
+        public string ChangeInRequirements { get; set; }
+        public string StandardRefID { get; set; } // ✅ Categorical (Will be converted to Key)
+    }
 }
-
-
-
-public class EncodedTrainingData
-{
-    public string ReferenceMLSRID { get; set; }
-    public string Requirement { get; set; }
-    public string Category { get; set; }
-    public string ChangeInRequirements { get; set; }
-    public float StandardRefID { get; set; } // Converted label (numerical)
-}
-
-

@@ -1,13 +1,22 @@
-﻿using Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 using OfficeOpenXml;
 
 namespace Infrastructure.Data;
 
-public class ExcelRequirementRepository(string filePath) : IRequirementRepository
+public class ExcelRequirementRepository( ) : IRequirementRepository
 {
-    private readonly string _filePath = filePath;
+   
+    private static readonly string ProjectRoot =
+        Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../"));
+
+    private static readonly string InfrastructureResourcePath =
+        Path.Combine(ProjectRoot, "src/Infrastructure.Resource/Resources");
+
+// ✅ Ensure the correct Excel file name is used
+    private static readonly string ExcelFileName = "MLCR_Cybersecurity_Product_Requirements.xlsm";
+    private static readonly string filePath = Path.Combine(InfrastructureResourcePath, ExcelFileName);
+
     private const string SheetName = "Unique Requirement"; // Adjust as needed
 
     public List<StandardRequirement> GetAllStandardRequirements()
