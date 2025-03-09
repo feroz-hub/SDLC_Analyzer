@@ -23,7 +23,7 @@ namespace Infrastructure.Services
 
         public List<RequirementOutput> SearchRequirements(string query)
         {
-            return semanticSearch.FindMatchingRequirements( query); //(query, requirements);
+            return semanticSearch.FindMatchingRequirements( query); 
         }
 
         public StandardRequirement GetRequirementById(string id)

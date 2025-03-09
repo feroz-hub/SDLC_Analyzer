@@ -8,13 +8,8 @@ namespace ModelTraining;
 
 public class ModelTrainerVer2
 {
-    private static readonly string ProjectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../"));
-    private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src/Infrastructure.Resource");
-
-    // ✅ Ensure the correct Excel file name is used
-    private static readonly string ExcelFilePath = "Resources/MLCR_Cybersecurity_Product_Requirements.xlsm";
-    private static readonly string ExcelFile = Path.Combine(InfrastructureResourcePath, ExcelFilePath);
-    private static readonly string ModelPath = Path.Combine(InfrastructureResourcePath, "ml_excelModel.zip");
+    private static readonly string ProjectRoot = Helper.GetProjectRoot();
+    private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src","Infrastructure.Resource");
     private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex.zip");
     private const string DataPath = "RequirementIndexTraining.csv";
     private readonly MLContext _context = new();
@@ -28,8 +23,7 @@ public class ModelTrainerVer2
             return;
         }
         DeleteExistingModels();
-
-       // var data = LoadDataFromExcel();
+        
        // Load Data
         var trainDataView = _context.Data.LoadFromTextFile<RequirementData>(DataPath, separatorChar: ',', hasHeader: true);
         
@@ -49,40 +43,8 @@ public class ModelTrainerVer2
         // if (File.Exists(ModelPath)) File.Delete(ModelPath);
         Console.WriteLine("🗑️ Old models deleted.");
     }
-
     
-
-    private static List<string> GetAllReqIndexes()
-    {
-        var reqIndexes = new List<string>();
-
-        using var package = new ExcelPackage(new FileInfo(ExcelFile));
-        var worksheet = package.Workbook.Worksheets["Unique_Requirements"];
-            
-        for (int row = 3; row <= 219; row++)  // Adjust based on data range
-        {
-            string reqIndex = worksheet.Cells[row, 2].Text.Trim(); // Column 'B' = ReqIndex
-            if (!string.IsNullOrEmpty(reqIndex))
-            {
-                reqIndexes.Add(reqIndex);
-            }
-        }
-
-        return reqIndexes;
-    }
-
-    // private ITransformer TrainModel(IDataView trainData)
-    // {
-    //     Console.WriteLine("🚀 Training Model...");
-    //     // Define ML.NET pipeline
-    //     var pipeline = _context.Transforms.Text.FeaturizeText("ChangeInRequirements_Features", nameof(RequirementData.Change_In_Requirements))
-    //         .Append(_context.Transforms.Conversion.MapValueToKey("Label", nameof(RequirementData.Category))) // Convert Category to Key
-    //         .Append(_context.Transforms.Concatenate("Features", "ChangeInRequirements_Features")) // Ensure it's a float vector
-    //         .Append(_context.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features")) // Train model
-    //         .Append(_context.Transforms.Conversion.MapKeyToValue("PredictedLabel")); // Convert back to string
-    //     return pipeline.Fit(trainData);
-    // }
-    //
+    
     private ITransformer ReqIndexTrainModel(IDataView  trainData)
     {
         Console.WriteLine("🚀 Training Model...");
@@ -119,7 +81,5 @@ public class ModelTrainerVer2
         [LoadColumn(0)] public string UserQuery { get; set; }
         [LoadColumn(1)] public string RequirementIndex { get; set; }
     }
-
-
 }
 

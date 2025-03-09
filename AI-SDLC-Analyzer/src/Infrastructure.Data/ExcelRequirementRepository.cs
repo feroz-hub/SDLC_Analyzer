@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain;
+using Domain.Entities;
 using Domain.Interfaces;
 using OfficeOpenXml;
 
@@ -6,14 +7,13 @@ namespace Infrastructure.Data;
 
 public class ExcelRequirementRepository( ) : IRequirementRepository
 {
-   
-    private static readonly string ProjectRoot =
-        Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../"));
+
+    private static readonly string ProjectRoot = Helper.GetProjectRoot();
 
     private static readonly string InfrastructureResourcePath =
-        Path.Combine(ProjectRoot, "src/Infrastructure.Resource/Resources");
+        Path.Combine(ProjectRoot, "src","Infrastructure.Resource","Resources");
 
-// ✅ Ensure the correct Excel file name is used
+    // ✅ Ensure the correct Excel file name is used
     private static readonly string ExcelFileName = "MLCR_Cybersecurity_Product_Requirements.xlsm";
     private static readonly string FilePath = Path.Combine(InfrastructureResourcePath, ExcelFileName);
 
@@ -22,17 +22,15 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
     {
         var reqIndexes = new List<string>();
 
-        using (var package = new ExcelPackage(new FileInfo(FilePath)))
-        {
-            var worksheet = package.Workbook.Worksheets["Unique_Requirement"];
+        using var package = new ExcelPackage(new FileInfo(FilePath));
+        var worksheet = package.Workbook.Worksheets["Unique_Requirement"];
             
-            for (int row = 3; row <= 219; row++)  // Adjust based on data range
+        for (int row = 3; row <= 219; row++)  // Adjust based on data range
+        {
+            string reqIndex = worksheet.Cells[row, 2].Text.Trim(); // Column 'B' = ReqIndex
+            if (!string.IsNullOrEmpty(reqIndex))
             {
-                string reqIndex = worksheet.Cells[row, 2].Text.Trim(); // Column 'B' = ReqIndex
-                if (!string.IsNullOrEmpty(reqIndex))
-                {
-                    reqIndexes.Add(reqIndex);
-                }
+                reqIndexes.Add(reqIndex);
             }
         }
 
@@ -78,26 +76,25 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         var requirements = new List<RequirementData>();
 
-        using (var package = new ExcelPackage(new FileInfo(FilePath)))
+        using var package = new ExcelPackage(new FileInfo(FilePath));
+        var sheet = package.Workbook.Worksheets["Unique_Requirements"];
+
+        for (int row = 3; row <= 219; row++)
         {
-            var sheet = package.Workbook.Worksheets["Unique_Requirements"];
+            string fullMlsrId = sheet.Cells[row, 2].Text;
+            string reqIndex = sheet.Cells[row, 3].Text;
+            string category = sheet.Cells[row, 8].Text;
+            string changeInRequirements = sheet.Cells[row, 4].Text;
 
-            for (int row = 3; row <= 219; row++)
+            requirements.Add(new RequirementData
             {
-                string fullMlsrId = sheet.Cells[row, 2].Text;
-                string reqIndex = sheet.Cells[row, 3].Text;
-                string category = sheet.Cells[row, 8].Text;
-                string changeInRequirements = sheet.Cells[row, 4].Text;
-
-                requirements.Add(new RequirementData
-                {
-                    MLSR_ID = fullMlsrId,
-                    Requirement_Index = reqIndex,
-                    Category = category,
-                    Change_In_Requirements = changeInRequirements
-                });
-            }
+                MLSR_ID = fullMlsrId,
+                Requirement_Index = reqIndex,
+                Category = category,
+                Change_In_Requirements = changeInRequirements
+            });
         }
+
         return requirements;
     }
     
