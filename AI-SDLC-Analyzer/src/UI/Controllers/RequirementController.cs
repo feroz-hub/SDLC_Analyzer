@@ -4,9 +4,16 @@ using Newtonsoft.Json;
 
 namespace UI.Controllers;
 
-public class RequirementController(IHttpClientFactory httpClientFactory) : Controller
+
+
+public class RequirementController : Controller
 {
-    private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
+    private readonly HttpClient _httpClient;
+
+    public RequirementController(IHttpClientFactory httpClientFactory)
+    {
+        _httpClient = httpClientFactory.CreateClient();
+    }
 
     public IActionResult Chat()
     {

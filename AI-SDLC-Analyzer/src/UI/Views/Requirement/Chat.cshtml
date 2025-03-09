@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "AI-SDLC Chatbot";
 }
+<link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
 
 <div class="container mt-4">
     <h2 class="text-center">🤖 AI-SDLC Requirement Chatbot</h2>
@@ -17,56 +18,6 @@
     </div>
 </div>
 
-<style>
-    .chat-box {
-        max-height: 500px;
-        overflow-y: auto;
-        border: 1px solid #ccc;
-        padding: 15px;
-        background: #f9f9f9;
-        border-radius: 10px;
-    }
-    .message {
-        padding: 12px;
-        border-radius: 8px;
-        margin: 8px 0;
-        max-width: 80%;
-        display: inline-block;
-        word-wrap: break-word;
-    }
-    .bot {
-        background: #e3f2fd;
-        align-self: flex-start;
-    }
-    .user {
-        background: #dcedc8;
-        align-self: flex-end;
-        text-align: right;
-    }
-    .typing-indicator {
-        font-style: italic;
-        color: gray;
-    }
-    .chat-input {
-        display: flex;
-        margin-top: 15px;
-    }
-    .chat-input input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    .chat-input button {
-        margin-left: 8px;
-        padding: 10px;
-        border: none;
-        background: #007bff;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-</style>
 
 <script>
     function sendMessage() {
@@ -74,6 +25,12 @@
         if (!userInput.trim()) return;
 
         let chatBox = document.getElementById("chat-box");
+        let inputField = document.getElementById("user-input");
+        let sendButton = document.querySelector(".chat-input button");
+
+        // Disable input & button
+        inputField.disabled = true;
+        sendButton.disabled = true;
 
         // Append user message
         let userMessage = document.createElement("div");
@@ -81,10 +38,10 @@
         userMessage.innerHTML = `<span>${userInput}</span>`;
         chatBox.appendChild(userMessage);
 
-        // Show typing indicator
+        // Show animated typing indicator
         let typingIndicator = document.createElement("div");
         typingIndicator.classList.add("message", "bot", "typing-indicator");
-        typingIndicator.innerHTML = `<span>Typing... ⏳</span>`;
+        typingIndicator.innerHTML = `<span>🤖 Typing<span class="dots"></span></span>`;
         chatBox.appendChild(typingIndicator);
         chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -101,7 +58,7 @@
                 if (data.error) {
                     let errorMessage = document.createElement("div");
                     errorMessage.classList.add("message", "bot");
-                    errorMessage.innerHTML = `<span>${data.error}</span>`;
+                    errorMessage.innerHTML = `<span>⚠️ ${data.error}</span>`;
                     chatBox.appendChild(errorMessage);
                 } else {
                     data.forEach((req, index) => {
@@ -115,7 +72,7 @@
                             chatBox.appendChild(responseMessage);
                             chatBox.scrollTop = chatBox.scrollHeight;
 
-                            // Display Change in Requirements one-by-one
+                            // Display Change in Requirements one by one
                             req.changeInRequirement.forEach((change, i) => {
                                 setTimeout(() => {
                                     let changeMessage = document.createElement("div");
@@ -129,8 +86,23 @@
                         }, index * 2000); // Typing delay for each requirement
                     });
                 }
+            })
+            .catch(() => {
+                chatBox.removeChild(typingIndicator);
+                let errorMessage = document.createElement("div");
+                errorMessage.classList.add("message", "bot");
+                errorMessage.innerHTML = `<span>⚠️ Unable to process request. Please try again later.</span>`;
+                chatBox.appendChild(errorMessage);
+            })
+            .finally(() => {
+                inputField.value = ""; // Clear input
+                inputField.disabled = false;
+                sendButton.disabled = false;
+                inputField.focus(); // Auto-focus input
             });
-
-        document.getElementById("user-input").value = ""; // Clear input
     }
 </script>
+
+
+
+
