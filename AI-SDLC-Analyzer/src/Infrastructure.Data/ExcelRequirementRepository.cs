@@ -15,20 +15,39 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
 
 // ✅ Ensure the correct Excel file name is used
     private static readonly string ExcelFileName = "MLCR_Cybersecurity_Product_Requirements.xlsm";
-    private static readonly string filePath = Path.Combine(InfrastructureResourcePath, ExcelFileName);
+    private static readonly string FilePath = Path.Combine(InfrastructureResourcePath, ExcelFileName);
 
     private const string SheetName = "Unique_Requirements"; // Adjust as needed
+    public List<string> GetAllReqIndexes()
+    {
+        var reqIndexes = new List<string>();
 
+        using (var package = new ExcelPackage(new FileInfo(FilePath)))
+        {
+            var worksheet = package.Workbook.Worksheets["Unique_Requirement"];
+            
+            for (int row = 3; row <= 219; row++)  // Adjust based on data range
+            {
+                string reqIndex = worksheet.Cells[row, 2].Text.Trim(); // Column 'B' = ReqIndex
+                if (!string.IsNullOrEmpty(reqIndex))
+                {
+                    reqIndexes.Add(reqIndex);
+                }
+            }
+        }
+
+        return reqIndexes;
+    }
     public List<StandardRequirement> GetAllStandardRequirements()
     {
         var requirements = new List<StandardRequirement>();
 
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException($"❌ Excel file not found at {filePath}");
+        if (!File.Exists(FilePath))
+            throw new FileNotFoundException($"❌ Excel file not found at {FilePath}");
 
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;  // EPPlus license
 
-        using var package = new ExcelPackage(new FileInfo(filePath));
+        using var package = new ExcelPackage(new FileInfo(FilePath));
         var worksheet = package.Workbook.Worksheets[SheetName];
 
         if (worksheet == null)
@@ -51,6 +70,34 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
             });
         }
 
+        return requirements;
+    }
+    
+    public List<RequirementData> LoadRequirementsFromExcel()
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        var requirements = new List<RequirementData>();
+
+        using (var package = new ExcelPackage(new FileInfo(FilePath)))
+        {
+            var sheet = package.Workbook.Worksheets["Unique_Requirements"];
+
+            for (int row = 3; row <= 219; row++)
+            {
+                string fullMlsrId = sheet.Cells[row, 2].Text;
+                string reqIndex = sheet.Cells[row, 3].Text;
+                string category = sheet.Cells[row, 8].Text;
+                string changeInRequirements = sheet.Cells[row, 4].Text;
+
+                requirements.Add(new RequirementData
+                {
+                    MLSR_ID = fullMlsrId,
+                    Requirement_Index = reqIndex,
+                    Category = category,
+                    Change_In_Requirements = changeInRequirements
+                });
+            }
+        }
         return requirements;
     }
     

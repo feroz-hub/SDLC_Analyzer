@@ -1,0 +1,136 @@
+@{
+    ViewData["Title"] = "AI-SDLC Chatbot";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">🤖 AI-SDLC Requirement Chatbot</h2>
+
+    <div id="chat-box" class="chat-box">
+        <div class="message bot">
+            <span>Hi! How can I help you with SDLC requirements today? 😊</span>
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your query..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<style>
+    .chat-box {
+        max-height: 500px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 10px;
+    }
+    .message {
+        padding: 12px;
+        border-radius: 8px;
+        margin: 8px 0;
+        max-width: 80%;
+        display: inline-block;
+        word-wrap: break-word;
+    }
+    .bot {
+        background: #e3f2fd;
+        align-self: flex-start;
+    }
+    .user {
+        background: #dcedc8;
+        align-self: flex-end;
+        text-align: right;
+    }
+    .typing-indicator {
+        font-style: italic;
+        color: gray;
+    }
+    .chat-input {
+        display: flex;
+        margin-top: 15px;
+    }
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .chat-input button {
+        margin-left: 8px;
+        padding: 10px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function sendMessage() {
+        let userInput = document.getElementById("user-input").value;
+        if (!userInput.trim()) return;
+
+        let chatBox = document.getElementById("chat-box");
+
+        // Append user message
+        let userMessage = document.createElement("div");
+        userMessage.classList.add("message", "user");
+        userMessage.innerHTML = `<span>${userInput}</span>`;
+        chatBox.appendChild(userMessage);
+
+        // Show typing indicator
+        let typingIndicator = document.createElement("div");
+        typingIndicator.classList.add("message", "bot", "typing-indicator");
+        typingIndicator.innerHTML = `<span>Typing... ⏳</span>`;
+        chatBox.appendChild(typingIndicator);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Send API request
+        fetch("/Requirement/ChatQuery", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: userInput })
+        })
+            .then(response => response.json())
+            .then(data => {
+                chatBox.removeChild(typingIndicator); // Remove typing indicator
+
+                if (data.error) {
+                    let errorMessage = document.createElement("div");
+                    errorMessage.classList.add("message", "bot");
+                    errorMessage.innerHTML = `<span>${data.error}</span>`;
+                    chatBox.appendChild(errorMessage);
+                } else {
+                    data.forEach((req, index) => {
+                        setTimeout(() => {
+                            let responseMessage = document.createElement("div");
+                            responseMessage.classList.add("message", "bot");
+                            responseMessage.innerHTML = `
+                            <strong>📌 ${req.requirementDescription}</strong><br>
+                            <strong>Category:</strong> ${req.category}<br>
+                        `;
+                            chatBox.appendChild(responseMessage);
+                            chatBox.scrollTop = chatBox.scrollHeight;
+
+                            // Display Change in Requirements one-by-one
+                            req.changeInRequirement.forEach((change, i) => {
+                                setTimeout(() => {
+                                    let changeMessage = document.createElement("div");
+                                    changeMessage.classList.add("message", "bot");
+                                    changeMessage.innerHTML = `🔹 ${change}`;
+                                    chatBox.appendChild(changeMessage);
+                                    chatBox.scrollTop = chatBox.scrollHeight;
+                                }, (i + 1) * 800); // Typing delay for each change
+                            });
+
+                        }, index * 2000); // Typing delay for each requirement
+                    });
+                }
+            });
+
+        document.getElementById("user-input").value = ""; // Clear input
+    }
+</script>

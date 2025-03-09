@@ -1,0 +1,125 @@
+using Microsoft.ML;
+using Microsoft.ML.Data;
+using Microsoft.ML.Transforms.Text;
+using OfficeOpenXml;
+
+
+namespace ModelTraining;
+
+public class ModelTrainerVer2
+{
+    private static readonly string ProjectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../"));
+    private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src/Infrastructure.Resource");
+
+    // ✅ Ensure the correct Excel file name is used
+    private static readonly string ExcelFilePath = "Resources/MLCR_Cybersecurity_Product_Requirements.xlsm";
+    private static readonly string ExcelFile = Path.Combine(InfrastructureResourcePath, ExcelFilePath);
+    private static readonly string ModelPath = Path.Combine(InfrastructureResourcePath, "ml_excelModel.zip");
+    private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex.zip");
+    private const string DataPath = "RequirementIndexTraining.csv";
+    private readonly MLContext _context = new();
+
+    public void TrainAndSaveModel()
+    {
+        if (!Directory.Exists(InfrastructureResourcePath))
+        {
+            Console.WriteLine(
+                $"❌ Error: Infrastructure resource directory does not exist at {InfrastructureResourcePath}");
+            return;
+        }
+        DeleteExistingModels();
+
+       // var data = LoadDataFromExcel();
+       // Load Data
+        var trainDataView = _context.Data.LoadFromTextFile<RequirementData>(DataPath, separatorChar: ',', hasHeader: true);
+        
+        // ✅ Train-Test Split (80% Train, 20% Test)
+        var trainTestSplit = _context.Data.TrainTestSplit(trainDataView, testFraction: 0.2);
+        var trainData = trainTestSplit.TrainSet;
+        var testData = trainTestSplit.TestSet;
+        var reqModelIndexModel = ReqIndexTrainModel(trainDataView);
+        EvaluateModel(reqModelIndexModel, testData);
+        
+        SaveModel(reqModelIndexModel, trainData.Schema,ModelPathReqIndex);
+    }
+
+    private void DeleteExistingModels()
+    {
+        if (File.Exists(ModelPathReqIndex)) File.Delete(ModelPathReqIndex);
+        // if (File.Exists(ModelPath)) File.Delete(ModelPath);
+        Console.WriteLine("🗑️ Old models deleted.");
+    }
+
+    
+
+    private static List<string> GetAllReqIndexes()
+    {
+        var reqIndexes = new List<string>();
+
+        using var package = new ExcelPackage(new FileInfo(ExcelFile));
+        var worksheet = package.Workbook.Worksheets["Unique_Requirements"];
+            
+        for (int row = 3; row <= 219; row++)  // Adjust based on data range
+        {
+            string reqIndex = worksheet.Cells[row, 2].Text.Trim(); // Column 'B' = ReqIndex
+            if (!string.IsNullOrEmpty(reqIndex))
+            {
+                reqIndexes.Add(reqIndex);
+            }
+        }
+
+        return reqIndexes;
+    }
+
+    // private ITransformer TrainModel(IDataView trainData)
+    // {
+    //     Console.WriteLine("🚀 Training Model...");
+    //     // Define ML.NET pipeline
+    //     var pipeline = _context.Transforms.Text.FeaturizeText("ChangeInRequirements_Features", nameof(RequirementData.Change_In_Requirements))
+    //         .Append(_context.Transforms.Conversion.MapValueToKey("Label", nameof(RequirementData.Category))) // Convert Category to Key
+    //         .Append(_context.Transforms.Concatenate("Features", "ChangeInRequirements_Features")) // Ensure it's a float vector
+    //         .Append(_context.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features")) // Train model
+    //         .Append(_context.Transforms.Conversion.MapKeyToValue("PredictedLabel")); // Convert back to string
+    //     return pipeline.Fit(trainData);
+    // }
+    //
+    private ITransformer ReqIndexTrainModel(IDataView  trainData)
+    {
+        Console.WriteLine("🚀 Training Model...");
+        // Define ML.NET pipeline
+        var pipeline = _context.Transforms.Text.TokenizeIntoWords("TokenizedText", nameof(RequirementData.UserQuery))
+            .Append(_context.Transforms.Text.ApplyWordEmbedding("Features", "TokenizedText",
+                WordEmbeddingEstimator.PretrainedModelKind.GloVe300D))  // ✅ Built-in ML.NET GloVe Model
+            .Append(_context.Transforms.Conversion.MapValueToKey("Label", nameof(RequirementData.RequirementIndex)))
+            .Append(_context.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features"))
+            .Append(_context.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
+
+        return pipeline.Fit(trainData);
+    }
+
+    private void EvaluateModel(ITransformer model, IDataView testData)
+    {
+        Console.WriteLine("📊 Evaluating Model...");
+        var predictions = model.Transform(testData);
+        var metrics = _context.MulticlassClassification.Evaluate(predictions, "Label");
+
+        Console.WriteLine($"🔍 Accuracy: {metrics.MicroAccuracy:P2} (Micro), {metrics.MacroAccuracy:P2} (Macro)");
+        Console.WriteLine($"🛠 Log Loss: {metrics.LogLoss:F4}");
+    }
+    private void SaveModel(ITransformer model, DataViewSchema schema, string savePath)
+    {
+        Console.WriteLine($"💾 Saving Model at {savePath}...");
+        _context.Model.Save(model, schema, savePath);
+        Console.WriteLine($"✅ Model saved at: {savePath}");
+    }
+
+
+    private class RequirementData
+    {
+        [LoadColumn(0)] public string UserQuery { get; set; }
+        [LoadColumn(1)] public string RequirementIndex { get; set; }
+    }
+
+
+}
+

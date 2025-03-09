@@ -6,7 +6,7 @@ namespace Infrastructure.Data
 {
     public class ExcelStandardRepository() : IStandardRepository
     {
-        private const string SheetName = "MLSR List";
+        private const string SheetName = "MLSR_List";
         private static readonly string ProjectRoot =
             Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../"));
 
@@ -46,6 +46,30 @@ namespace Infrastructure.Data
             }
 
             return standards;
+        }
+        
+        public Dictionary<string, string> LoadMlsrMapping()
+        {
+            var mlsrMapping = new Dictionary<string, string>();
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var mlsrSheet = package.Workbook.Worksheets[SheetName];
+
+                // ✅ Read MLSR List Data dynamically
+                for (int row = 5; row <= 44; row++)
+                {
+                    string standardName = mlsrSheet.Cells[row, 5].Text.Trim(); // Standard Name (e.g., "NIST SP 800-53 R4")
+                    string mlsrId = mlsrSheet.Cells[row, 2].Text.Trim();       // MLSR ID (e.g., "MLSR049")
+
+                    if (!string.IsNullOrEmpty(standardName) && !string.IsNullOrEmpty(mlsrId))
+                    {
+                        mlsrMapping[standardName.ToUpper()] = mlsrId;
+                    }
+                }
+            }
+
+            return mlsrMapping;
         }
 
         public Standard GetStandardById(string mlrsId)

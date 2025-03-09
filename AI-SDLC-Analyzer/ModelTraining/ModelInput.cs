@@ -4,27 +4,24 @@ namespace ModelTraining;
 
 public class TrainingData
 {
-    public string ReferenceMLSRID { get; set; }
+    public string Reference_MLSR_ID { get; set; }
     public string Requirement { get; set; }
     public string Category { get; set; }
-    public string ChangeInRequirements { get; set; }
-    public string StandardRefID { get; set; }
-    
-    [ColumnName("Label")] // This is the label column needed for regression!
-    public float Label { get; set; }
+    public string Change_In_Requirements { get; set; }
+    public string Standard_Ref_ID { get; set; } // ✅ Categorical (Will be converted to Key)
 }
 
 public class Standard
 {
-    public string MLSRID { get; set; }
-    public string StandardName { get; set; }
-    public string StandardRefID { get; set; }
+    public string MLSR_ID { get; set; }
+    public string Standard_Ref_Name { get; set; }
+    public string Standard_Ref_ID { get; set; }
 }
 
 public class Requirement
 {
-    public string ReferenceMLSRID { get; set; }
-    public string RequirementDescription { get; set; }
+    public string Reference_MLSR_ID { get; set; }
+    public string Requirement_Index { get; set; }
     public string Category { get; set; }
-    public string ChangeInRequirements { get; set; }
+    public string Change_In_Requirements { get; set; }
 }

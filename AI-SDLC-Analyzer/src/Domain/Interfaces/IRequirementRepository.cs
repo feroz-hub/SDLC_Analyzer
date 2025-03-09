@@ -7,4 +7,6 @@ namespace Domain.Interfaces;
     {
         List<StandardRequirement> GetAllStandardRequirements();
         StandardRequirement GetRequirementById(string id);
+        List<RequirementData> LoadRequirementsFromExcel();
+        List<string> GetAllReqIndexes();
     }

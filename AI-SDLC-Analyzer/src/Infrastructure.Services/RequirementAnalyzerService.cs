@@ -1,6 +1,8 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Resource;
+using RequirementData = Domain.Entities.RequirementData;
+
 
 namespace Infrastructure.Services
 {
@@ -19,10 +21,10 @@ namespace Infrastructure.Services
             return standardRepository.GetAll();
         }
 
-        public List<StandardRequirement> SearchRequirements(string query)
+        public List<RequirementOutput> SearchRequirements(string query)
         {
             var requirements = requirementRepository.GetAllStandardRequirements();
-            return semanticSearch.FindSimilarRequirements(query, requirements);
+            return semanticSearch.FindMatchingRequirements( query); //(query, requirements);
         }
 
         public StandardRequirement GetRequirementById(string id)

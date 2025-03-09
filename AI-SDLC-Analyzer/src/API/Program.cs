@@ -25,9 +25,9 @@ builder.Services.AddControllers();
 
 // ✅ Register Application Services
 builder.Services.AddSingleton<IRequirementRepository, ExcelRequirementRepository>();
-builder.Services.AddSingleton<IStandardRepository, ExcelStandardRepository>();
-builder.Services.AddSingleton<SemanticSearch>();
-builder.Services.AddSingleton<RequirementAnalyzerService>();
+builder.Services.AddScoped<IStandardRepository, ExcelStandardRepository>();
+builder.Services.AddScoped<SemanticSearch>();
+builder.Services.AddScoped<RequirementAnalyzerService>();
 
 
 

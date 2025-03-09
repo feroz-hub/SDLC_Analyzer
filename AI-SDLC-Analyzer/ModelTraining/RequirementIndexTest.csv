@@ -1,0 +1,6 @@
+UserQuery,RequirementIndex
+"Use multi-factor authentication for critical actions",Develop feature in system to enable dual /multiple authorization for critical actions
+"Prevent unauthorized execution of untrusted software",Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
+"Control network segmentation for security",Implement segregation and segmentation of network to limit propagation of attacks
+"Secure password storage and expiration",Develop feature in system to establish lifetime, strength and complexity of memorized secrets
+"Monitor and log access control changes",Develop feature in system to maintain and review access rights periodically for user

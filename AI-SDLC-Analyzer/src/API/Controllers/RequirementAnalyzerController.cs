@@ -38,9 +38,7 @@ namespace API.Controllers
                 return BadRequest("Query cannot be empty.");
 
             var results = requirementAnalyzerService.SearchRequirements(query);
-
-            if (results.Count == 0)
-                return NotFound("No matching requirements found.");
+            
 
             return Ok(results);
         }

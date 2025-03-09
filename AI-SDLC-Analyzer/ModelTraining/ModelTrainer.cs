@@ -64,9 +64,9 @@ public class ModelTrainer
             if (columns.Length < 3) continue;
             standards.Add(new Standard
             {
-                MLSRID = columns[0].Trim(),
-                StandardName = columns[1].Trim(),
-                StandardRefID = columns[2].Trim()
+                MLSR_ID = columns[0].Trim(),
+                Standard_Ref_ID = columns[2].Trim(),
+                Standard_Ref_Name = columns[3].Trim()
             });
         }
 
@@ -87,12 +87,12 @@ public class ModelTrainer
             if (columns.Length < 4) continue;
             requirements.Add(new Requirement
             {
-                ReferenceMLSRID = columns[0].Trim(),
-                RequirementDescription = columns[1].Trim().Length > 500
+                Reference_MLSR_ID = columns[0].Trim(),
+                Requirement_Index = columns[1].Trim().Length > 500
                     ? columns[1].Trim().Substring(0, 500)
                     : columns[1].Trim(),
                 Category = columns[2].Trim(),
-                ChangeInRequirements = columns[3].Trim()
+                Change_In_Requirements  = columns[3].Trim()
             });
         }
 
@@ -106,16 +106,16 @@ public class ModelTrainer
 
         foreach (var req in requirements)
         {
-            var matchedStandard = standards.FirstOrDefault(s => req.ReferenceMLSRID.StartsWith(s.MLSRID));
+            var matchedStandard = standards.FirstOrDefault(s => req.Reference_MLSR_ID.StartsWith(s.MLSR_ID));
             if (matchedStandard != null)
             {
                 trainingData.Add(new TrainingData
                 {
-                    ReferenceMLSRID = req.ReferenceMLSRID,
-                    Requirement = req.RequirementDescription,
+                    Reference_MLSR_ID = req.Reference_MLSR_ID,
+                    Requirement = req.Requirement_Index,
                     Category = req.Category,
-                    ChangeInRequirements = req.ChangeInRequirements,
-                    StandardRefID = matchedStandard.StandardRefID
+                    Change_In_Requirements = req.Change_In_Requirements,
+                    Standard_Ref_ID = matchedStandard.Standard_Ref_ID,
                 });
             }
         }
@@ -128,13 +128,13 @@ public class ModelTrainer
         Console.WriteLine("🚀 Training Model...");
 
         var pipeline = _mlContext.Transforms.Conversion
-            .MapValueToKey("Label", nameof(TrainingData.StandardRefID)) // ✅ Convert StandardRefID to Key
+            .MapValueToKey("Label", nameof(TrainingData.Standard_Ref_ID)) // ✅ Convert StandardRefID to Key
             .Append(_mlContext.Transforms.Text.FeaturizeText("RequirementFeatures", nameof(TrainingData.Requirement)))
             .Append(_mlContext.Transforms.Text.FeaturizeText("CategoryFeatures", nameof(TrainingData.Category)))
             .Append(_mlContext.Transforms.Text.FeaturizeText("ChangeFeatures",
-                nameof(TrainingData.ChangeInRequirements)))
+                nameof(TrainingData.Change_In_Requirements)))
             .Append(_mlContext.Transforms.Text.FeaturizeText("ReferenceMLSRIDFeatures",
-                nameof(TrainingData.ReferenceMLSRID))) // ✅ Featurize ReferenceMLSRID
+                nameof(TrainingData.Reference_MLSR_ID))) // ✅ Featurize ReferenceMLSRID
             .Append(_mlContext.Transforms.Concatenate("Features", "RequirementFeatures", "CategoryFeatures",
                 "ChangeFeatures", "ReferenceMLSRIDFeatures"))
             .Append(_mlContext.Transforms.NormalizeMinMax("Features"))
@@ -163,12 +163,5 @@ public class ModelTrainer
     }
 
 
-    public class TrainingData
-    {
-        public string ReferenceMLSRID { get; set; }
-        public string Requirement { get; set; }
-        public string Category { get; set; }
-        public string ChangeInRequirements { get; set; }
-        public string StandardRefID { get; set; } // ✅ Categorical (Will be converted to Key)
-    }
+   
 }

@@ -1,87 +1,60 @@
 ﻿using Microsoft.ML;
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using Domain.Entities;
+
 using Microsoft.ML.Data;
 
 namespace Infrastructure.Resource
 {
     public class NlpProcessor
     {
-        private readonly MLContext _mlContext;
-        private ITransformer _model;
-        private PredictionEngine<NLPInput, NLPFeatures> _predictionEngine;
         private static readonly string ProjectRoot =
             Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../"));
 
-        private static readonly string InfrastructureResourcePath =
-            Path.Combine(ProjectRoot, "src/Infrastructure.Resource/");
+        // private static readonly string CategoryModelPath =
+        //     Path.Combine(ProjectRoot, "src/Infrastructure.Resource/ml_excelModel.zip");
 
-        // ✅ Ensure the correct Excel file name is used
-        private static readonly string TrainingModel = "ml_model.zip";
-        
-        private static readonly string filePath = Path.Combine(InfrastructureResourcePath, TrainingModel);
-        
+        private static readonly string ReqIndexModelPath =
+            Path.Combine(ProjectRoot, "src/Infrastructure.Resource/ml_model_reqIndex.zip");
+
+        //private readonly PredictionEngine<RequirementPrediction, CategoryPredictionResult> _categoryPredictionEngine;
+        private readonly PredictionEngine<RequirementData, RequirementPrediction> _indexPredictionEngine;
+
         public NlpProcessor()
         {
-            _mlContext = new MLContext();
-            LoadModel();
+            var mlContext = new MLContext();
+
+            // Load category prediction model
+           
+            // var categoryModel = mlContext.Model.Load(CategoryModelPath, out _);
+            // _categoryPredictionEngine = mlContext.Model.CreatePredictionEngine<RequirementPrediction, CategoryPredictionResult>(categoryModel);
+
+            // Load requirement index prediction model
+            var reqIndexModel = mlContext.Model.Load(ReqIndexModelPath, out _);
+            _indexPredictionEngine = mlContext.Model.CreatePredictionEngine<RequirementData, RequirementPrediction>(reqIndexModel);
         }
+        
+       
 
-        private void LoadModel()
+        // public string PredictCategory(string query)
+        // {
+        //     var prediction = _categoryPredictionEngine.Predict(new RequirementPrediction { Text = query });
+        //     return prediction.PredictedCategory;
+        // }
+
+        public string PredictReqIndex(string query)
         {
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine("❌ NLP Model not found. Train the model first.");
-                return;
-            }
-
-            _model = _mlContext.Model.Load(filePath, out _);
-            _predictionEngine = _mlContext.Model.CreatePredictionEngine<NLPInput, NLPFeatures>(_model);
-
-            Console.WriteLine("✅ NLP Model Loaded Successfully.");
-        }
-
-        public static string PreprocessText(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
-
-            // Convert to lowercase
-            input = input.ToLower();
-
-            // Remove special characters
-            input = Regex.Replace(input, @"[^a-z0-9\s]", "");
-
-            // Remove extra spaces
-            input = Regex.Replace(input, @"\s+", " ").Trim();
-
-            return input;
-        }
-
-        public float[] GetTextEmbedding(string text)
-        {
-            if (string.IsNullOrWhiteSpace(text)) return new float[512];
-
-            string cleanText = PreprocessText(text);
-            var input = new NLPInput { Text = cleanText };
-            var prediction = _predictionEngine.Predict(input);
-
-            return prediction.Features ?? new float[512]; // Return zero vector if null
+            var prediction = _indexPredictionEngine.Predict(new RequirementData() { UserQuery = query });
+            return prediction.RequirementIndex;
         }
     }
 
-    public class NLPInput
+    public class RequirementData
     {
-        public string Text { get; set; }
-
-        [VectorType(512)] // Ensure this matches the embedding size
-        public float[] Features { get; set; }
+        [LoadColumn(0)] public string UserQuery { get; set; }
+        [LoadColumn(1)] public string RequirementIndex { get; set; }
     }
 
-    public class NLPFeatures
+    public class RequirementPrediction
     {
-        [VectorType(512)]
-        public float[] Features { get; set; }
+        [ColumnName("PredictedLabel")] public string RequirementIndex;
     }
 }
