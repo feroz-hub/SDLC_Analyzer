@@ -1,0 +1,379 @@
+UserQuery,RequirementIndex
+Create and manage user accounts,"Develop feature in system to create, update and review user/ system accounts"
+Update user profile and account details,"Develop feature in system to create, update and review user/ system accounts"
+Review and modify system user accounts,"Develop feature in system to create, update and review user/ system accounts"
+Remove inactive user accounts,Develop feature in system to remove user accounts that are no longer needed
+Delete user accounts that are no longer required,Develop feature in system to remove user accounts that are no longer needed
+Automatically remove unused accounts,Develop feature in system to remove user accounts that are no longer needed
+Store and manage user credentials securely,Develop feature in system to maintain identity and credentials for users
+Maintain user identity and login credentials,Develop feature in system to maintain identity and credentials for users
+Ensure secure credential management,Develop feature in system to maintain identity and credentials for users
+Lock user account after failed login attempts,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts
+Disable accounts after multiple failed login attempts,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts
+Prevent brute-force attacks with account lockout,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts
+Allow admin to lock and unlock mobile devices,Develop feature to lock/unlock mobile device by an administrator
+Enable remote lock/unlock for mobile devices,Develop feature to lock/unlock mobile device by an administrator
+Provide admin control for mobile device security,Develop feature to lock/unlock mobile device by an administrator
+Track user login activity,"Develop feature in system to identify unique user, track and manage identifiers assigned to users"
+Assign and manage unique user identifiers,"Develop feature in system to identify unique user, track and manage identifiers assigned to users"
+Ensure each user has a unique ID,"Develop feature in system to identify unique user, track and manage identifiers assigned to users"
+Authorize user access to physical locations,Develop feature in system to authorize and grant physical access for users
+Grant physical entry based on authorization,Develop feature in system to authorize and grant physical access for users
+Control access to restricted areas,Develop feature in system to authorize and grant physical access for users
+Restrict unauthorized entry to secured zones,Develop feature in system to authorize and grant physical access for users
+Manage remote access control in containers,Implement mechanism to control remote access in containers
+Prevent unauthorized remote access to container systems,Implement mechanism to control remote access in containers
+Secure containerized environments from remote threats,Implement mechanism to control remote access in containers
+Authorize and monitor remote sessions,Employ mechanism to authorize and control remote access and remote sessions
+Restrict remote access to authorized users only,Employ mechanism to authorize and control remote access and remote sessions
+Implement multi-factor authentication for remote sessions,Employ mechanism to authorize and control remote access and remote sessions
+Protect cardholder data with strict access controls,Implement access control for protection of card holder data
+Restrict access to payment information,Implement access control for protection of card holder data
+Enforce strong authentication for payment systems,Implement access control for protection of card holder data
+Review and update user access rights regularly,Develop feature in system to maintain and review access rights periodically for user
+Ensure periodic audits of user access privileges,Develop feature in system to maintain and review access rights periodically for user
+Implement automated user access reviews,Develop feature in system to maintain and review access rights periodically for user
+Assign specific roles to privileged accounts,"Develop feature in system to identify, assign and restrict roles for privileged user accounts"
+Restrict admin roles to authorized users,"Develop feature in system to identify, assign and restrict roles for privileged user accounts"
+Control privileges for system administrators,"Develop feature in system to identify, assign and restrict roles for privileged user accounts"
+Allow only authorized users to execute privileged functions,Develop feature in system to control execution of privileged functions by users
+Restrict execution of high-privilege commands,Develop feature in system to control execution of privileged functions by users
+Implement approval process for privileged operations,Develop feature in system to control execution of privileged functions by users
+Authorize and enforce security/privacy settings,"Develop feature in system to authorize, restrict and maintain security and privacy attributes"
+Restrict changes to system security attributes,"Develop feature in system to authorize, restrict and maintain security and privacy attributes"
+Maintain privacy controls for user data,"Develop feature in system to authorize, restrict and maintain security and privacy attributes"
+Allow only admin to change alarm settings,Develop feature in system to allow only authorized user to edit alarm settings/configuration
+Restrict unauthorized modifications to alarm settings,Develop feature in system to allow only authorized user to edit alarm settings/configuration
+Secure alarm configuration against unauthorized changes,Develop feature in system to allow only authorized user to edit alarm settings/configuration
+Discover and pair with trusted Bluetooth devices,Develop feature in system to discover and authenticate Bluetooth devices
+Authenticate Bluetooth connections before pairing,Develop feature in system to discover and authenticate Bluetooth devices
+Prevent unauthorized Bluetooth device connections,Develop feature in system to discover and authenticate Bluetooth devices
+Implement authorization for Bluetooth access,Develop feature in Bluetooth device for authorization
+Restrict Bluetooth connectivity to authorized devices,Develop feature in Bluetooth device for authorization
+Control permissions for Bluetooth interactions,Develop feature in Bluetooth device for authorization
+Restrict app access on mobile devices,Develop feature to limit access for apps and services in mobile device
+Control which apps and services can run on a mobile device,Develop feature to limit access for apps and services in mobile device
+Block unauthorized apps from accessing system resources,Develop feature to limit access for apps and services in mobile device
+Allow only approved apps to be installed,Develop feature to install only whitelisted applications on mobile device
+Restrict app installation to a predefined whitelist,Develop feature to install only whitelisted applications on mobile device
+Prevent installation of non-approved applications,Develop feature to install only whitelisted applications on mobile device
+Grant audit access only to authorized users,Develop feature in system to authorize audit access for users
+Restrict audit log access to security personnel,Develop feature in system to authorize audit access for users
+Ensure only privileged users can review system audits,Develop feature in system to authorize audit access for users
+Separate security functions from non-security processes,Employ mechanisms to isolate security functions from nonsecurity functions
+Ensure security functions run in an isolated environment,Employ mechanisms to isolate security functions from nonsecurity functions
+Prevent non-security functions from interfering with security processes,Employ mechanisms to isolate security functions from nonsecurity functions
+Develop role-based access control,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Implement least privilege for user accounts,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Restrict unauthorized access to resources,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Manage permissions for users,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Enforce access restrictions,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Apply RBAC in application,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Limit access based on roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Implement RBAC for system access,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Enforce least privilege for user roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Restrict access based on user roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Control user permissions based on role hierarchy,Develop feature in system to control authorization for users
+Ensure only authorized users can access certain features,Develop feature in system to control authorization for users
+Implement strict user authorization policies,Develop feature in system to control authorization for users
+Block execution of unauthorized applications,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
+Prevent users from running unapproved software,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
+Restrict system utilities to admin users,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
+Limit user access to critical system resources,Develop feature in system to control/limit access for users to avoid unauthorized access
+Prevent unauthorized access to sensitive data,Develop feature in system to control/limit access for users to avoid unauthorized access
+Implement user access controls to safeguard system,Develop feature in system to control/limit access for users to avoid unauthorized access
+Enforce OS-level access restrictions,Implement access restrictions for operating system
+Prevent unauthorized changes to OS settings,Implement access restrictions for operating system
+Restrict admin privileges in the OS,Implement access restrictions for operating system
+Require dual authorization for critical actions,Develop feature in system to enable dual /multiple authorization for critical actions
+Implement multi-user approval for sensitive operations,Develop feature in system to enable dual /multiple authorization for critical actions
+Ensure multiple approvals for security-critical tasks,Develop feature in system to enable dual /multiple authorization for critical actions
+Allocate IP addresses dynamically based on policies,Configure network address allocation for systems
+Ensure controlled assignment of network addresses,Configure network address allocation for systems
+Prevent unauthorized devices from getting network access,Configure network address allocation for systems
+Segment network to limit attack spread,Implement segregation and segmentation of network to limit propagation of attacks
+Separate critical systems from general networks,Implement segregation and segmentation of network to limit propagation of attacks
+Isolate high-risk areas of the network,Implement segregation and segmentation of network to limit propagation of attacks
+Deploy DMZ to secure external connections,Implement demilitarized zones (DMZ) to improve security while connecting to external networks
+Protect internal systems by implementing a DMZ,Implement demilitarized zones (DMZ) to improve security while connecting to external networks
+Restrict direct access to internal networks using DMZ,Implement demilitarized zones (DMZ) to improve security while connecting to external networks
+Handle lost or compromised authentication tokens,Develop feature in system to manage lost/ expired/ compromised authenticators for users
+Manage expired or revoked user authenticators,Develop feature in system to manage lost/ expired/ compromised authenticators for users
+Replace compromised authentication credentials,Develop feature in system to manage lost/ expired/ compromised authenticators for users
+Ensure protection of authentication tokens,Develop feature in system to protect authenticators for users
+Implement secure storage for authentication credentials,Develop feature in system to protect authenticators for users
+Prevent unauthorized access to user authenticators,Develop feature in system to protect authenticators for users
+Allow users to change passwords or authentication methods,Develop change password/authenticator feature in system for user accounts
+Enable password reset functionality,Develop change password/authenticator feature in system for user accounts
+Provide users with a secure method to update authenticators,Develop change password/authenticator feature in system for user accounts
+Enforce password change on first login,Develop feature to change default passwords for user accounts on first use
+Require users to set a new password at first-time login,Develop feature to change default passwords for user accounts on first use
+Prevent use of default credentials beyond first use,Develop feature to change default passwords for user accounts on first use
+Implement OTP authentication for secure login,Develop feature in system to manage OTP authenticator
+Allow users to configure OTP settings,Develop feature in system to manage OTP authenticator
+Manage lifecycle and policies for OTP-based authentication,Develop feature in system to manage OTP authenticator
+Define password complexity rules,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets"
+Enforce password length and expiration policies,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets"
+Ensure passwords meet security strength requirements,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets"
+Notify users when their authentication method changes,Develop feature in system to notify users on addition/change in authenticators
+Send alerts on new authentication device registration,Develop feature in system to notify users on addition/change in authenticators
+Inform users when their authenticator is updated,Develop feature in system to notify users on addition/change in authenticators
+Set policies for authentication validity and security,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts"
+Ensure authentication mechanisms comply with security standards,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts"
+Enforce authentication renewal policies,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts"
+Verify user identity credentials before granting access,Develop feature in system to verify personal identity verification credentials for users
+Ensure users provide valid ID for authentication,Develop feature in system to verify personal identity verification credentials for users
+Authenticate users using government-issued or enterprise IDs,Develop feature in system to verify personal identity verification credentials for users
+Perform identity verification during user registration,Develop feature in system to verify and review user identities during registration
+Review and validate user identities before account approval,Develop feature in system to verify and review user identities during registration
+Authenticate users during onboarding,Develop feature in system to verify and review user identities during registration
+Automatically log out inactive users,Develop feature in system to logout user for protecting user session from unauthorized use
+Implement session timeout for security,Develop feature in system to logout user for protecting user session from unauthorized use
+Provide logout option in the user interface,Develop feature in system to logout user for protecting user session from unauthorized use
+Show login success message to users,Develop feature in system to display messages to user before and after login
+Display logout confirmation messages,Develop feature in system to display messages to user before and after login
+Notify users about failed login attempts,Develop feature in system to display messages to user before and after login
+Show privacy policy before app usage,Develop feature in mobile device to display privacy notices to users
+Display terms and conditions on mobile devices,Develop feature in mobile device to display privacy notices to users
+Provide privacy disclaimers for app users,Develop feature in mobile device to display privacy notices to users
+Show privacy policies before login,Develop feature in system to display privacy notices to users
+Notify users about data collection and usage,Develop feature in system to display privacy notices to users
+Display consent forms for privacy compliance,Develop feature in system to display privacy notices to users
+Secure microservices communication using session tokens,Develop feature in system to protect sessions in microservices
+Prevent unauthorized access to microservice sessions,Develop feature in system to protect sessions in microservices
+Implement authentication for microservices sessions,Develop feature in system to protect sessions in microservices
+Generate session attributes dynamically,Develop feature in system to generate session attributes
+Store and retrieve user session attributes securely,Develop feature in system to generate session attributes
+Track user activity through session attributes,Develop feature in system to generate session attributes
+Enable HTTP-only and secure flag for cookies,Develop feature in system to secure cookies
+Prevent session hijacking with secure cookies,Develop feature in system to secure cookies
+Encrypt cookies for additional security,Develop feature in system to secure cookies
+Establish secure session management,Develop feature in system to establish secure sessions
+Implement session encryption for secure communication,Develop feature in system to establish secure sessions
+Prevent session fixation attacks,Develop feature in system to establish secure sessions
+Auto-terminate inactive user sessions,Develop feature in system to terminate sessions when no longer needed
+End user sessions on logout,Develop feature in system to terminate sessions when no longer needed
+Revoke expired session tokens,Develop feature in system to terminate sessions when no longer needed
+Assign unique identifiers for user authentication,Develop feature in system to uniquely identify users and control authentication
+Implement user ID tracking for better authentication,Develop feature in system to uniquely identify users and control authentication
+Ensure unique user identification for secure access,Develop feature in system to uniquely identify users and control authentication
+Disable or suspend authentication device when compromised,Develop feature to disable or suspend authenticator device
+Provide option to temporarily disable an authenticator,Develop feature to disable or suspend authenticator device
+Suspend lost or stolen authentication devices,Develop feature to disable or suspend authenticator device
+Require physical input for generating cryptographic authentication,Implement physical input in single factor cryptographic device to generate authenticator
+Implement button-based authentication in cryptographic devices,Implement physical input in single factor cryptographic device to generate authenticator
+Use PIN-based verification for single-factor cryptographic devices,Implement physical input in single factor cryptographic device to generate authenticator
+Control device and network authentication,"Develop feature in system to control authentication for devices, services and networks"
+Implement authentication mechanism for network services,"Develop feature in system to control authentication for devices, services and networks"
+Restrict unauthorized authentication requests,"Develop feature in system to control authentication for devices, services and networks"
+Require users to re-authenticate after session expiration,Develop feature in system to re-authenticate users and devices when session is terminated
+Enforce device re-authentication when session is lost,Develop feature in system to re-authenticate users and devices when session is terminated
+Require login again after session timeout,Develop feature in system to re-authenticate users and devices when session is terminated
+Use only approved authentication protocols,Develop features in system using approved authentication protocols
+Implement authentication based on industry standards,Develop features in system using approved authentication protocols
+Ensure compliance with security authentication guidelines,Develop features in system using approved authentication protocols
+Enable biometric authentication for login,Develop feature to manage biometric authentication
+Implement fingerprint and facial recognition for security,Develop feature to manage biometric authentication
+Store and process biometric data securely,Develop feature to manage biometric authentication
+Require MFA for high-privilege user accounts,Develop feature in system to implement multifactor authentication (MFA) for users
+Implement two-factor authentication (2FA) for login,Develop feature in system to implement multifactor authentication (MFA) for users
+Use OTP and biometrics for multifactor authentication,Develop feature in system to implement multifactor authentication (MFA) for users
+Prevent replay attacks in network authentication,Implement replay-resistant authentication mechanism for network access
+Use cryptographic nonce for replay-resistant authentication,Implement replay-resistant authentication mechanism for network access
+Implement time-based authentication codes,Implement replay-resistant authentication mechanism for network access
+Enable single sign-on (SSO) for accessing multiple applications,Develop single sign-on feature for accessing multiple apps
+Allow users to sign in once and access all apps,Develop single sign-on feature for accessing multiple apps
+Integrate SSO with corporate authentication systems,Develop single sign-on feature for accessing multiple apps
+Implement secondary authentication via a different device,Implement out-of-band secure authentication for devices and users
+Use mobile device for out-of-band authentication,Implement out-of-band secure authentication for devices and users
+Require out-of-band verification for critical actions,Implement out-of-band secure authentication for devices and users
+Use PKI certificates for authenticating users and devices,Implement PKI based authentication for users and devices
+Enable digital certificates for secure authentication,Implement PKI based authentication for users and devices
+Implement certificate-based authentication for devices,Implement PKI based authentication for users and devices
+Encrypt stored data to maintain confidentiality,Implement encryption to protect confidentiality of data at rest
+Use AES encryption to secure stored information,Implement encryption to protect confidentiality of data at rest
+Ensure database encryption for sensitive records,Implement encryption to protect confidentiality of data at rest
+Protect data during transmission using encryption,Develop feature in system to protect information and maintain confidentiality during transmission
+Implement TLS/SSL to secure data in transit,Develop feature in system to protect information and maintain confidentiality during transmission
+Encrypt files before sending over a network,Develop feature in system to protect information and maintain confidentiality during transmission
+Encrypt data stored on mobile devices,Implement encryption to protect confidentiality of data at rest on mobile device
+Secure mobile storage with strong encryption,Implement encryption to protect confidentiality of data at rest on mobile device
+Prevent unauthorized access to stored mobile data,Implement encryption to protect confidentiality of data at rest on mobile device
+Encrypt and isolate sensitive cloud data,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Implement virtual private storage for cloud data,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Prevent cross-tenant data access in cloud environments,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Ensure system has adequate resources for availability,Implement mechanisms to ensure availability of resources by allocating adequate capacity
+Allocate sufficient bandwidth and storage capacity,Implement mechanisms to ensure availability of resources by allocating adequate capacity
+Monitor resource usage to avoid service disruptions,Implement mechanisms to ensure availability of resources by allocating adequate capacity
+Prevent unauthorized data access and leakage,Implement mechanisms in system to protect against leakage of data
+Detect and block data exfiltration attempts,Implement mechanisms in system to protect against leakage of data
+Prevent confidential data from being leaked externally,Implement mechanisms in system to protect against leakage of data
+Secure payment data to prevent leaks,Implement mechanism to prevent leakage of cardholder data
+Prevent unauthorized access to credit card information,Implement mechanism to prevent leakage of cardholder data
+Mask and encrypt cardholder data in storage and transmission,Implement mechanism to prevent leakage of cardholder data
+Prevent exposure of sensitive data to unauthorized users,Implement mechanism to prevent information disclosure of sensitive data
+Mask sensitive data in system logs,Implement mechanism to prevent information disclosure of sensitive data
+Ensure encryption for personally identifiable information (PII),Implement mechanism to prevent information disclosure of sensitive data
+Control data sharing to avoid leaks,Develop feature in system to control information flow to prevent data leaks
+Prevent unauthorized transfer of confidential files,Develop feature in system to control information flow to prevent data leaks
+Restrict email attachments containing sensitive information,Develop feature in system to control information flow to prevent data leaks
+Validate user inputs to prevent injection attacks,Develop feature in system to validate inputs to prevent data leaks
+Implement input validation to prevent unauthorized data access,Develop feature in system to validate inputs to prevent data leaks
+Ensure proper input sanitization to avoid data leaks,Develop feature in system to validate inputs to prevent data leaks
+Display generic error messages to avoid exposing system details,"Develop feature in system to display error messages or hint, without revealing sensitive information"
+Prevent error messages from revealing system paths or credentials,"Develop feature in system to display error messages or hint, without revealing sensitive information"
+Securely handle errors without exposing sensitive information,"Develop feature in system to display error messages or hint, without revealing sensitive information"
+Store passwords securely using hashing and salting,Develop feature in system to protect passwords/ memorized secrets
+Prevent password exposure through secure storage mechanisms,Develop feature in system to protect passwords/ memorized secrets
+Encrypt and securely transmit passwords over the network,Develop feature in system to protect passwords/ memorized secrets
+Implement cryptographic integrity protection for data,Develop feature in system to implement cryptography to protect integrity of data and as per recommended standards
+Use industry-standard cryptographic algorithms,Develop feature in system to implement cryptography to protect integrity of data and as per recommended standards
+Ensure compliance with cryptographic security standards,Develop feature in system to implement cryptography to protect integrity of data and as per recommended standards
+Encrypt mobile device storage to protect user data,Implement cryptography to protect data on mobile device
+Implement full-disk encryption for mobile security,Implement cryptography to protect data on mobile device
+Protect mobile data using strong encryption methods,Implement cryptography to protect data on mobile device
+Verify digital signatures before installing mobile apps,Employ mechanism to verify digital signatures for mobile application and OS updates
+Ensure OS updates are digitally signed and verified,Employ mechanism to verify digital signatures for mobile application and OS updates
+Prevent installation of unsigned or tampered mobile apps,Employ mechanism to verify digital signatures for mobile application and OS updates
+Encrypt sensitive images to prevent unauthorized access,Develop feature in system to encrypt sensitive data/images
+Secure sensitive data with strong encryption algorithms,Develop feature in system to encrypt sensitive data/images
+Implement encryption for stored documents and media,Develop feature in system to encrypt sensitive data/images
+Ensure data integrity verification for software and applications,Develop feature in system to protect and verify integrity of data/ software/ applications/ documents
+Implement checksum validation to detect software tampering,Develop feature in system to protect and verify integrity of data/ software/ applications/ documents
+Verify document integrity before processing sensitive files,Develop feature in system to protect and verify integrity of data/ software/ applications/ documents
+Mask or anonymize personally identifiable information (PII),Implement mechanism in system to de-identify sensitive data
+Use tokenization to protect sensitive user information,Implement mechanism in system to de-identify sensitive data
+Prevent unauthorized access to de-identified datasets,Implement mechanism in system to de-identify sensitive data
+Sign software components to ensure authenticity and integrity,"Implement digital signatures for software, firmware and network components"
+Verify firmware authenticity using digital signatures,"Implement digital signatures for software, firmware and network components"
+Ensure all network components are digitally signed and validated,"Implement digital signatures for software, firmware and network components"
+Manage cryptographic keys securely to prevent unauthorized use,Develop feature in system to manage keys used by software/ device authenticators
+Implement secure key management lifecycle for authentication devices,Develop feature in system to manage keys used by software/ device authenticators
+Rotate encryption keys periodically to enhance security,Develop feature in system to manage keys used by software/ device authenticators
+Protect encryption keys used to secure payment card data,Implement mechanism to secure keys used to protect cardholder data
+Ensure cryptographic keys are encrypted and stored securely,Implement mechanism to secure keys used to protect cardholder data
+Prevent unauthorized access and modification of sensitive encryption keys,Develop feature in system to prevent unauthorized access and modification of cryptographic keys
+Enforce role-based access for cryptographic key management,Develop feature in system to prevent unauthorized access and modification of cryptographic keys
+Validate digital certificates before establishing secure connections,"Implement mechanism to validate digital certificates, ensure authenticity and integrity"
+Ensure integrity of digital certificates through proper validation mechanisms,"Implement mechanism to validate digital certificates, ensure authenticity and integrity"
+Protect Bluetooth communication to prevent unauthorized data access,Develop feature in Bluetooth device to protect integrity and confidentiality
+Ensure encryption of Bluetooth data to maintain confidentiality,Develop feature in Bluetooth device to protect integrity and confidentiality
+Verify the boot process to prevent execution of compromised firmware,Develop feature in mobile device to verify integrity of boot process
+Implement secure boot mechanisms to detect unauthorized modifications,Develop feature in system to verify integrity of boot process
+Verify hardware integrity to detect tampering attempts,Employ mechanism to verify integrity of hardware components
+Ensure system components follow up-to-date security configurations,Implement baseline configuration to system components that are up-to-date
+Design security architecture that aligns with industry best practices,"Develop, design, update and review information security architecture for system"
+Ensure security controls are included in system architecture updates,"Develop, design, update and review information security architecture for system"
+Develop cross-platform applications to ensure system compatibility,Develop platform-independent applications to achieve diversity of technologies
+Implement platform-independent security measures for system resilience,Develop platform-independent applications to achieve diversity of technologies
+Track and review all configuration changes to prevent misconfigurations,Implement configuration change control to track and review changes in system
+Enforce change management processes for system configuration updates,Implement configuration change control to track and review changes in system
+Maintain automated backups to recover data during system failures,Employ mechanisms to maintain backup of information to recover during system failures
+Configure regular backups to ensure data recovery in case of incidents,Employ mechanisms to maintain backup of information to recover during system failures
+Set retention policies for backup data in compliance with regulations,Configure retention period for backup of information in system
+Ensure backup data is encrypted to prevent unauthorized access,Employ mechanisms to protect confidentiality of backup to prevent unauthorized modification
+Implement code scanning tools to detect security vulnerabilities,Employ code analysis tools to identify security flaws
+Use automated code analysis tools to enhance application security,Employ code analysis tools to identify security flaws
+Implement hardware-based isolation to minimize security risks,Implement hardware separation mechanism to minimize vulnerabilities
+Design microservices following best security practices,Implement best practices during design and development for microservices
+Ensure microservices follow secure coding and authentication mechanisms,Implement best practices during design and development for microservices
+Develop a service registry to manage microservices dynamically,Implement service registry feature for microservices
+Implement a central service discovery mechanism for microservices,Implement service registry feature for microservices
+Deploy an API gateway to control access and routing for microservices,Implement API gateway feature for microservices
+Implement rate limiting and authentication in the API gateway,Implement API gateway feature for microservices
+Deploy a service mesh to enhance security and observability of microservices,Implement Service Mesh deployment for microservices
+Implement mutual TLS (mTLS) for secure communication in a service mesh,Implement Service Mesh deployment for microservices
+Conduct security assessments before deploying microservices in production,Implement security best practices before moving to production
+Ensure secure deployment pipelines for microservices before production,Implement security best practices before moving to production
+Follow secure coding principles during microservices development,Implement security best practices during design and development
+Perform threat modeling and risk assessments in the design phase,Implement security best practices during design and development
+Implement API rate limiting and validation to prevent attacks,Implement mechanisms to protect data/services against attacks
+Secure backend services against injection and denial-of-service (DoS) attacks,Implement mechanisms to protect data/services against attacks
+Deploy anti-spam filters to detect and block spam messages,Implement spam protection mechanisms in systems
+Implement CAPTCHA to prevent automated bot attacks in systems,Implement spam protection mechanisms in systems
+Use sandboxing techniques to isolate apps on mobile devices,Employ isolation mechanisms to setup trusted environment in mobile device
+Implement application containerization to enhance mobile device security,Employ isolation mechanisms to setup trusted environment in mobile device
+Use deception techniques like honeypots to mislead attackers,Employ concealment and misdirection techniques to mislead adversaries
+Implement decoy credentials to detect and deflect adversaries,Employ concealment and misdirection techniques to mislead adversaries
+Enforce strict security policies for mobile devices in enterprise environments,Employ mechanism to enforce security policy and usage restrictions on mobile device
+Restrict unauthorized app installations on managed mobile devices,Employ mechanism to enforce security policy and usage restrictions on mobile device
+Implement a feature to allow a Bluetooth device to change its private address dynamically for security,Develop feature in Bluetooth device to change private address and settings
+Enable users to modify Bluetooth device settings while preventing unauthorized changes,Develop feature in Bluetooth device to change private address and settings
+Use an automated tool to scan mobile applications for vulnerabilities before installation,Employ App vetting tool to detect vulnerabilities in mobile device
+Implement an app security check before allowing applications on corporate devices,Employ App vetting tool to detect vulnerabilities in mobile device
+Ensure secure execution of processes by isolating critical system tasks,Develop feature in system to isolate process execution
+Implement sandboxing techniques to separate and isolate untrusted processes,Develop feature in system to isolate process execution
+Develop a system that allows emergency shutdown of power when a critical situation arises,Implement power shutoff during emergency situations
+Implement an automated emergency response system to shut off power in case of a security breach,Implement power shutoff during emergency situations
+"Deploy an incident response mechanism to detect, analyze, and respond to security threats",Develop feature in system to handle security incidents
+Implement real-time monitoring and alerting for potential security incidents,Develop feature in system to handle security incidents
+Perform regular vulnerability assessments to identify and mitigate security weaknesses,Perform vulnerability scanning to identify vulnerabilities
+Implement an automated vulnerability scanning tool to continuously monitor for risks,Perform vulnerability scanning to identify vulnerabilities
+Develop an authentication system to verify and authorize maintenance personnel before granting access,Develop feature in system to authorize maintenance personnel
+Implement a role-based access system to restrict maintenance tasks to authorized personnel only,Develop feature in system to authorize maintenance personnel
+Set up an automated system to schedule preventive maintenance of critical infrastructure,Develop feature in system to perform preventive and predictive maintenance periodically
+Use AI-driven analytics to predict failures and schedule maintenance in advance,Develop feature in system to perform preventive and predictive maintenance periodically
+Deploy antivirus software on Bluetooth-enabled devices to detect and remove malware,Deploy antivirus software on Bluetooth devices to protect from malware
+Implement real-time malware scanning for Bluetooth devices to prevent infections,Deploy antivirus software on Bluetooth devices to protect from malware
+Set up an automated system to deploy security patches and updates for containerized applications,Implement mechanism to rollout updates in containers
+"Develop a feature to ensure seamless, zero-downtime updates for containers in production",Implement mechanism to rollout updates in containers
+Implement a system feature to provide automatic software and firmware updates to ensure devices are up to date,Develop feature in system to provide software and firmware updates/patches and ensure it is up to date
+Deploy a mechanism to check for software and firmware updates and apply security patches regularly,Develop feature in system to provide software and firmware updates/patches and ensure it is up to date
+Allow remote diagnostic and maintenance services to identify and resolve system issues,Perform nonlocal maintenance and diagnostic services
+Implement a secure remote maintenance feature that enables technicians to troubleshoot issues remotely,Perform nonlocal maintenance and diagnostic services
+Develop a notification system to approve and alert administrators about remote maintenance activities,Develop feature in system to approve and notify nonlocal maintenance activities
+Implement an approval workflow for remote maintenance tasks to prevent unauthorized access,Develop feature in system to approve and notify nonlocal maintenance activities
+"Capture system logs for all activities, including executed programs and user procedures","Implement mechanism in system to capture logs for programs, procedures and system activities"
+Implement an automated logging mechanism to track system changes and application activities,"Implement mechanism in system to capture logs for programs, procedures and system activities"
+"Develop a feature to configure audit attributes, generate, and review logs for security analysis","Develop feature in system to configure attributes, generate and review audit trail to enable analysis and reporting"
+Enable administrators to configure audit trails and generate reports for forensic investigations,"Develop feature in system to configure attributes, generate and review audit trail to enable analysis and reporting"
+Implement a feature to generate audit records for user login activities and account modifications,Develop feature in system to generate audit records related to user actions and accounts
+Develop a system that maintains an audit log of user access and authentication events,Develop feature in system to generate audit records related to user actions and accounts
+Generate logs related to security alarms and system alerts for incident tracking,Develop feature in system to generate and review logs related to system alarms
+Implement a real-time logging system to capture and store system alarm data for analysis,Develop feature in system to generate and review logs related to system alarms
+Develop a mechanism to periodically review and update audit records for accurate security analysis,Develop feature in system to review and update audit records to enable accurate analysis and reporting
+Implement an automated system to validate and update audit records to maintain log integrity,Develop feature in system to review and update audit records to enable accurate analysis and reporting
+"Use security tools to configure, analyze, and protect audit logs from unauthorized modifications","Employ tools for audit configuration, protection and analysis"
+Implement a mechanism to safeguard and analyze audit logs to detect suspicious activity,"Employ tools for audit configuration, protection and analysis"
+Configure a system to manage audit record storage capacity to prevent log overflow,Employ mechanism in system to configure audit record storage capacity
+Implement an alerting mechanism for administrators when audit storage reaches critical limits,Employ mechanism in system to configure audit record storage capacity
+Develop a system feature to monitor and alert administrators on audit failures,Employ mechanism in system to alert system and application audit failures
+Implement an automatic alert system for audit failures in critical applications and logs,Employ mechanism in system to alert system and application audit failures
+Develop an analytics feature to analyze and filter audit logs for security reporting,"Develop feature in system to analyze, reduce and report audit information"
+Implement a mechanism to reduce redundant logs and generate meaningful audit reports,"Develop feature in system to analyze, reduce and report audit information"
+Enable time synchronization for audit records across all connected systems,Implement synchronization clocks for audit records to track time accurately across systems
+Configure a system clock synchronization mechanism to ensure accurate timestamps in audit logs,Implement synchronization clocks for audit records to track time accurately across systems
+Develop a feature to log all security-related events on mobile devices,Develop feature to log and alert events on mobile device
+Implement a real-time event logging and alerting mechanism for mobile applications,Develop feature to log and alert events on mobile device
+Implement event logging for security incidents occurring in containerized environments,Implement mechanism to log events in containers
+Configure logging policies for containerized workloads to track security events,Implement mechanism to log events in containers
+Set an audit record retention policy to ensure logs are available for future investigations,Configure audit record retention period for investigation
+Implement a mechanism to automatically delete expired logs while retaining essential records,Configure audit record retention period for investigation
+Restrict the use of USB drives and other portable storage devices for security compliance,Implement mechanism to restrict or prohibit use of portable storage devices
+Implement a policy to disable external storage devices on secure systems,Implement mechanism to restrict or prohibit use of portable storage devices
+Develop a security feature to prevent unauthorized access and use of removable media,Implement mechanisms to protect and control media from unauthorized usage
+Implement access control policies to restrict unauthorized users from accessing sensitive media,Implement mechanisms to protect and control media from unauthorized usage
+Employ secure data sanitization techniques before disposing of storage media,Employ mechanisms for sanitization and disposal of media
+Implement an automated process to securely wipe sensitive data from storage devices before disposal,Employ mechanisms for sanitization and disposal of media
+Implement a downgrade mechanism to ensure media security policy compliance,Employ media downgrade mechanisms to ensure adherence to security policy
+Develop a system to enforce media classification rules and security downgrade mechanisms,Employ media downgrade mechanisms to ensure adherence to security policy
+Develop a system feature to block installation and execution of unauthorized software,Implement mechanisms to prevent use of unauthorized software in systems
+Implement an allowlist mechanism to restrict execution of unauthorized applications,Implement mechanisms to prevent use of unauthorized software in systems
+Disable unnecessary system features and services to reduce attack surface,Employ mechanism to disable unnecessary features in system to improve security
+Implement security policies to restrict access to unused system functionalities,Employ mechanism to disable unnecessary features in system to improve security
+Prohibit direct system connections without using boundary security devices,Employ mechanisms to prohibit direct connection without boundary protection device
+Enforce security measures to prevent unauthorized direct network connections,Employ mechanisms to prohibit direct connection without boundary protection device
+Enable network traffic monitoring and encryption to detect and block malicious packets,Configure monitoring of network and encrypt communication traffic to restrict malicious network packets
+Implement deep packet inspection to filter and secure network traffic,Configure monitoring of network and encrypt communication traffic to restrict malicious network packets
+Deploy a firewall or intrusion detection system to monitor and control network communication,"Employ barrier device to monitor, control and protect communication over a network"
+Implement a security gateway to inspect and filter network traffic for threats,"Employ barrier device to monitor, control and protect communication over a network"
+Secure cardholder data transmission with encrypted communication channels,Configure control networks and implement secure communication channels for cardholder data environment
+Implement network segmentation to isolate and secure cardholder data,Configure control networks and implement secure communication channels for cardholder data environment
+Enforce network security controls to prevent unauthorized access to critical systems,Implement network controls and employ mechanism to secure network connections
+Implement a zero-trust architecture to secure network connections,Implement network controls and employ mechanism to secure network connections
+Use host-based firewalls to block unauthorized access to applications and services,Implement host-based boundary mechanisms to protect applications from attacks
+Implement endpoint protection measures to prevent application-layer attacks,Implement host-based boundary mechanisms to protect applications from attacks
+Route all network traffic through a managed security interface to prevent intrusions,Route network access through managed interface to prevent attacks
+Deploy network access control mechanisms to restrict and monitor inbound/outbound traffic,Route network access through managed interface to prevent attacks
+Conduct covert channel analysis to detect and eliminate unauthorized data exfiltration paths,Perform covert channel analysis to eliminate covert channels
+Implement security mechanisms to prevent hidden communication channels in network traffic,Perform covert channel analysis to eliminate covert channels

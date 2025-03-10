@@ -1,5 +1,6 @@
 using Microsoft.ML;
 using Microsoft.ML.Data;
+using Microsoft.ML.Trainers.LightGbm;
 using Microsoft.ML.Transforms.Text;
 using OfficeOpenXml;
 
@@ -9,11 +10,8 @@ public class ModelTrainerVer2
 {
     private static readonly string ProjectRoot = Helper.GetProjectRoot();
     private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src","Infrastructure.Resource");
-    private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex.zip");
-    private const string DataPath = "RequirementIndexTraining.csv";
-   // private static readonly string ExcelFile="RequirementIndexTraining.xlsx";
-   
-    private static readonly string SheetName = "in";
+    private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex220.zip");
+    private const string DataPath = "RequirementIndexTraining220.csv";
     private readonly MLContext _context = new();
 
     public void TrainAndSaveModel()
@@ -29,8 +27,7 @@ public class ModelTrainerVer2
        // Load Data
          var trainDataView = _context.Data.LoadFromTextFile<RequirementData>(
             path: DataPath, separatorChar: ',', hasHeader: true, allowQuoting: true, trimWhitespace: true);
-       // var data = LoadDataFromExcel();
-        //var trainDataView = _context.Data.LoadFromEnumerable(data);
+       
         // ✅ Train-Test Split (80% Train, 20% Test)
         var trainTestSplit = _context.Data.TrainTestSplit(trainDataView, testFraction: 0.2);
         var trainData = trainTestSplit.TrainSet;
@@ -65,7 +62,6 @@ public class ModelTrainerVer2
             .Append(_context.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features"))
             .Append(_context.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
         
-
        
         return pipeline.Fit(trainData);
     }
