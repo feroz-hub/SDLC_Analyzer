@@ -1,55 +1,159 @@
-UserQuery,RequirementIndex
-Develop role-based access control,Develop role based access (RBAC) feature in system and follow least privilege principle for users
-Implement least privilege for user accounts,Develop role based access (RBAC) feature in system and follow least privilege principle for users
-Restrict unauthorized access to resources,Develop role based access (RBAC) feature in system and follow least privilege principle for users
-Enable dual authentication for critical actions,Develop feature in system to enable dual /multiple authorization for critical actions
-Require multiple approvals for high-risk transactions,Develop feature in system to enable dual /multiple authorization for critical actions
-Prevent unauthorized software execution,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
-Block unknown software from running,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software
-Restrict access to operating system settings,Implement access restrictions for operating system
-Control OS-level permissions,Implement access restrictions for operating system
-Restrict network access based on roles,Implement segregation and segmentation of network to limit propagation of attacks
-Enable network isolation for security,Implement segregation and segmentation of network to limit propagation of attacks
-Use demilitarized zones for external networks,Implement demilitarized zones (DMZ) to improve security while connecting to external networks
-Securely manage expired authentication credentials,Develop feature in system to manage lost/ expired/ compromised authenticators for users
-Implement password change functionality,Develop change password/authenticator feature in system for user accounts
-Enforce password update on first login,Develop feature to change default passwords for user accounts on first use
-Manage OTP authentication for users,Develop feature in system to manage OTP authenticator
-Set password complexity and expiration rules,Develop feature in system to establish lifetime, strength and complexity of memorized secrets
-Notify users of authentication changes,Develop feature in system to notify users on addition/change in authenticators
-Verify identity documents during registration,Develop feature in system to verify and review user identities during registration
-Ensure users are logged out after inactivity,Develop feature in system to logout user for protecting user session from unauthorized use
-Display login messages to users,Develop feature in system to display messages to user before and after login
-Show privacy notices on mobile login,Develop feature in mobile device to display privacy notices to users
-Provide system privacy notices to users,Develop feature in system to display privacy notices to users
-Protect user sessions in microservices,Develop feature in system to protect sessions in microservices
-Generate secure session attributes,Develop feature in system to generate session attributes
-Secure browser cookies,Develop feature in system to secure cookies
-Implement secure user sessions,Develop feature in system to establish secure sessions
-Terminate inactive sessions automatically,Develop feature in system to terminate sessions when no longer needed
-Ensure unique user identification,Develop feature in system to uniquely identify users and control authentication
-Disable authentication device when needed,Develop feature to disable or suspend authenticator device
-Require physical input for cryptographic authentication,Implement physical input in single factor cryptographic device to generate authenticator
-Authenticate devices and services securely,Develop feature in system to control authentication for devices, services and networks
-Require re-authentication after session timeout,Develop feature in system to re-authenticate users and devices when session is terminated
-Authorize and manage user/system accounts,Develop feature in system to create, update and review user/ system accounts
-Remove outdated user accounts,Develop feature in system to remove user accounts that are no longer needed
-Maintain user credentials securely,Develop feature in system to maintain identity and credentials for users
-Lock accounts after failed login attempts,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts
-Enable remote account locking/unlocking,Develop feature to lock/unlock mobile device by an administrator
-Track and manage user IDs,Develop feature in system to identify unique user, track and manage identifiers assigned to users
-Control physical access permissions,Develop feature in system to authorize and grant physical access for users
-Manage remote access in containers,Implement mechanism to control remote access in containers
-Restrict remote sessions,Employ mechanism to authorize and control remote access and remote sessions
-Apply access controls for cardholder data,Implement access control for protection of card holder data
-Review and maintain user access rights,Develop feature in system to maintain and review access rights periodically for user
-Define roles and restrictions for privileged users,Develop feature in system to identify, assign and restrict roles for privileged user accounts
-Limit execution of privileged functions,Develop feature in system to control execution of privileged functions by users
-Restrict security and privacy attributes,Develop feature in system to authorize, restrict and maintain security and privacy attributes
-Allow only authorized users to change alarm settings,Develop feature in system to allow only authorized user to edit alarm settings/configuration
-Authenticate Bluetooth devices securely,Develop feature in system to discover and authenticate bluetooth devices
-Control Bluetooth device authorization,Develop feature in bluetooth device for authorization
-Limit app and service access on mobile devices,Develop feature to limit access for apps and services in mobile device
-Allow only whitelisted applications on mobile,Develop feature to install only whitelisted applications on mobile device
-Authorize user access to audit logs,Develop feature in system to authorize audit access for users
-Separate security functions from non-security,Employ mechanisms to isolate security functions from nonsecurity functions
+UserQuery,RequirementIndex,,,,
+Create and manage user accounts,"Develop feature in system to create, update and review user/system accounts",,,,
+Update user profile and account details,"Develop feature in system to create, update and review user/system accounts",,,,
+Review and modify system user accounts,"Develop feature in system to create, update and review user/system accounts",,,,
+Remove inactive user accounts,Develop feature in system to remove user accounts that are no longer needed,,,,
+Delete user accounts that are no longer required,Develop feature in system to remove user accounts that are no longer needed,,,,
+Automatically remove unused accounts,Develop feature in system to remove user accounts that are no longer needed,,,,
+Store and manage user credentials securely,Develop feature in system to maintain identity and credentials for users,,,,
+Maintain user identity and login credentials,Develop feature in system to maintain identity and credentials for users,,,,
+Ensure secure credential management,Develop feature in system to maintain identity and credentials for users,,,,
+Lock user account after failed login attempts,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts,,,,
+Disable accounts after multiple failed login attempts,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts,,,,
+Prevent brute-force attacks with account lockout,Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts,,,,
+Allow admin to lock and unlock mobile devices,Develop feature to lock/unlock mobile device by an administrator,,,,
+Enable remote lock/unlock for mobile devices,Develop feature to lock/unlock mobile device by an administrator,,,,
+Provide admin control for mobile device security,Develop feature to lock/unlock mobile device by an administrator,,,,
+Track user login activity,"Develop feature in system to identify unique user, track and manage identifiers assigned to users",,,,
+Assign and manage unique user identifiers,"Develop feature in system to identify unique user, track and manage identifiers assigned to users",,,,
+Ensure each user has a unique ID,"Develop feature in system to identify unique user, track and manage identifiers assigned to users",,,,
+Authorize user access to physical locations,Develop feature in system to authorize and grant physical access for users,,,,
+Grant physical entry based on authorization,Develop feature in system to authorize and grant physical access for users,,,,
+Control access to restricted areas,Develop feature in system to authorize and grant physical access for users,,,,
+Restrict unauthorized entry to secured zones,Develop feature in system to authorize and grant physical access for users,,,,
+Manage remote access control in containers,Implement mechanism to control remote access in containers,,,,
+Prevent unauthorized remote access to container systems,Implement mechanism to control remote access in containers,,,,
+Secure containerized environments from remote threats,Implement mechanism to control remote access in containers,,,,
+Authorize and monitor remote sessions,Employ mechanism to authorize and control remote access and remote sessions,,,,
+Restrict remote access to authorized users only,Employ mechanism to authorize and control remote access and remote sessions,,,,
+Implement multi-factor authentication for remote sessions,Employ mechanism to authorize and control remote access and remote sessions,,,,
+Protect cardholder data with strict access controls,Implement access control for protection of card holder data,,,,
+Restrict access to payment information,Implement access control for protection of card holder data,,,,
+Enforce strong authentication for payment systems,Implement access control for protection of card holder data,,,,
+Review and update user access rights regularly,Develop feature in system to maintain and review access rights periodically for user,,,,
+Ensure periodic audits of user access privileges,Develop feature in system to maintain and review access rights periodically for user,,,,
+Implement automated user access reviews,Develop feature in system to maintain and review access rights periodically for user,,,,
+Assign specific roles to privileged accounts,"Develop feature in system to identify, assign and restrict roles for privileged user accounts",,,,
+Restrict admin roles to authorized users,"Develop feature in system to identify, assign and restrict roles for privileged user accounts",,,,
+Control privileges for system administrators,"Develop feature in system to identify, assign and restrict roles for privileged user accounts",,,,
+Allow only authorized users to execute privileged functions,Develop feature in system to control execution of privileged functions by users,,,,
+Restrict execution of high-privilege commands,Develop feature in system to control execution of privileged functions by users,,,,
+Implement approval process for privileged operations,Develop feature in system to control execution of privileged functions by users,,,,
+Authorize and enforce security/privacy settings,"Develop feature in system to authorize, restrict and maintain security and privacy attributes",,,,
+Restrict changes to system security attributes,"Develop feature in system to authorize, restrict and maintain security and privacy attributes",,,,
+Maintain privacy controls for user data,"Develop feature in system to authorize, restrict and maintain security and privacy attributes",,,,
+Allow only admin to change alarm settings,Develop feature in system to allow only authorized user to edit alarm settings/configuration,,,,
+Restrict unauthorized modifications to alarm settings,Develop feature in system to allow only authorized user to edit alarm settings/configuration,,,,
+Secure alarm configuration against unauthorized changes,Develop feature in system to allow only authorized user to edit alarm settings/configuration,,,,
+Discover and pair with trusted Bluetooth devices,Develop feature in system to discover and authenticate Bluetooth devices,,,,
+Authenticate Bluetooth connections before pairing,Develop feature in system to discover and authenticate Bluetooth devices,,,,
+Prevent unauthorized Bluetooth device connections,Develop feature in system to discover and authenticate Bluetooth devices,,,,
+Implement authorization for Bluetooth access,Develop feature in Bluetooth device for authorization,,,,
+Restrict Bluetooth connectivity to authorized devices,Develop feature in Bluetooth device for authorization,,,,
+Control permissions for Bluetooth interactions,Develop feature in Bluetooth device for authorization,,,,
+Restrict app access on mobile devices,Develop feature to limit access for apps and services in mobile device,,,,
+Control which apps and services can run on a mobile device,Develop feature to limit access for apps and services in mobile device,,,,
+Block unauthorized apps from accessing system resources,Develop feature to limit access for apps and services in mobile device,,,,
+Allow only approved apps to be installed,Develop feature to install only whitelisted applications on mobile device,,,,
+Restrict app installation to a predefined whitelist,Develop feature to install only whitelisted applications on mobile device,,,,
+Prevent installation of non-approved applications,Develop feature to install only whitelisted applications on mobile device,,,,
+Grant audit access only to authorized users,Develop feature in system to authorize audit access for users,,,,
+Restrict audit log access to security personnel,Develop feature in system to authorize audit access for users,,,,
+Ensure only privileged users can review system audits,Develop feature in system to authorize audit access for users,,,,
+Separate security functions from non-security processes,Employ mechanisms to isolate security functions from nonsecurity functions,,,,
+Ensure security functions run in an isolated environment,Employ mechanisms to isolate security functions from nonsecurity functions,,,,
+Prevent non-security functions from interfering with security processes,Employ mechanisms to isolate security functions from nonsecurity functions,,,,
+Develop role-based access control,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Implement least privilege for user accounts,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Restrict unauthorized access to resources,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Manage permissions for users,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Enforce access restrictions,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Apply RBAC in application,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Limit access based on roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Implement RBAC for system access,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Enforce least privilege for user roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Restrict access based on user roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users,,,,
+Control user permissions based on role hierarchy,Develop feature in system to control authorization for users,,,,
+Ensure only authorized users can access certain features,Develop feature in system to control authorization for users,,,,
+Implement strict user authorization policies,Develop feature in system to control authorization for users,,,,
+Block execution of unauthorized applications,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software,,,,
+Prevent users from running unapproved software,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software,,,,
+Restrict system utilities to admin users,Implement access restrictions in system to prevent unauthorized execution of utility and user-installed software,,,,
+Limit user access to critical system resources,Develop feature in system to control/limit access for users to avoid unauthorized access,,,,
+Prevent unauthorized access to sensitive data,Develop feature in system to control/limit access for users to avoid unauthorized access,,,,
+Implement user access controls to safeguard system,Develop feature in system to control/limit access for users to avoid unauthorized access,,,,
+Enforce OS-level access restrictions,Implement access restrictions for operating system,,,,
+Prevent unauthorized changes to OS settings,Implement access restrictions for operating system,,,,
+Restrict admin privileges in the OS,Implement access restrictions for operating system,,,,
+Require dual authorization for critical actions,Develop feature in system to enable dual /multiple authorization for critical actions,,,,
+Implement multi-user approval for sensitive operations,Develop feature in system to enable dual /multiple authorization for critical actions,,,,
+Ensure multiple approvals for security-critical tasks,Develop feature in system to enable dual /multiple authorization for critical actions,,,,
+Allocate IP addresses dynamically based on policies,Configure network address allocation for systems,,,,
+Ensure controlled assignment of network addresses,Configure network address allocation for systems,,,,
+Prevent unauthorized devices from getting network access,Configure network address allocation for systems,,,,
+Segment network to limit attack spread,Implement segregation and segmentation of network to limit propagation of attacks,,,,
+Separate critical systems from general networks,Implement segregation and segmentation of network to limit propagation of attacks,,,,
+Isolate high-risk areas of the network,Implement segregation and segmentation of network to limit propagation of attacks,,,,
+Deploy DMZ to secure external connections,Implement demilitarized zones (DMZ) to improve security while connecting to external networks,,,,
+Protect internal systems by implementing a DMZ,Implement demilitarized zones (DMZ) to improve security while connecting to external networks,,,,
+Restrict direct access to internal networks using DMZ,Implement demilitarized zones (DMZ) to improve security while connecting to external networks,,,,
+Handle lost or compromised authentication tokens,Develop feature in system to manage lost/ expired/ compromised authenticators for users,,,,
+Manage expired or revoked user authenticators,Develop feature in system to manage lost/ expired/ compromised authenticators for users,,,,
+Replace compromised authentication credentials,Develop feature in system to manage lost/ expired/ compromised authenticators for users,,,,
+Ensure protection of authentication tokens,Develop feature in system to protect authenticators for users,,,,
+Implement secure storage for authentication credentials,Develop feature in system to protect authenticators for users,,,,
+Prevent unauthorized access to user authenticators,Develop feature in system to protect authenticators for users,,,,
+Allow users to change passwords or authentication methods,Develop change password/authenticator feature in system for user accounts,,,,
+Enable password reset functionality,Develop change password/authenticator feature in system for user accounts,,,,
+Provide users with a secure method to update authenticators,Develop change password/authenticator feature in system for user accounts,,,,
+Enforce password change on first login,Develop feature to change default passwords for user accounts on first use,,,,
+Require users to set a new password at first-time login,Develop feature to change default passwords for user accounts on first use,,,,
+Prevent use of default credentials beyond first use,Develop feature to change default passwords for user accounts on first use,,,,
+Implement OTP authentication for secure login,Develop feature in system to manage OTP authenticator,,,,
+Allow users to configure OTP settings,Develop feature in system to manage OTP authenticator,,,,
+Manage lifecycle and policies for OTP-based authentication,Develop feature in system to manage OTP authenticator,,,,
+Define password complexity rules,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets",,,,
+Enforce password length and expiration policies,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets",,,,
+Ensure passwords meet security strength requirements,"Develop feature in system to establish lifetime, strength and complexity of memorized secrets",,,,
+Notify users when their authentication method changes,Develop feature in system to notify users on addition/change in authenticators,,,,
+Send alerts on new authentication device registration,Develop feature in system to notify users on addition/change in authenticators,,,,
+Inform users when their authenticator is updated,Develop feature in system to notify users on addition/change in authenticators,,,,
+Set policies for authentication validity and security,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts",,,,
+Ensure authentication mechanisms comply with security standards,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts",,,,
+Enforce authentication renewal policies,"Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts",,,,
+Verify user identity credentials before granting access,Develop feature in system to verify personal identity verification credentials for users,,,,
+Ensure users provide valid ID for authentication,Develop feature in system to verify personal identity verification credentials for users,,,,
+Authenticate users using government-issued or enterprise IDs,Develop feature in system to verify personal identity verification credentials for users,,,,
+Perform identity verification during user registration,Develop feature in system to verify and review user identities during registration,,,,
+Review and validate user identities before account approval,Develop feature in system to verify and review user identities during registration,,,,
+Authenticate users during onboarding,Develop feature in system to verify and review user identities during registration,,,,
+Automatically log out inactive users,Develop feature in system to logout user for protecting user session from unauthorized use,,,,
+Implement session timeout for security,Develop feature in system to logout user for protecting user session from unauthorized use,,,,
+Provide logout option in the user interface,Develop feature in system to logout user for protecting user session from unauthorized use,,,,
+Show login success message to users,Develop feature in system to display messages to user before and after login,,,,
+Display logout confirmation messages,Develop feature in system to display messages to user before and after login,,,,
+Notify users about failed login attempts,Develop feature in system to display messages to user before and after login,,,,
+Show privacy policy before app usage,Develop feature in mobile device to display privacy notices to users,,,,
+Display terms and conditions on mobile devices,Develop feature in mobile device to display privacy notices to users,,,,
+Provide privacy disclaimers for app users,Develop feature in mobile device to display privacy notices to users,,,,
+Show privacy policies before login,Develop feature in system to display privacy notices to users,,,,
+Notify users about data collection and usage,Develop feature in system to display privacy notices to users,,,,
+Display consent forms for privacy compliance,Develop feature in system to display privacy notices to users,,,,
+Secure microservices communication using session tokens,Develop feature in system to protect sessions in microservices,,,,
+Prevent unauthorized access to microservice sessions,Develop feature in system to protect sessions in microservices,,,,
+Implement authentication for microservices sessions,Develop feature in system to protect sessions in microservices,,,,
+Generate session attributes dynamically,Develop feature in system to generate session attributes,,,,
+Store and retrieve user session attributes securely,Develop feature in system to generate session attributes,,,,
+Track user activity through session attributes,Develop feature in system to generate session attributes,,,,
+Enable HTTP-only and secure flag for cookies,Develop feature in system to secure cookies,,,,
+Prevent session hijacking with secure cookies,Develop feature in system to secure cookies,,,,
+Encrypt cookies for additional security,Develop feature in system to secure cookies,,,,
+Establish secure session management,Develop feature in system to establish secure sessions,,,,
+Implement session encryption for secure communication,Develop feature in system to establish secure sessions,,,,
+Prevent session fixation attacks,Develop feature in system to establish secure sessions,,,,
+Auto-terminate inactive user sessions,Develop feature in system to terminate sessions when no longer needed,,,,
+End user sessions on logout,Develop feature in system to terminate sessions when no longer needed,,,,
+Revoke expired session tokens,Develop feature in system to terminate sessions when no longer needed,,,,
+Assign unique identifiers for user authentication,Develop feature in system to uniquely identify users and control authentication,,,,
+Implement user ID tracking for better authentication,Develop feature in system to uniquely identify users and control authentication,,,,
+Ensure unique user identification for secure access,Develop feature in system to uniquely identify users and control authentication,,,,

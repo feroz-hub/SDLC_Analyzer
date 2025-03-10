@@ -1,0 +1,105 @@
+UserQuery,RequirementIndex
+Develop role-based access control,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Implement least privilege for user accounts,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Restrict unauthorized access to resources,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Manage permissions for users,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Enforce access restrictions,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Apply RBAC in application,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Limit access based on roles,Develop role based access (RBAC) feature in system and follow least privilege principle for users
+Encrypt stored data,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Apply AES encryption to data,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Use strong encryption for database,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Protect stored files with encryption,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Implement data encryption policy,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Ensure secure data storage,Implement encryption and data isolation mechanism to protect data at rest in cloud
+Enable logging for security events,Develop feature in system to capture logs for programs, procedures and system activities
+Track system logs for anomalies,Develop feature in system to capture logs for programs, procedures and system activities
+Generate logs for user activities,Develop feature in system to capture logs for programs, procedures and system activities
+Monitor application logs,Develop feature in system to capture logs for programs, procedures and system activities
+Enable audit logging,Develop feature in system to capture logs for programs, procedures and system activities
+Log all security-related events,Develop feature in system to capture logs for programs, procedures and system activities
+
+Restrict USB device access,Implement mechanism to restrict or prohibit use of portable storage devices
+Block unauthorized USB devices,Implement mechanism to restrict or prohibit use of portable storage devices
+Disable USB storage access,Implement mechanism to restrict or prohibit use of portable storage devices
+Prevent copying sensitive files to USB,Implement mechanism to restrict or prohibit use of portable storage devices
+Enforce policy on removable storage,Implement mechanism to restrict or prohibit use of portable storage devices
+
+Monitor system for unauthorized changes,Develop feature in system to track and alert for unauthorized changes
+Detect system configuration changes,Develop feature in system to track and alert for unauthorized changes
+Alert administrators on unauthorized modifications,Develop feature in system to track and alert for unauthorized changes
+
+Employ multi-factor authentication,Implement MFA to strengthen user authentication
+Require OTP for login,Implement MFA to strengthen user authentication
+Use biometric authentication,Implement MFA to strengthen user authentication
+Secure user login with two-step verification,Implement MFA to strengthen user authentication
+
+Protect user credentials,Implement mechanism to securely store and manage user credentials
+Encrypt stored passwords,Implement mechanism to securely store and manage user credentials
+Use secure password storage techniques,Implement mechanism to securely store and manage user credentials
+Avoid plaintext password storage,Implement mechanism to securely store and manage user credentials
+
+Monitor network traffic,Employ mechanisms to monitor and analyze network traffic
+Detect anomalies in network behavior,Employ mechanisms to monitor and analyze network traffic
+Analyze packets for security threats,Employ mechanisms to monitor and analyze network traffic
+Track incoming and outgoing traffic,Employ mechanisms to monitor and analyze network traffic
+
+Detect malware in system,Develop feature in system to detect and prevent malware
+Prevent virus infections,Develop feature in system to detect and prevent malware
+Scan files for malicious software,Develop feature in system to detect and prevent malware
+
+Secure mobile devices,Implement security mechanisms in mobile devices to prevent unauthorized access
+Apply security policies on mobile devices,Implement security mechanisms in mobile devices to prevent unauthorized access
+Ensure mobile device compliance,Implement security mechanisms in mobile devices to prevent unauthorized access
+
+Encrypt network communications,Implement secure communication protocols (SSL/TLS) for data transmission
+Enable SSL/TLS for web traffic,Implement secure communication protocols (SSL/TLS) for data transmission
+Ensure encrypted connections for applications,Implement secure communication protocols (SSL/TLS) for data transmission
+
+Prevent unauthorized access to cloud data,Develop feature in system to secure cloud-based data and restrict unauthorized access
+Secure cloud storage,Develop feature in system to secure cloud-based data and restrict unauthorized access
+Enforce cloud data access control,Develop feature in system to secure cloud-based data and restrict unauthorized access
+
+Harden OS configurations,Implement hardening measures in operating system to enhance security
+Disable unused services,Implement hardening measures in operating system to enhance security
+Apply security patches to OS,Implement hardening measures in operating system to enhance security
+
+Monitor system activity,Employ mechanisms to track and analyze system activity for threats
+Track user behavior in the system,Employ mechanisms to track and analyze system activity for threats
+Analyze system logs for security incidents,Employ mechanisms to track and analyze system activity for threats
+
+Prevent unauthorized software installation,Develop feature in system to restrict software installation
+Control application installation,Develop feature in system to restrict software installation
+Allow only approved software,Develop feature in system to restrict software installation
+
+Control remote access,Implement mechanisms to secure remote access to corporate systems
+Restrict unauthorized remote connections,Implement mechanisms to secure remote access to corporate systems
+Ensure VPN security for remote access,Implement mechanisms to secure remote access to corporate systems
+
+Enable firewall protection,Develop feature in system to configure and manage firewalls
+Block unauthorized network access,Develop feature in system to configure and manage firewalls
+Filter incoming and outgoing traffic,Develop feature in system to configure and manage firewalls
+
+Ensure compliance with security policies,Implement mechanisms to enforce security policies across system
+Monitor adherence to security standards,Implement mechanisms to enforce security policies across system
+Track compliance violations,Implement mechanisms to enforce security policies across system
+
+Control data sharing,Implement mechanisms to regulate and restrict data sharing
+Prevent unauthorized data transfers,Implement mechanisms to regulate and restrict data sharing
+Monitor data movement within system,Implement mechanisms to regulate and restrict data sharing
+
+Detect and prevent insider threats,Develop feature in system to identify and mitigate insider threats
+Monitor employee activity for risks,Develop feature in system to identify and mitigate insider threats
+Detect unusual employee behavior,Develop feature in system to identify and mitigate insider threats
+
+Implement software updates,Employ automated mechanisms to update and patch software vulnerabilities
+Apply security patches,Employ automated mechanisms to update and patch software vulnerabilities
+Ensure regular software maintenance,Employ automated mechanisms to update and patch software vulnerabilities
+
+Secure sensitive data,Develop feature in system to protect sensitive data from unauthorized access
+Apply encryption for sensitive files,Develop feature in system to protect sensitive data from unauthorized access
+Restrict access to confidential information,Develop feature in system to protect sensitive data from unauthorized access
+
+Secure APIs,Develop feature in system to protect and authenticate API endpoints
+Apply authentication for API requests,Develop feature in system to protect and authenticate API endpoints
+Prevent unauthorized API access,Develop feature in system to protect and authenticate API endpoints

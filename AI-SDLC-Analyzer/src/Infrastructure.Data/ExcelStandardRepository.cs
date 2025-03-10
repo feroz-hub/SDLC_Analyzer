@@ -31,7 +31,7 @@ namespace Infrastructure.Data
 
             int rowCount = worksheet.Dimension.Rows;
 
-            for (int row = 5; row <= rowCount; row++) // Assuming data starts at row 5
+            for (int row = 6; row <= rowCount; row++) // Assuming data starts at row 5
             {
                 var standard = new Standard
                 {

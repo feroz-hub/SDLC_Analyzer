@@ -25,10 +25,11 @@
     <None Update="RequirementIndexTraining.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="RequirementIndexTraining.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.6.0" />
-  </ItemGroup>
+  
 
   
 </Project>

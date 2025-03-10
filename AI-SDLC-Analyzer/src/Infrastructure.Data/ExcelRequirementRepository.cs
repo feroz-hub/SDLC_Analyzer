@@ -36,6 +36,36 @@ public class ExcelRequirementRepository( ) : IRequirementRepository
 
         return reqIndexes;
     }
+
+    public List<ProductRequirement> GetLoadProductRequirementsFromExcel()
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        var requirements = new List<ProductRequirement>();
+
+       
+        using var package = new ExcelPackage(new FileInfo(FilePath));
+        var sheet = package.Workbook.Worksheets["Product-Requirement"];
+        // Get the last row with data in the worksheet
+        int lastRow = sheet.Dimension.End.Row;
+
+        for (int row = 3; row <= lastRow; row++)
+        {
+            string fullMlsrId = sheet.Cells[row, 2].Text;
+            string requirement = sheet.Cells[row, 5].Text;
+           
+
+            requirements.Add(new ProductRequirement()
+            {
+                MLSR_Id = fullMlsrId,
+                Requirement= requirement
+            });
+        }
+
+        return requirements;
+    }
+
+   
+
     public List<StandardRequirement> GetAllStandardRequirements()
     {
         var requirements = new List<StandardRequirement>();

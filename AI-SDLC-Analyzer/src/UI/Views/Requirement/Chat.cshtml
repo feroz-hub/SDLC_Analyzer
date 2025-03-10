@@ -18,15 +18,46 @@
     </div>
 </div>
 
-
 <script>
-    function sendMessage() {
-        let userInput = document.getElementById("user-input").value;
-        if (!userInput.trim()) return;
+    // Utility function to simulate letter-by-letter typing effect
+    function typeText(element, text, delayPerLetter) {
+        return new Promise(resolve => {
+            let index = 0;
+            let interval = setInterval(() => {
+                index++;
+                element.innerHTML = `<span>${text.substring(0, index)}</span>`;
+                document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+                if (index === text.length) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, delayPerLetter);
+        });
+    }
+
+    async function sendMessage() {
+        let userInput = document.getElementById("user-input").value.trim();
+        if (!userInput) return;
 
         let chatBox = document.getElementById("chat-box");
         let inputField = document.getElementById("user-input");
         let sendButton = document.querySelector(".chat-input button");
+
+        // Remove existing warning message if any
+        let existingWarning = document.querySelector(".message.bot.warning");
+        if (existingWarning) {
+            existingWarning.remove();
+        }
+
+        // Check if the query is a single word
+        if (userInput.split(" ").length === 1) {
+            let warningMessage = document.createElement("div");
+            warningMessage.classList.add("message", "bot", "warning");
+            warningMessage.innerHTML = `<span style="color: red;">⚠️ Please refine your query for better results.</span>`;
+            chatBox.appendChild(warningMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return; // Stop further execution
+        }
 
         // Disable input & button
         inputField.disabled = true;
@@ -38,71 +69,92 @@
         userMessage.innerHTML = `<span>${userInput}</span>`;
         chatBox.appendChild(userMessage);
 
+        // Show "Retrieving requirements" message
+        let retrievingMessage = document.createElement("div");
+        retrievingMessage.classList.add("message", "bot", "retrieving");
+        retrievingMessage.innerHTML = `<span>⏳ We are retrieving requirements for your query...</span>`;
+        chatBox.appendChild(retrievingMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
         // Show animated typing indicator
         let typingIndicator = document.createElement("div");
         typingIndicator.classList.add("message", "bot", "typing-indicator");
-        typingIndicator.innerHTML = `<span>🤖 Typing<span class="dots"></span></span>`;
+        //typingIndicator.innerHTML = `<span>🤖 Typing<span class="dots"></span></span>`;
         chatBox.appendChild(typingIndicator);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Send API request
-        fetch("/Requirement/ChatQuery", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query: userInput })
-        })
-            .then(response => response.json())
-            .then(data => {
-                chatBox.removeChild(typingIndicator); // Remove typing indicator
+        try {
+            // Send API request
+            let response = await fetch("/Requirement/ChatQuery", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: userInput })
+            });
+            let data = await response.json();
 
-                if (data.error) {
-                    let errorMessage = document.createElement("div");
-                    errorMessage.classList.add("message", "bot");
-                    errorMessage.innerHTML = `<span>⚠️ ${data.error}</span>`;
-                    chatBox.appendChild(errorMessage);
-                } else {
-                    data.forEach((req, index) => {
-                        setTimeout(() => {
-                            let responseMessage = document.createElement("div");
-                            responseMessage.classList.add("message", "bot");
-                            responseMessage.innerHTML = `
-                            <strong>📌 ${req.requirementDescription}</strong><br>
-                            <strong>Category:</strong> ${req.category}<br>
-                        `;
-                            chatBox.appendChild(responseMessage);
-                            chatBox.scrollTop = chatBox.scrollHeight;
+            // Remove "Retrieving requirements" message and typing indicator
+            chatBox.removeChild(retrievingMessage);
+            chatBox.removeChild(typingIndicator);
 
-                            // Display Change in Requirements one by one
-                            req.changeInRequirement.forEach((change, i) => {
-                                setTimeout(() => {
-                                    let changeMessage = document.createElement("div");
-                                    changeMessage.classList.add("message", "bot");
-                                    changeMessage.innerHTML = `🔹 ${change}`;
-                                    chatBox.appendChild(changeMessage);
-                                    chatBox.scrollTop = chatBox.scrollHeight;
-                                }, (i + 1) * 800); // Typing delay for each change
-                            });
-
-                        }, index * 2000); // Typing delay for each requirement
-                    });
-                }
-            })
-            .catch(() => {
-                chatBox.removeChild(typingIndicator);
+            if (data.error) {
                 let errorMessage = document.createElement("div");
                 errorMessage.classList.add("message", "bot");
-                errorMessage.innerHTML = `<span>⚠️ Unable to process request. Please try again later.</span>`;
+                errorMessage.innerHTML = `<span>⚠️ ${data.error}</span>`;
                 chatBox.appendChild(errorMessage);
-            })
-            .finally(() => {
-                inputField.value = ""; // Clear input
-                inputField.disabled = false;
-                sendButton.disabled = false;
-                inputField.focus(); // Auto-focus input
-            });
+            } else {
+                // Process each requirement sequentially
+                for (let req of data) {
+                    // Display main requirement info
+                    let responseMessage = document.createElement("div");
+                    responseMessage.classList.add("message", "bot");
+                    responseMessage.innerHTML = `
+                        <strong>📌 ${req.requirementDescription}</strong><br>
+                        <strong>Category:</strong> ${req.category}<br>
+                    `;
+                    chatBox.appendChild(responseMessage);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    // Wait before displaying changes
+                    await new Promise(res => setTimeout(res, 800));
+
+                    // Process each change one after the other
+                    for (let change of req.changeInRequirement) {
+                        // Show typing indicator for the change
+                        let typingIndicatorChange = document.createElement("div");
+                        typingIndicatorChange.classList.add("message", "bot", "typing-indicator");
+                        //typingIndicatorChange.innerHTML = `<span>🤖 Typing<span class="dots"></span></span>`;
+                        chatBox.appendChild(typingIndicatorChange);
+                        chatBox.scrollTop = chatBox.scrollHeight;
+
+                        // Wait for a moment to simulate thinking
+                        await new Promise(res => setTimeout(res, 500));
+
+                        // Remove the typing indicator
+                        chatBox.removeChild(typingIndicatorChange);
+
+                        // Create a new message element for the change
+                        let changeMessage = document.createElement("div");
+                        changeMessage.classList.add("message", "bot");
+                        chatBox.appendChild(changeMessage);
+
+                        let messageContent = `🔹 ${change}`;
+                        // Type the message letter-by-letter and wait for completion before continuing
+                        await typeText(changeMessage, messageContent, 10);
+                    }
+                }
+            }
+        } catch (error) {
+            chatBox.removeChild(retrievingMessage);
+            chatBox.removeChild(typingIndicator);
+            let errorMessage = document.createElement("div");
+            errorMessage.classList.add("message", "bot");
+            errorMessage.innerHTML = `<span>⚠️ Unable to process request. Please try again later.</span>`;
+            chatBox.appendChild(errorMessage);
+        } finally {
+            inputField.value = ""; // Clear input field
+            inputField.disabled = false;
+            sendButton.disabled = false;
+            inputField.focus(); // Auto-focus input field
+        }
     }
 </script>
-
-
-
-

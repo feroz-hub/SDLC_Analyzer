@@ -7,12 +7,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="4.0.2" />
     <PackageReference Include="Microsoft.ML.AutoML" Version="0.22.2" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="4.0.2" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.6.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="RequirementIndexTraining.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\RequirementIndexTraining.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
