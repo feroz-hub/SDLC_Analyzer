@@ -16,6 +16,10 @@ namespace Infrastructure.Services
             return requirementRepository.GetAllStandardRequirements();
         }
 
+        public List<string> GetAllStandardNames()
+        {
+            return standardRepository.GetALlStandardNames();
+        }
         public List<Standard> GetAllStandards()
         {
             return standardRepository.GetAll();

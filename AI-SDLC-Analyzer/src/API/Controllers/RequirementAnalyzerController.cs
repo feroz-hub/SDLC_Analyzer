@@ -27,7 +27,15 @@ namespace API.Controllers
             var standards = requirementAnalyzerService.GetAllStandards();
             return Ok(standards);
         }
-
+        /// <summary>
+        /// Get all StandardsNames.
+        /// </summary>
+        [HttpGet("standardNames")]
+        public IActionResult GetAllStandardNames()
+        {
+            var standards = requirementAnalyzerService.GetAllStandardNames();
+            return Ok(standards);
+        }
         /// <summary>
         /// Search Requirements using AI-based Semantic Search.
         /// </summary>

@@ -69,6 +69,33 @@ namespace Infrastructure.Data
             return mlsrMapping;
         }
 
+        public List<string> GetALlStandardNames()
+        {
+            var standardNames = new List<string>();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage(new FileInfo(filePath));
+            var worksheet = package.Workbook.Worksheets[SheetName];
+            if (worksheet == null)
+            {
+                throw new Exception($"Sheet '{SheetName}' not found in Excel file.");
+            }
+
+            int rowCount = worksheet.Dimension.Rows;
+
+            for (int row = 6; row <= rowCount; row++) // Assuming data starts at row 6
+            {
+                var standardRefName = worksheet.Cells[row, 4].Text.Trim(); // Column D
+
+                if (!string.IsNullOrEmpty(standardRefName))
+                {
+                    standardNames.Add(standardRefName);
+                }
+            }
+
+            return standardNames;
+        }
+
         public Standard GetStandardById(string mlrsId)
         {
             return GetAll().Find(s => s.MLSR_ID == mlrsId);

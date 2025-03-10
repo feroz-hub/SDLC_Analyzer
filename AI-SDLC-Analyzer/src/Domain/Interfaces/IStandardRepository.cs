@@ -11,4 +11,6 @@ namespace Domain.Interfaces;
         public Standard GetStandardById(string mlrsId);
         Dictionary<string, string> LoadMlsrMapping();
         
+        List<string> GetALlStandardNames();
+        
     }
