@@ -10,7 +10,7 @@ public class ModelTrainerVer2
 {
     private static readonly string ProjectRoot = Helper.GetProjectRoot();
     private static readonly string InfrastructureResourcePath = Path.Combine(ProjectRoot, "src","Infrastructure.Resource");
-    private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex220.zip");
+    private static readonly string ModelPathReqIndex = Path.Combine(InfrastructureResourcePath,"ml_model_reqIndex220_Lower.zip");
     private const string DataPath = "RequirementIndexTraining220.csv";
     private readonly MLContext _context = new();
 
@@ -25,9 +25,17 @@ public class ModelTrainerVer2
         DeleteExistingModels();
         
        // Load Data
-         var trainDataView = _context.Data.LoadFromTextFile<RequirementData>(
-            path: DataPath, separatorChar: ',', hasHeader: true, allowQuoting: true, trimWhitespace: true);
-       
+       // Load Raw Data
+       var rawDataView = _context.Data.LoadFromTextFile<RequirementData>(
+           path: DataPath, separatorChar: ',', hasHeader: true, allowQuoting: true, trimWhitespace: true);
+        
+       // Preprocess Data (Convert to Lowercase)
+       var preprocessedData = _context.Data.CreateEnumerable<RequirementData>(rawDataView, reuseRowObject: false)
+           .Select(d => d.Normalize()) // Convert to lowercase
+           .ToList();
+
+       var   trainDataView = _context.Data.LoadFromEnumerable(preprocessedData);
+
         // ✅ Train-Test Split (80% Train, 20% Test)
         var trainTestSplit = _context.Data.TrainTestSplit(trainDataView, testFraction: 0.2);
         var trainData = trainTestSplit.TrainSet;
@@ -127,6 +135,15 @@ public class ModelTrainerVer2
         [LoadColumn(0)]
         public string UserQuery { get; set; }
         [LoadColumn(1)]public string RequirementIndex { get; set; }
+        
+        public RequirementData Normalize()
+        {
+            return new RequirementData
+            {
+                UserQuery = UserQuery.ToLowerInvariant(),
+                RequirementIndex = RequirementIndex.ToLowerInvariant()
+            };
+        }
     }
 }
 

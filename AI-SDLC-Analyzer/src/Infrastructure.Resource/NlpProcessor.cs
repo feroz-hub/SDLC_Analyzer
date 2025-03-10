@@ -7,7 +7,7 @@ namespace Infrastructure.Resource
     public class NlpProcessor
     {
         private static readonly string ProjectRoot = Helper.GetProjectRoot();
-        private static readonly string ReqIndexModelPath = Path.Combine(ProjectRoot, "src", "Infrastructure.Resource", "ml_model_reqIndex220.zip");
+        private static readonly string ReqIndexModelPath = Path.Combine(ProjectRoot, "src", "Infrastructure.Resource", "ml_model_reqIndex220_Lower.zip");
         private readonly PredictionEngine<RequirementData, RequirementPrediction> _indexPredictionEngine;
 
         public NlpProcessor()

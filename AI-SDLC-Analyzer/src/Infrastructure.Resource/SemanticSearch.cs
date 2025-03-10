@@ -40,8 +40,9 @@ namespace Infrastructure.Resource
             // Extract MLSR_ID from query
             string mlsrId = ExtractMlsrId(query);
 
+            string userQuery = query.ToLower();
             // Predict ReqIndex using Semantic Search
-            string predictedReqIndex = _nlpProcessor.PredictReqIndex(query);
+            string predictedReqIndex = _nlpProcessor.PredictReqIndex(userQuery);
 
             Console.WriteLine($"📌 Extracted MLSR ID: {mlsrId}");
             Console.WriteLine($"🔢 Predicted ReqIndex: {predictedReqIndex}");
@@ -50,7 +51,7 @@ namespace Infrastructure.Resource
             var requirements = _requirementRepository.LoadRequirementsFromExcel();
 
             var results = requirements
-                .Where(req => string.IsNullOrEmpty(predictedReqIndex) || req.Requirement_Index.Equals(predictedReqIndex, StringComparison.OrdinalIgnoreCase)).Select(req => new RequirementOutput
+                .Where(req => string.IsNullOrEmpty(predictedReqIndex) || req.Requirement_Index.Trim().Equals(predictedReqIndex.Trim(), StringComparison.OrdinalIgnoreCase)).Select(req => new RequirementOutput
                 {
                     RequirementDescription = req.Requirement_Index,
                     Category = req.Category,
