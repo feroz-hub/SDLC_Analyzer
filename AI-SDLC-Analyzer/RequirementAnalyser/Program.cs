@@ -10,7 +10,7 @@ class Program
 
         var dataPath = "RequirementIndexTraining.csv"; 
         
-        var embeddingPath = "/Users/ferozebasha/Downloads/glove.6B/glove.6B.300d.txt";
+        var embeddingPath = "/Users/ferozebasha.s/Downloads/glove.6B/glove.6B.300d.txt";
         var projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../"));
         var infrastructureResourcePath = Path.Combine(projectRoot, "src/Infrastructure.Resource");
 
