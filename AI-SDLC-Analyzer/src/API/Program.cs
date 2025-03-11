@@ -41,7 +41,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+// Force initialization at startup
+var nlpProcessor = app.Services.GetRequiredService<NlpProcessor>();
 app.UseRouting();
 
 
