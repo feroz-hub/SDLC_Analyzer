@@ -8,19 +8,29 @@ namespace Infrastructure.Resource
     {
         private static readonly string ProjectRoot = Helper.GetProjectRoot();
         private static readonly string ReqIndexModelPath = Path.Combine(ProjectRoot, "src", "Infrastructure.Resource", "ml_model_reqIndex220_Lower.zip");
-        private readonly PredictionEngine<RequirementData, RequirementPrediction> _indexPredictionEngine;
+        private static readonly MLContext mlContext = new MLContext();
+        private static readonly PredictionEngine<RequirementData, RequirementPrediction> _indexPredictionEngine;
 
-        public NlpProcessor()
+        // Static constructor to initialize once when the project starts
+        static NlpProcessor()
         {
-            var mlContext = new MLContext();
-            Console.WriteLine("NLP Processor Initialized");
+            Console.WriteLine("Initializing NLP Processor...");
             Console.WriteLine("Project Root: " + ProjectRoot);
-            Console.WriteLine(ReqIndexModelPath);
-            
-            // Load requirement index prediction model
-            var reqIndexModel = mlContext.Model.Load(ReqIndexModelPath, out _);
-            _indexPredictionEngine = mlContext.Model.CreatePredictionEngine<RequirementData, RequirementPrediction>(reqIndexModel);
+            Console.WriteLine("Loading Model: " + ReqIndexModelPath);
+
+            try
+            {
+                var reqIndexModel = mlContext.Model.Load(ReqIndexModelPath, out _);
+                _indexPredictionEngine = mlContext.Model.CreatePredictionEngine<RequirementData, RequirementPrediction>(reqIndexModel);
+                Console.WriteLine("Model Loaded Successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Loading Model: " + ex.Message);
+                throw;
+            }
         }
+
         
         public string PredictReqIndex(string query)
         {

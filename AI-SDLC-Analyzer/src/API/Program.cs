@@ -28,7 +28,7 @@ builder.Services.AddSingleton<IRequirementRepository, ExcelRequirementRepository
 builder.Services.AddScoped<IStandardRepository, ExcelStandardRepository>();
 builder.Services.AddScoped<SemanticSearch>();
 builder.Services.AddScoped<RequirementAnalyzerService>();
-builder.Services.AddScoped<NlpProcessor>();
+builder.Services.AddSingleton<NlpProcessor>();
 
 
 
