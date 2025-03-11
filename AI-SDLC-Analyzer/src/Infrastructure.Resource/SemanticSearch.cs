@@ -1,3 +1,185 @@
+// using System.Text.RegularExpressions;
+// using Domain;
+// using Domain.Entities;
+// using Domain.Interfaces;
+//
+// namespace Infrastructure.Resource
+// {
+//     public class SemanticSearch
+//     {
+//
+//         private readonly IStandardRepository _standardRepository ;
+//         private readonly IRequirementRepository _requirementRepository ;
+//         private readonly NlpProcessor _nlpProcessor;
+//         private List<ProductRequirement> _productRequirements;
+//         private List<Standard> _standardRequirements;
+//
+//         public SemanticSearch(IStandardRepository repository, IRequirementRepository requirementRepository)
+//         {
+//             _nlpProcessor = new NlpProcessor();
+//             _standardRepository = repository;
+//             _requirementRepository=requirementRepository;
+//             LoadProductRequirements();
+//             LoadAllStandardRequirements();
+//             
+//         }
+//         private void LoadProductRequirements()
+//         {
+//             // Load the data once and store it in a field
+//             _productRequirements = _requirementRepository.GetLoadProductRequirementsFromExcel();
+//         }
+//
+//         private void LoadAllStandardRequirements()
+//         {
+//             _standardRequirements=_standardRepository.GetAll();
+//         }
+//         
+//
+//         public List<RequirementOutput> FindMatchingRequirements(string query)
+//         {
+//             // Extract MLSR_ID from query
+//             string mlsrId = ExtractMlsrId(query);
+//
+//             string userQuery = query.ToLower();
+//             // Predict ReqIndex using Semantic Search
+//             string predictedReqIndex = _nlpProcessor.PredictReqIndex(userQuery);
+//
+//             Console.WriteLine($"📌 Extracted MLSR ID: {mlsrId}");
+//             Console.WriteLine($"🔢 Predicted ReqIndex: {predictedReqIndex}");
+//
+//             // Load all requirements from Excel
+//             var requirements = _requirementRepository.LoadRequirementsFromExcel();
+//
+//             var results = requirements
+//                 .Where(req => string.IsNullOrEmpty(predictedReqIndex) || req.Requirement_Index.Trim().Equals(predictedReqIndex.Trim(), StringComparison.OrdinalIgnoreCase)).Select(req => new RequirementOutput
+//                 {
+//                     RequirementDescription = req.Requirement_Index,
+//                     Category = req.Category,
+//                     ChangeInRequirement = GetFilteredChangeInRequirement(req.Change_In_Requirements, mlsrId)
+//                 })
+//                 .ToList();
+//             // Debug: print out to verify what is being compared
+//             Console.WriteLine($"Predicted ReqIndex: {predictedReqIndex}");
+//             Console.WriteLine($"Filtered Requirements Count: {results.Count}");
+//             return results;
+//         }
+//
+//         private string ExtractMlsrId(string query)
+//         {
+//             var mlsrMapping = _standardRepository.LoadMlsrMapping(); // ✅ Load dynamically
+//
+//             foreach (var kvp in mlsrMapping)
+//             {
+//                 if (query.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
+//                 {
+//                     return kvp.Value;
+//                 }
+//             }
+//
+//             return string.Empty;
+//         }
+//
+//         private List<string> GetFilteredChangeInRequirement(string changeInRequirements, string mlsrId)
+//         {
+//
+//             if (string.IsNullOrEmpty(changeInRequirements))
+//                 return new List<string>();
+//
+//             // Split the change in requirement into lines
+//             var changes = changeInRequirements.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+//
+//             var finalChanges = new List<string>();
+//
+//             // If MLSR ID is available, filter changes and add description for filtered changes
+//             if (!string.IsNullOrEmpty(mlsrId))
+//             {
+//                 var filteredChanges = changes
+//                     .Where(line => line.TrimStart().StartsWith(mlsrId, StringComparison.OrdinalIgnoreCase))
+//                     .ToList();
+//
+//                 // If we have filtered changes, process and add descriptions
+//                 foreach (var change in filteredChanges)
+//                 {
+//                     var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+//                     if (!string.IsNullOrEmpty(mlsrIdInChange))
+//                     {
+//                         var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
+//                         var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+//                         if (!string.IsNullOrEmpty(requirementDescription))
+//                         {
+//                             finalChanges.Add($"{standardRefName} - {requirementDescription}");
+//                         }
+//                     }
+//                     else
+//                     {
+//                         finalChanges.Add(change); // Add the change without description if no MLSR ID is found
+//                     }
+//                 }
+//
+//                 return finalChanges;
+//             }
+//
+//             // If MLSR ID is not available, process all changes and add description for each change
+//             foreach (var change in changes)
+//             {
+//                 var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+//                 if (!string.IsNullOrEmpty(mlsrIdInChange))
+//                 {
+//                     var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
+//                     var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+//                     if (!string.IsNullOrEmpty(requirementDescription))
+//                     {
+//                         finalChanges.Add($"{standardRefName} - {requirementDescription}");
+//                     }
+//                 }
+//                 else
+//                 {
+//                     finalChanges.Add(change); // Add the change without description if no MLSR ID is found
+//                 }
+//             }
+//
+//             return finalChanges;
+//         }
+//
+//       
+//        
+//         
+//         // Helper method to get the requirement description from Product Requirement sheet
+//         private string GetRequirementDescriptionFromProductSheet(string mlsrId)
+//         {
+//             if (string.IsNullOrEmpty(mlsrId))
+//                 return string.Empty;
+//             // Search for the corresponding MLSR ID and return the requirement description (column E)
+//             var requirement = _productRequirements
+//                 .FirstOrDefault(req => req.MLSR_Id.Equals(mlsrId, StringComparison.OrdinalIgnoreCase));
+//             return requirement?.Requirement ?? "Requirement not found";
+//         }
+//
+//         private string GetRequirementStandardFromStandardSheet(string mlsrId)
+//         {
+//             if (string.IsNullOrEmpty(mlsrId))
+//                 return string.Empty;
+//             var standardMlsr  = Helper.ExtractMlsrPrefix(mlsrId);
+//             var requirement = _standardRequirements
+//                 .FirstOrDefault(req => req.MLSR_ID.Equals(standardMlsr, StringComparison.OrdinalIgnoreCase));
+//
+//             return requirement?.StandardRefID ?? "Requirement not found";
+//         }
+//         private static string NormalizeText(string input)
+//         {
+//             if (string.IsNullOrWhiteSpace(input))
+//                 return string.Empty;
+//
+//             // Remove multiple spaces and normalize spaces around '/'
+//             return Regex.Replace(input, @"\s+\/\s+", "/")  // Normalize slashes
+//                 .Replace("  ", " ")                // Replace double spaces with a single space
+//                 .Trim();                           // Trim spaces
+//         }
+//     }
+// }
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Domain;
 using Domain.Entities;
@@ -7,173 +189,258 @@ namespace Infrastructure.Resource
 {
     public class SemanticSearch
     {
-
-        private readonly IStandardRepository _standardRepository ;
-        private readonly IRequirementRepository _requirementRepository ;
+        private readonly IStandardRepository _standardRepository;
+        private readonly IRequirementRepository _requirementRepository;
         private readonly NlpProcessor _nlpProcessor;
-        private List<ProductRequirement> _productRequirements;
-        private List<Standard> _standardRequirements;
+        private readonly Lazy<List<ProductRequirement>> _lazyProductRequirements;
+        private readonly Lazy<List<Standard>> _lazyStandardRequirements;
+        private Dictionary<string, string> _requirementDictionary;
+        private Dictionary<string, string> _standardDictionary;
+        private Dictionary<string, string> _mlsrMappingCache;
 
         public SemanticSearch(IStandardRepository repository, IRequirementRepository requirementRepository)
         {
             _nlpProcessor = new NlpProcessor();
             _standardRepository = repository;
-            _requirementRepository=requirementRepository;
-            LoadProductRequirements();
-            LoadAllStandardRequirements();
-            
-        }
-        private void LoadProductRequirements()
-        {
-            // Load the data once and store it in a field
-            _productRequirements = _requirementRepository.GetLoadProductRequirementsFromExcel();
+            _requirementRepository = requirementRepository;
+
+            _lazyProductRequirements =
+                new Lazy<List<ProductRequirement>>(() => _requirementRepository.GetLoadProductRequirementsFromExcel());
+            _lazyStandardRequirements = new Lazy<List<Standard>>(() => _standardRepository.GetAll());
+            InitializeDictionaries();
+            LoadMlsrMappingCache();
         }
 
-        private void LoadAllStandardRequirements()
+        private List<ProductRequirement> ProductRequirements => _lazyProductRequirements.Value;
+        private List<Standard> StandardRequirements => _lazyStandardRequirements.Value;
+
+        private void InitializeDictionaries()
         {
-            _standardRequirements=_standardRepository.GetAll();
+            _requirementDictionary = ProductRequirements.ToDictionary(r => r.MLSR_Id, r => r.Requirement);
+            _standardDictionary = StandardRequirements.ToDictionary(s => s.MLSR_ID, s => s.StandardRefID);
         }
-        
 
         public List<RequirementOutput> FindMatchingRequirements(string query)
         {
-            // Extract MLSR_ID from query
-            string mlsrId = ExtractMlsrId(query);
+            if (string.IsNullOrWhiteSpace(query)) return new List<RequirementOutput>();
 
-            string userQuery = query.ToLower();
-            // Predict ReqIndex using Semantic Search
-            string predictedReqIndex = _nlpProcessor.PredictReqIndex(userQuery);
+            // Extract MLSR_ID and predict requirement index
+            string mlsrId = ExtractMlsrId(query);
+            string predictedReqIndex = _nlpProcessor.PredictReqIndex(query.ToLower());
 
             Console.WriteLine($"📌 Extracted MLSR ID: {mlsrId}");
             Console.WriteLine($"🔢 Predicted ReqIndex: {predictedReqIndex}");
 
-            // Load all requirements from Excel
-            var requirements = _requirementRepository.LoadRequirementsFromExcel();
-
-            var results = requirements
-                .Where(req => string.IsNullOrEmpty(predictedReqIndex) || req.Requirement_Index.Trim().Equals(predictedReqIndex.Trim(), StringComparison.OrdinalIgnoreCase)).Select(req => new RequirementOutput
+            // Retrieve requirements from Excel and filter efficiently
+            return _requirementRepository.LoadRequirementsFromExcel().AsParallel()
+                .Where(req => string.IsNullOrEmpty(predictedReqIndex) || req.Requirement_Index.Trim()
+                    .Equals(predictedReqIndex.Trim(), StringComparison.OrdinalIgnoreCase))
+                .Select(req => new RequirementOutput
                 {
                     RequirementDescription = req.Requirement_Index,
                     Category = req.Category,
                     ChangeInRequirement = GetFilteredChangeInRequirement(req.Change_In_Requirements, mlsrId)
                 })
                 .ToList();
-            // Debug: print out to verify what is being compared
-            Console.WriteLine($"Predicted ReqIndex: {predictedReqIndex}");
-            Console.WriteLine($"Filtered Requirements Count: {results.Count}");
-            return results;
+        }
+
+        private void LoadMlsrMappingCache()
+        {
+            _mlsrMappingCache = _standardRepository.LoadMlsrMapping();
         }
 
         private string ExtractMlsrId(string query)
         {
-            var mlsrMapping = _standardRepository.LoadMlsrMapping(); // ✅ Load dynamically
-
-            foreach (var kvp in mlsrMapping)
-            {
-                if (query.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    return kvp.Value;
-                }
-            }
-
-            return string.Empty;
+            return _mlsrMappingCache.FirstOrDefault(kvp => query.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
+                .Value ?? string.Empty;
         }
+
+        // private List<string> GetFilteredChangeInRequirement(string changeInRequirements, string mlsrId)
+        // {
+        //     if (string.IsNullOrEmpty(changeInRequirements)) return new List<string>();
+        //
+        //     var finalChanges = new List<string>();
+        //     foreach (var change in changeInRequirements.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries))
+        //     {
+        //         var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+        //         if (!string.IsNullOrEmpty(mlsrIdInChange))
+        //         {
+        //             // Fetch descriptions only if MLSR ID exists
+        //             if (_productRequirements.TryGetValue(mlsrIdInChange, out var productReq))
+        //             {
+        //                 string standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+        //                 finalChanges.Add($"{standardRefName} - {productReq.Requirement}");
+        //             }
+        //             else
+        //             {
+        //                 finalChanges.Add(change); // Add raw change if no matching requirement is found
+        //             }
+        //         }
+        //         else
+        //         {
+        //             finalChanges.Add(change);
+        //         }
+        //     }
+        //     return finalChanges;
+        // }
+
+        // private List<string> GetFilteredChangeInRequirement(string changeInRequirements, string mlsrId)
+        // {
+        //     if (string.IsNullOrEmpty(changeInRequirements)) return new List<string>();
+        //
+        //     var finalChanges = new List<string>();
+        //     foreach (var change in changeInRequirements.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries))
+        //     {
+        //         var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+        //         var requirementDescription = !string.IsNullOrEmpty(mlsrIdInChange) 
+        //             ? GetRequirementDescriptionFromProductSheet(mlsrIdInChange) 
+        //             : string.Empty;
+        //
+        //         var standardRefName = !string.IsNullOrEmpty(mlsrIdInChange) 
+        //             ? GetRequirementStandardFromStandardSheet(mlsrIdInChange) 
+        //             : string.Empty;
+        //
+        //         finalChanges.Add(!string.IsNullOrEmpty(requirementDescription) ? $"{standardRefName} - {requirementDescription}" : change);
+        //     }
+        //
+        //     return finalChanges;
+        // }
+
+
+        private string GetRequirementDescriptionFromProductSheet(string mlsrId)
+        {
+            return !string.IsNullOrEmpty(mlsrId) && _requirementDictionary.TryGetValue(mlsrId, out var description)
+                ? description
+                : "Requirement not found";
+        }
+
+        private string GetRequirementStandardFromStandardSheet(string mlsrId)
+        {
+            return !string.IsNullOrEmpty(mlsrId) &&
+                   _standardDictionary.TryGetValue(Helper.ExtractMlsrPrefix(mlsrId), out var standardRef)
+                ? standardRef
+                : "Requirement not found";
+        }
+        // private string GetRequirementStandardFromStandardSheet(string mlsrId)
+        // {
+        //     if (string.IsNullOrEmpty(mlsrId)) return string.Empty;
+        //
+        //     string standardMlsr = Helper.ExtractMlsrPrefix(mlsrId);
+        //     return _standardRequirements.TryGetValue(standardMlsr, out var standard) ? standard.StandardRefID : "Requirement not found";
+        // }
+
+        private static string NormalizeText(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+            return Regex.Replace(input, @"\s+\/\s+", "/").Replace("  ", " ").Trim();
+        }
+
+        // private List<string> GetFilteredChangeInRequirement(string changeInRequirements, string mlsrId)
+        // {
+        //
+        //     if (string.IsNullOrEmpty(changeInRequirements))
+        //         return new List<string>();
+        //
+        //     // Split the change in requirement into lines
+        //     var changes = changeInRequirements.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+        //
+        //     var finalChanges = new List<string>();
+        //
+        //     // If MLSR ID is available, filter changes and add description for filtered changes
+        //     if (!string.IsNullOrEmpty(mlsrId))
+        //     {
+        //         var filteredChanges = changes
+        //             .Where(line => line.TrimStart().StartsWith(mlsrId, StringComparison.OrdinalIgnoreCase))
+        //             .ToList();
+        //
+        //         // If we have filtered changes, process and add descriptions
+        //         foreach (var change in filteredChanges)
+        //         {
+        //             var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+        //             if (!string.IsNullOrEmpty(mlsrIdInChange))
+        //             {
+        //                 var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
+        //                 var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+        //                 if (!string.IsNullOrEmpty(requirementDescription))
+        //                 {
+        //                     finalChanges.Add($"{standardRefName} - {requirementDescription}");
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 finalChanges.Add(change); // Add the change without description if no MLSR ID is found
+        //             }
+        //         }
+        //
+        //         return finalChanges;
+        //     }
+        //
+        //     // If MLSR ID is not available, process all changes and add description for each change
+        //     foreach (var change in changes)
+        //     {
+        //         var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+        //         if (!string.IsNullOrEmpty(mlsrIdInChange))
+        //         {
+        //             var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
+        //             var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+        //             if (!string.IsNullOrEmpty(requirementDescription))
+        //             {
+        //                 finalChanges.Add($"{standardRefName} - {requirementDescription}");
+        //             }
+        //         }
+        //         else
+        //         {
+        //             finalChanges.Add(change); // Add the change without description if no MLSR ID is found
+        //         }
+        //     }
+        //
+        //     return finalChanges;
+        // }
+
 
         private List<string> GetFilteredChangeInRequirement(string changeInRequirements, string mlsrId)
         {
-
             if (string.IsNullOrEmpty(changeInRequirements))
                 return new List<string>();
 
-            // Split the change in requirement into lines
-            var changes = changeInRequirements.Split(['\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
+            // Split changes into individual lines
+            var changes = changeInRequirements.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+    
+            // Filter changes based on MLSR ID if available
+            var filteredChanges = string.IsNullOrEmpty(mlsrId) 
+                ? changes.ToList()
+                : changes.Where(line => line.TrimStart().StartsWith(mlsrId, StringComparison.OrdinalIgnoreCase)).ToList();
 
+            return ProcessChanges(filteredChanges);
+        }
+
+// Helper method to process changes and add descriptions
+        private List<string> ProcessChanges(IEnumerable<string> changes)
+        {
             var finalChanges = new List<string>();
 
-            // If MLSR ID is available, filter changes and add description for filtered changes
-            if (!string.IsNullOrEmpty(mlsrId))
-            {
-                var filteredChanges = changes
-                    .Where(line => line.TrimStart().StartsWith(mlsrId, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-
-                // If we have filtered changes, process and add descriptions
-                foreach (var change in filteredChanges)
-                {
-                    var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
-                    if (!string.IsNullOrEmpty(mlsrIdInChange))
-                    {
-                        var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
-                        var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
-                        if (!string.IsNullOrEmpty(requirementDescription))
-                        {
-                            finalChanges.Add($"{standardRefName} - {requirementDescription}");
-                        }
-                    }
-                    else
-                    {
-                        finalChanges.Add(change); // Add the change without description if no MLSR ID is found
-                    }
-                }
-
-                return finalChanges;
-            }
-
-            // If MLSR ID is not available, process all changes and add description for each change
             foreach (var change in changes)
             {
                 var mlsrIdInChange = Helper.ExtractMlsrIdFromChange(change);
+        
                 if (!string.IsNullOrEmpty(mlsrIdInChange))
                 {
                     var requirementDescription = GetRequirementDescriptionFromProductSheet(mlsrIdInChange);
                     var standardRefName = GetRequirementStandardFromStandardSheet(mlsrIdInChange);
+
                     if (!string.IsNullOrEmpty(requirementDescription))
                     {
                         finalChanges.Add($"{standardRefName} - {requirementDescription}");
+                        continue;
                     }
                 }
-                else
-                {
-                    finalChanges.Add(change); // Add the change without description if no MLSR ID is found
-                }
+
+                // If no MLSR ID or description is found, add the raw change
+                finalChanges.Add(change);
             }
 
             return finalChanges;
         }
 
-      
-       
-        
-        // Helper method to get the requirement description from Product Requirement sheet
-        private string GetRequirementDescriptionFromProductSheet(string mlsrId)
-        {
-            if (string.IsNullOrEmpty(mlsrId))
-                return string.Empty;
-            // Search for the corresponding MLSR ID and return the requirement description (column E)
-            var requirement = _productRequirements
-                .FirstOrDefault(req => req.MLSR_Id.Equals(mlsrId, StringComparison.OrdinalIgnoreCase));
-            return requirement?.Requirement ?? "Requirement not found";
-        }
-
-        private string GetRequirementStandardFromStandardSheet(string mlsrId)
-        {
-            if (string.IsNullOrEmpty(mlsrId))
-                return string.Empty;
-            var standardMlsr  = Helper.ExtractMlsrPrefix(mlsrId);
-            var requirement = _standardRequirements
-                .FirstOrDefault(req => req.MLSR_ID.Equals(standardMlsr, StringComparison.OrdinalIgnoreCase));
-
-            return requirement?.StandardRefID ?? "Requirement not found";
-        }
-        private static string NormalizeText(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return string.Empty;
-
-            // Remove multiple spaces and normalize spaces around '/'
-            return Regex.Replace(input, @"\s+\/\s+", "/")  // Normalize slashes
-                .Replace("  ", " ")                // Replace double spaces with a single space
-                .Trim();                           // Trim spaces
-        }
     }
 }
