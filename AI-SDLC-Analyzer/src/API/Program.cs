@@ -29,6 +29,7 @@ builder.Services.AddScoped<IStandardRepository, ExcelStandardRepository>();
 builder.Services.AddScoped<SemanticSearch>();
 builder.Services.AddScoped<RequirementAnalyzerService>();
 builder.Services.AddSingleton<NlpProcessor>();
+builder.Services.AddHttpClient<PythonNlpProcessor>();
 
 
 
@@ -42,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 // Force initialization at startup
-var nlpProcessor = app.Services.GetRequiredService<NlpProcessor>();
+//var nlpProcessor = app.Services.GetRequiredService<NlpProcessor>();
 app.UseRouting();
 
 

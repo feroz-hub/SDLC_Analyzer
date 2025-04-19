@@ -192,6 +192,7 @@ namespace Infrastructure.Resource
         private readonly IStandardRepository _standardRepository;
         private readonly IRequirementRepository _requirementRepository;
         private readonly NlpProcessor _nlpProcessor;
+        private readonly PythonNlpProcessor _pythonNlpProcessor;
         private readonly Lazy<List<ProductRequirement>> _lazyProductRequirements;
         private readonly Lazy<List<Standard>> _lazyStandardRequirements;
         private Dictionary<string, string> _requirementDictionary;
@@ -201,6 +202,7 @@ namespace Infrastructure.Resource
         public SemanticSearch(IStandardRepository repository, IRequirementRepository requirementRepository)
         {
             _nlpProcessor = new NlpProcessor();
+            _pythonNlpProcessor = new PythonNlpProcessor(httpClient: new HttpClient());
             _standardRepository = repository;
             _requirementRepository = requirementRepository;
 
@@ -226,7 +228,7 @@ namespace Infrastructure.Resource
 
             // Extract MLSR_ID and predict requirement index
             string mlsrId = ExtractMlsrId(query);
-            string predictedReqIndex = _nlpProcessor.PredictReqIndex(query.ToLower());
+            string predictedReqIndex = _pythonNlpProcessor.PredictReqIndex(query.ToLower());
 
             Console.WriteLine($"📌 Extracted MLSR ID: {mlsrId}");
             Console.WriteLine($"🔢 Predicted ReqIndex: {predictedReqIndex}");

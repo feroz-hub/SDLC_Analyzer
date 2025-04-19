@@ -4,9 +4,7 @@ using Newtonsoft.Json;
 
 namespace UI.Controllers;
 
-
-
-public class RequirementController(IHttpClientFactory httpClientFactory) : Controller
+public class AiRequirementController(IHttpClientFactory httpClientFactory) : Controller
 {
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
 
@@ -39,9 +37,4 @@ public class RequirementController(IHttpClientFactory httpClientFactory) : Contr
             return Json(new { error = "⚠️ Error retrieving data from API." });
         }
     }
-}
-
-public class ChatRequest
-{
-    public string Query { get; set; }
 }

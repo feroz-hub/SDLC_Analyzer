@@ -1,62 +1,162 @@
-﻿@{
+﻿@* @{ *@
+@*     ViewData["Title"] = "Home Page"; *@
+@* } *@
+@* *@
+@* <style> *@
+@*     /* Gradient Button Styling */ *@
+@*     .gradient-button { *@
+@*         display: inline-block; *@
+@*         padding: 15px 30px; *@
+@*         font-size: 18px; *@
+@*         font-weight: bold; *@
+@*         color: white; *@
+@*         text-decoration: none; *@
+@*         border-radius: 50px; *@
+@*         background: linear-gradient(90deg, #0078D4, #00AEEF); /* HCLTech Gradient */ *@
+@*         transition: all 0.3s ease-in-out; *@
+@*         position: relative; *@
+@*         overflow: hidden; *@
+@*         box-shadow: 0 4px 10px rgba(0, 120, 212, 0.3); *@
+@*     } *@
+@* *@
+@*     /* Hover Effect */ *@
+@*     .gradient-button:hover { *@
+@*         background: linear-gradient(90deg, #00AEEF, #0078D4); /* Reverse Gradient */ *@
+@*         box-shadow: 0 6px 15px rgba(0, 120, 212, 0.5); *@
+@*         transform: scale(1.05); *@
+@*     } *@
+@* *@
+@*     /* Button Animation */ *@
+@*     .gradient-button::after { *@
+@*         content: ""; *@
+@*         position: absolute; *@
+@*         top: 0; *@
+@*         left: -100%; *@
+@*         width: 100%; *@
+@*         height: 100%; *@
+@*         background: rgba(255, 255, 255, 0.2); *@
+@*         transition: left 0.5s ease-in-out; *@
+@*     } *@
+@* *@
+@*     .gradient-button:hover::after { *@
+@*         left: 100%; *@
+@*     } *@
+@* </style> *@
+@* *@
+@* <div class="text-center"> *@
+@*     <h1 class="display-4">Welcome to HCLTech</h1> *@
+@*     <p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p> *@
+@* *@
+@*     <hr class="my-4"> *@
+@* *@
+@*     <p>Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p> *@
+@* *@
+@*     <!-- Animated Gradient Button --> *@
+@*     <div class="mt-4"> *@
+@*         <a class="gradient-button" asp-area="" asp-controller="AiRequirement" asp-action="Chat"> *@
+@*             🚀 AI SDLC Analyzer *@
+@*         </a> *@
+@*     </div> *@
+@* *@
+@*     <p class="mt-3 text-muted">Developed by HCLTech to enhance SDLC efficiency and precision.</p> *@
+@* </div> *@
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<style>
-    /* Gradient Button Styling */
-    .gradient-button {
-        display: inline-block;
-        padding: 15px 30px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        background: linear-gradient(90deg, #0078D4, #00AEEF); /* HCLTech Gradient */
-        transition: all 0.3s ease-in-out;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 120, 212, 0.3);
-    }
+<link rel="stylesheet" href="~/css/mainscreen.css" asp-append-version="true" />
 
-    /* Hover Effect */
-    .gradient-button:hover {
-        background: linear-gradient(90deg, #00AEEF, #0078D4); /* Reverse Gradient */
-        box-shadow: 0 6px 15px rgba(0, 120, 212, 0.5);
-        transform: scale(1.05);
-    }
+<!-- Background Animation Elements -->
+<ul class="bg-animation">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
 
-    /* Button Animation */
-    .gradient-button::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.2);
-        transition: left 0.5s ease-in-out;
-    }
+<div class="hero-container">
+    <div class="content-wrapper">
+        <h1 class="animated-heading display-4">Welcome to HCLTech</h1>
+        <p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p>
 
-    .gradient-button:hover::after {
-        left: 100%;
-    }
-</style>
+        <hr class="my-4">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to HCLTech</h1>
-    <p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p>
+        <!-- Feature Icons -->
+        <div class="features-wrapper">
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <h4>Rapid Analysis</h4>
+                <p>Process complex requirements in seconds using advanced AI algorithms</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔍</div>
+                <h4>Deep Insights</h4>
+                <p>Discover hidden patterns and relationships within your SDLC documentation</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📈</div>
+                <h4>Enhanced Efficiency</h4>
+                <p>Streamline development processes and reduce requirement ambiguities</p>
+            </div>
+        </div>
 
-    <hr class="my-4">
+        <p class="mt-4 mb-0">Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p>
 
-    <p>Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p>
+        <!-- Animated Gradient Button -->
+        <div class="gradient-button-wrapper">
+            <a class="gradient-button pulse" asp-area="" asp-controller="AiRequirement" asp-action="Chat">
+                <span class="rocket">🚀</span> Launch AI SDLC Analyzer
+            </a>
+        </div>
 
-    <!-- Animated Gradient Button -->
-    <div class="mt-4">
-        <a class="gradient-button" asp-area="" asp-controller="Requirement" asp-action="Chat">
-            🚀 AI SDLC Analyzer
-        </a>
+        <p class="footer-text text-center">Developed by HCLTech to enhance SDLC efficiency and precision.</p>
     </div>
-
-    <p class="mt-3 text-muted">Developed by HCLTech to enhance SDLC efficiency and precision.</p>
 </div>
+
+<!-- Add JavaScript for additional interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Stopping animation on lower-powered devices
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches) {
+            document.querySelectorAll('.bg-animation').forEach(elem => {
+                elem.style.display = 'none';
+            });
+        }
+
+        // Add hover effect to the entire content area
+        const contentWrapper = document.querySelector('.content-wrapper');
+        contentWrapper.addEventListener('mousemove', function(e) {
+            const rect = contentWrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xPercent = (x / rect.width - 0.5) * 5;
+            const yPercent = (y / rect.height - 0.5) * 5;
+
+            contentWrapper.style.transform = `perspective(1000px) rotateX(${-yPercent}deg) rotateY(${xPercent}deg)`;
+        });
+
+        contentWrapper.addEventListener('mouseleave', function() {
+            contentWrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+
+        // Button click effect
+        const button = document.querySelector('.gradient-button');
+        button.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+
+        button.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-5px) scale(1.05)';
+        });
+    });
+</script>
+

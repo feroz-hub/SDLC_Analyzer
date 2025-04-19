@@ -9,6 +9,24 @@
         </div>
     </div>
 
+    <div class="chat-options">
+        <div class="option-group-inline">
+            <label for="model-select">🔍 Model:</label>
+            <select id="model-select">
+                <option value="all-MiniLM-L6-v2" selected>MiniLM (default)</option>
+                <option value="all-mpnet-base-v2">MPNet</option>
+            </select>
+        </div>
+
+        <div class="option-group-inline">
+            <label for="method-select">🧠 Method:</label>
+            <select id="method-select">
+                <option value="cosine" selected>Cosine Similarity</option>
+                <option value="faiss">FAISS</option>
+            </select>
+        </div>
+    </div>
+
     <div class="chat-input">
         <input type="text" id="user-input" placeholder="Type your query..." oninput="expandInput()" />
         <button onclick="sendMessage()">Send</button>

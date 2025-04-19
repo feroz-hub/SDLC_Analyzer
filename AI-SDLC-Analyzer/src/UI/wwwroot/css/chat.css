@@ -10,6 +10,42 @@
     display: inline-block;
     animation: dotsAnimation 1.5s steps(4, end) infinite;
 }
+.chat-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.option-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.option-group-inline label {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.option-group-inline select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    min-width: 180px;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.option-group-inline select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
 
 
 @keyframes blink {
