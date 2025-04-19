@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+openpyxl
+torch
+sentence-transformers
+faiss-cpu
+numpy
+annoy
