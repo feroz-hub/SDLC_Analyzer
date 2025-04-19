@@ -61,102 +61,257 @@
 @*     <p class="mt-3 text-muted">Developed by HCLTech to enhance SDLC efficiency and precision.</p> *@
 @* </div> *@
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+@* @{ *@
+@*     ViewData["Title"] = "Home Page"; *@
+@* } *@
+@* *@
+@* <link rel="stylesheet" href="~/css/mainscreen.css" asp-append-version="true" /> *@
+@* *@
+@* <!-- Background Animation Elements --> *@
+@* <ul class="bg-animation"> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@*     <li></li> *@
+@* </ul> *@
+@* *@
+@* <div class="hero-container"> *@
+@*     <div class="content-wrapper"> *@
+@*         <h1 class="animated-heading display-4">Welcome to HCLTech</h1> *@
+@*         <p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p> *@
+@* *@
+@*         <hr class="my-4"> *@
+@* *@
+@*         <!-- Feature Icons --> *@
+@*         <div class="features-wrapper"> *@
+@*             <div class="feature-item"> *@
+@*                 <div class="feature-icon">⚡</div> *@
+@*                 <h4>Rapid Analysis</h4> *@
+@*                 <p>Process complex requirements in seconds using advanced AI algorithms</p> *@
+@*             </div> *@
+@*             <div class="feature-item"> *@
+@*                 <div class="feature-icon">🔍</div> *@
+@*                 <h4>Deep Insights</h4> *@
+@*                 <p>Discover hidden patterns and relationships within your SDLC documentation</p> *@
+@*             </div> *@
+@*             <div class="feature-item"> *@
+@*                 <div class="feature-icon">📈</div> *@
+@*                 <h4>Enhanced Efficiency</h4> *@
+@*                 <p>Streamline development processes and reduce requirement ambiguities</p> *@
+@*             </div> *@
+@*         </div> *@
+@* *@
+@*         <p class="mt-4 mb-0">Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p> *@
+@* *@
+@*         <!-- Animated Gradient Button --> *@
+@*         <div class="gradient-button-wrapper"> *@
+@*             <a class="gradient-button pulse" asp-area="" asp-controller="AiRequirement" asp-action="Chat"> *@
+@*                 <span class="rocket">🚀</span> Launch AI SDLC Analyzer *@
+@*             </a> *@
+@*         </div> *@
+@* *@
+@*         <p class="footer-text text-center">Developed by HCLTech to enhance SDLC efficiency and precision.</p> *@
+@*     </div> *@
+@* </div> *@
+@* *@
+@* <!-- Add JavaScript for additional interactions --> *@
+@* <script> *@
+@*     document.addEventListener('DOMContentLoaded', function() { *@
+@*         // Stopping animation on lower-powered devices *@
+@*         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)'); *@
+@*         if (prefersReducedMotion.matches) { *@
+@*             document.querySelectorAll('.bg-animation').forEach(elem => { *@
+@*                 elem.style.display = 'none'; *@
+@*             }); *@
+@*         } *@
+@* *@
+@*         // Add hover effect to the entire content area *@
+@*         const contentWrapper = document.querySelector('.content-wrapper'); *@
+@*         contentWrapper.addEventListener('mousemove', function(e) { *@
+@*             const rect = contentWrapper.getBoundingClientRect(); *@
+@*             const x = e.clientX - rect.left; *@
+@*             const y = e.clientY - rect.top; *@
+@* *@
+@*             const xPercent = (x / rect.width - 0.5) * 5; *@
+@*             const yPercent = (y / rect.height - 0.5) * 5; *@
+@* *@
+@*             contentWrapper.style.transform = `perspective(1000px) rotateX(${-yPercent}deg) rotateY(${xPercent}deg)`; *@
+@*         }); *@
+@* *@
+@*         contentWrapper.addEventListener('mouseleave', function() { *@
+@*             contentWrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)'; *@
+@*         }); *@
+@* *@
+@*         // Button click effect *@
+@*         const button = document.querySelector('.gradient-button'); *@
+@*         button.addEventListener('mousedown', function() { *@
+@*             this.style.transform = 'translateY(-2px) scale(1.02)'; *@
+@*         }); *@
+@* *@
+@*         button.addEventListener('mouseup', function() { *@
+@*             this.style.transform = 'translateY(-5px) scale(1.05)'; *@
+@*         }); *@
+@*     }); *@
+@* </script> *@
+@* *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/mainscreen.css" asp-append-version="true" />
+</head>
+<body>
+<!-- WebGL Particle Canvas -->
+<canvas id="particle-canvas"></canvas>
 
-<link rel="stylesheet" href="~/css/mainscreen.css" asp-append-version="true" />
-
-<!-- Background Animation Elements -->
-<ul class="bg-animation">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-</ul>
-
+<!-- Hero Section -->
 <div class="hero-container">
-    <div class="content-wrapper">
-        <h1 class="animated-heading display-4">Welcome to HCLTech</h1>
-        <p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p>
+<div class="content-wrapper" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000">
+<h1 class="animated-heading">Welcome to HCLTech</h1>
+<p class="lead">Empowering Innovation with AI-driven Software Development Lifecycle Analysis.</p>
 
-        <hr class="my-4">
+<hr class="my-4">
 
-        <!-- Feature Icons -->
-        <div class="features-wrapper">
-            <div class="feature-item">
-                <div class="feature-icon">⚡</div>
-                <h4>Rapid Analysis</h4>
-                <p>Process complex requirements in seconds using advanced AI algorithms</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🔍</div>
-                <h4>Deep Insights</h4>
-                <p>Discover hidden patterns and relationships within your SDLC documentation</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">📈</div>
-                <h4>Enhanced Efficiency</h4>
-                <p>Streamline development processes and reduce requirement ambiguities</p>
-            </div>
-        </div>
-
-        <p class="mt-4 mb-0">Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p>
-
-        <!-- Animated Gradient Button -->
-        <div class="gradient-button-wrapper">
-            <a class="gradient-button pulse" asp-area="" asp-controller="AiRequirement" asp-action="Chat">
-                <span class="rocket">🚀</span> Launch AI SDLC Analyzer
-            </a>
-        </div>
-
-        <p class="footer-text text-center">Developed by HCLTech to enhance SDLC efficiency and precision.</p>
+<!-- Feature Cards -->
+<div class="features-wrapper">
+    <div class="feature-item" data-parallax="0.2">
+        <div class="feature-icon">⚡</div>
+        <h4>Rapid Analysis</h4>
+        <p>Process complex requirements in seconds using advanced AI algorithms</p>
+    </div>
+    <div class="feature-item" data-parallax="0.3">
+        <div class="feature-icon">🔍</div>
+        <h4>Deep Insights</h4>
+        <p>Discover hidden patterns and relationships within your SDLC documentation</p>
+    </div>
+    <div class="feature-item" data-parallax="0.25">
+        <div class="feature-icon">📈</div>
+        <h4>Enhanced Efficiency</h4>
+        <p>Streamline development processes and reduce requirement ambiguities</p>
     </div>
 </div>
 
-<!-- Add JavaScript for additional interactions -->
+<p class="mt-4 mb-0">Introducing <strong>AI SDLC Analyzer</strong> – your intelligent assistant for analyzing and refining software development requirements efficiently.</p>
+
+<!-- Gradient Button -->
+<div class="gradient-button-wrapper">
+<a class="gradient-button" asp-area="" asp-controller="AiRequirement" asp-action="Chat">
+    <span class="rocket">🚀</span> Launch AI SDLC Analyzer
+</a>
+</div>
+
+<p class="footer-text">Developed by HCLTech to enhance SDLC efficiency and precision.</p>
+</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Stopping animation on lower-powered devices
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (prefersReducedMotion.matches) {
-            document.querySelectorAll('.bg-animation').forEach(elem => {
-                elem.style.display = 'none';
-            });
+        // WebGL Particle System with Three.js
+        const canvas = document.getElementById('particle-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particles = [];
+        const particleCount = 100;
+        const geometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0x0078D4, transparent: true, opacity: 0.5 });
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = new THREE.Mesh(geometry, material);
+            particle.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50
+            );
+            particle.velocity = new THREE.Vector3(
+                (Math.random() - 0.5) * 0.02,
+                (Math.random() - 0.5) * 0.02,
+                (Math.random() - 0.5) * 0.02
+            );
+            scene.add(particle);
+            particles.push(particle);
         }
 
-        // Add hover effect to the entire content area
-        const contentWrapper = document.querySelector('.content-wrapper');
-        contentWrapper.addEventListener('mousemove', function(e) {
-            const rect = contentWrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        camera.position.z = 20;
+function animate() {
+            requestAnimationFrame(animate);
+            particles.forEach(particle => {
+                particle.position.add(particle.velocity);
+                if (particle.position.length() > 25) {
+                    particle.position.set(
+                        (Math.random() - 0.5) * 50,
+                        (Math.random() - 0.5) * 50,
+                        (Math.random() - 0.5) * 50
+                    );
+                }
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
 
-            const xPercent = (x / rect.width - 0.5) * 5;
-            const yPercent = (y / rect.height - 0.5) * 5;
-
-            contentWrapper.style.transform = `perspective(1000px) rotateX(${-yPercent}deg) rotateY(${xPercent}deg)`;
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
         });
 
-        contentWrapper.addEventListener('mouseleave', function() {
-            contentWrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        // GSAP Scroll Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.fromTo('.content-wrapper', 
+            { y: 50, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.hero-container', start: 'top 80%' }}
+        );
+        gsap.fromTo('.lead', 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.3, scrollTrigger: { trigger: '.hero-container', start: 'top 80%' }}
+        );
+        gsap.fromTo('.features-wrapper', 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.5, scrollTrigger: { trigger: '.hero-container', start: 'top 80%' }}
+        );
+        gsap.fromTo('.gradient-button-wrapper', 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.7, scrollTrigger: { trigger: '.hero-container', start: 'top 80%' }}
+        );
+        gsap.fromTo('.footer-text', 
+            { opacity: 0 }, 
+             { opacity: 1, duration: 1, ease: 'power3.out', delay: 0.9, scrollTrigger: { trigger: '.hero-container', start: 'top 80%' }}
+        );
+
+        // Parallax Effect for Feature Cards
+        document.querySelectorAll('.feature-item').forEach(item => {
+            const speed = parseFloat(item.getAttribute('data-parallax'));
+            window.addEventListener('mousemove', e => {
+                const x = (window.innerWidth - e.pageX * speed) / 100;
+                const y = (window.innerHeight - e.pageY * speed) / 100;
+                item.style.transform = `translate(${x}px, ${y}px)`;
+            });
         });
 
-        // Button click effect
-        const button = document.querySelector('.gradient-button');
-        button.addEventListener('mousedown', function() {
-            this.style.transform = 'translateY(-2px) scale(1.02)';
-        });
-
-        button.addEventListener('mouseup', function() {
-            this.style.transform = 'translateY(-5px) scale(1.05)';
-        });
-    });
-</script>
-
+        // Accessibility: Respect Reduced Motion Preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('[data-tilt]').forEach(elem => {
+                elem.vanillaTilt.destroy();
+            });
+            gsap.killTweensOf('*');
+            document.querySelectorAll('.feature-item').forEach(item => {
+                item.style.transform = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
