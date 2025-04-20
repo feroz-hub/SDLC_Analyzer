@@ -262,8 +262,7 @@ from models.faiss_model import FaissSearchModel
 from models.cosine_model import CosineSimilarityModel
 from config import EMBEDDING_DIR, MODEL_SHORT_NAMES
 import os
-import logging
-from logging.handlers import RotatingFileHandler
+from preprocess import preprocess_query
 from typing import Dict, Tuple, Union
 from contextlib import asynccontextmanager
 import re
@@ -274,9 +273,18 @@ log_dir = os.path.join(os.path.dirname(__file__), "logs")
 logger = setup_logging(log_dir=log_dir, log_file="semantic_api.log")
 logger = get_logger(__name__)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("✅ Startup: Loading resources...")
+    # e.g., preload models here
+    yield
+    print("🛑 Shutdown: Cleaning up...")
+    # e.g., release memory/resources
+
 app = FastAPI(
     title="Semantic Search API",
-    description="API for semantic search using different embedding models."
+    description="API for semantic search using different embedding models.",
+    lifespan=lifespan
 )
 
 # Model cache to store loaded models
@@ -351,10 +359,8 @@ async def lifespan(app: FastAPI):
             except Exception as e:
                 logger.error(f"Failed to preload model {model_name} ({method}): {str(e)}")
     yield
-    logger.info("Application shutdown: cleaning up models")
-    logger.debug("Starting application shutdown")
+    logger.info("Application shutdown: cleaning up model cache")
     model_cache.cleanup()
-    logger.debug("Application shutdown completed")
 
 app.lifespan = lifespan
 
@@ -393,7 +399,9 @@ async def search(req: QueryRequest, cache: ModelCache = Depends(get_model_cache)
     try:
         logger.info(f"Processing query: {req.user_query} with {req.model_name} ({req.method})")
         model = cache.get_model(req.method, req.model_name)
-        results = model.search(req.user_query, top_k=req.top_k)
+        preprocessed_query = preprocess_query(req.user_query)
+        logger.info(f"PreProcessed query: {preprocessed_query} with {req.model_name} ({req.method})")
+        results = model.search(preprocessed_query, top_k=req.top_k)
         return {
             "query": req.user_query,
             "method": req.method,
