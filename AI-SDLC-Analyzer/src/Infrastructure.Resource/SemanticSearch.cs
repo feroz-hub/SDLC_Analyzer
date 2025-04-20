@@ -228,7 +228,7 @@ namespace Infrastructure.Resource
 
             // Extract MLSR_ID and predict requirement index
             string mlsrId = ExtractMlsrId(query);
-            string predictedReqIndex = _pythonNlpProcessor.PredictReqIndex(query.ToLower());
+            string predictedReqIndex = _pythonNlpProcessor.PredictReqIndex(query);
 
             Console.WriteLine($"📌 Extracted MLSR ID: {mlsrId}");
             Console.WriteLine($"🔢 Predicted ReqIndex: {predictedReqIndex}");
