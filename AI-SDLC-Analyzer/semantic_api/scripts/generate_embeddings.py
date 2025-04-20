@@ -4,7 +4,7 @@ import numpy as np
 import faiss
 import pandas as pd
 from sentence_transformers import SentenceTransformer
-from config import EXCEL_FILE_PATH, MODEL_PATH, MODEL_NAME_MINILM,MODEL_NAME_MPNET, MODEL_SHORT_NAMES, MODEL_NAME_T5
+from .config import EXCEL_FILE_PATH, MODEL_PATH, MODEL_NAME_MINILM,MODEL_NAME_MPNET, MODEL_SHORT_NAMES, MODEL_NAME_T5
 
 
 
