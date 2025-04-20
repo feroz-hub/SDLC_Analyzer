@@ -2,7 +2,7 @@ Develop feature in system to create, update and review user/ system accounts
 Develop feature in system to remove user accounts that are no longer needed
 Develop feature in system to maintain identity and credentials for users
 Develop feature in system to monitor and lock/disable account after predefined unsuccessful login attempts
-Develop feature to lock/unlock mobile device by an administrator 
+Develop feature to lock/unlock mobile device by an administrator
 Develop feature in system to identify unique user, track and manage identifiers assigned to users
 Develop feature in system to authorize and grant physical access for users
 Implement mechanism to control remote access in containers
@@ -16,8 +16,6 @@ Develop feature in system to allow only authorized user to edit alarm settings/c
 Develop feature in system to discover and authenticate bluetooth devices
 Develop feature in bluetooth device for authorization
 Develop feature to limit access for apps and services in mobile device
-
-
 Develop feature to install only whitelisted applications on mobile device
 Develop feature in system to authorize audit access for users
 Employ mechanisms to isolate security functions from nonsecurity functions
@@ -28,17 +26,14 @@ Develop feature in system to control/limit access for users to avoid unauthorize
 Implement access restrictions for operating system
 Develop feature in system to enable dual /multiple authorization for critical actions
 Configure network address allocation for systems
-
-
 Implement segregation and segmentation of network to limit propagation of attacks
-
 Implement demilitarized zones (DMZ) to improve security while connecting to external networks
 Develop feature in system to manage lost/ expired/ compromised authenticators for users
 Develop feature in system to protect authenticators for users
 Develop change password/authenticator feature in system for user accounts
 Develop feature to change default passwords for user accounts on first use
 Develop feature in system to manage OTP authenticator
-Develop feature in system to establish lifetime, strength and complexity of memorized secrets 
+Develop feature in system to establish lifetime, strength and complexity of memorized secrets
 Develop feature in system to notify users on addition/change in authenticators
 Develop feature in system to establish lifetime, strength and complexity of authenticators for user accounts
 Develop feature in system to verify personal identity verification credentials for users
@@ -47,10 +42,10 @@ Develop feature in system to logout user for protecting user session from unauth
 Develop feature in system to display messages to user before and after login
 Develop feature in mobile device to display privacy notices to users
 Develop feature in system to display privacy notices to users
-Develop feature in system to protect sessions in microservices 
-Develop feature in system to generate session attributes 
+Develop feature in system to protect sessions in microservices
+Develop feature in system to generate session attributes
 Develop feature in system to secure cookies
-Develop feature in system to establish secure sessions 
+Develop feature in system to establish secure sessions
 Develop feature in system to terminate sessions when no longer needed
 Develop feature in system to uniquely identify users and control authentication
 Develop feature to disable or suspend authenticator device
@@ -75,7 +70,7 @@ Implement mechanism to prevent information disclosure of sensitive data
 Develop feature in system to control information flow to prevent data leaks
 Develop feature in system to validate inputs to prevent data leaks
 Develop feature in system to display error messages or hint, without revealing sensitive information
-Develop feature in system to protect passwords/  memorized secrets
+Develop feature in system to protect passwords/ memorized secrets
 Develop feature in system to implement cryptography to protect integrity of data and as per recommended standards
 Implement cryptography to protect data on mobile device
 Employ mechanism to verify digital signatures for mobile application and OS updates
@@ -91,21 +86,21 @@ Develop feature in bluetooth device to protect integrity and confidentiality
 Develop feature in mobile device to verify integrity of boot process
 Develop feature in system to verify integrity of boot process
 Employ mechanism to verify integrity of hardware components
-Implement baseline configuration  to system components that are up-to-date
-Develop, design, update and review information security architecture for system 
+Implement baseline configuration to system components that are up-to-date
+Develop, design, update and review information security architecture for system
 Develop platform-independent applications to achieve diversity of technologies
 Implement configuration change control to track and review changes in system
 Employ mechanisms to maintain backup of information to recover during system failures
 Configure retention period for backup of information in system
 Employ mechanisms to protect confidentiality of backup to prevent unauthorized modification
-Employ code analysis tools to identify security flaws 
+Employ code analysis tools to identify security flaws
 Implement hardware separation mechanism to minimize vulnerabilities
 Implement best practices during design and development for microservices
 Implement service registry feature for microservices
 Implement API gateway feature for microservices
 Implement Service Mesh deployment for microservices
 Implement security best practices before moving to production
-Implement security best practices during  design and development
+Implement security best practices during design and development
 Implement mechanisms to protect data/services against attacks
 Implement spam protection mechanisms in systems
 Employ isolation mechanisms to setup trusted environment in mobile device
@@ -113,23 +108,17 @@ Employ concealment and misdirection techniques to mislead adversaries
 Employ mechanism to enforce security policy and usage restrictions on mobile device
 Develop feature in bluetooth device to change private address and settings
 Employ App vetting tool to detect vulnerabilities in mobile device
-Develop feature in system to isolate process execution 
+Develop feature in system to isolate process execution
 Implement power shutoff during emergency situations
-
 Develop feature in system to handle security incidents
 Perform vulnerability scanning to identify vulnerabilities
 Develop feature in system to authorize maintenance personnel
 Develop feature in system to perform preventive and predictive maintenance periodically
 Deploy antivirus software on bluetooth devices to protect from malwares
-
 Implement mechanism to rollout updates in containers
 Develop feature in system to provide software and firmware updates/patches and ensure it is up to date
-Perform nonlocal maintenance and diagnostic services 
-
+Perform nonlocal maintenance and diagnostic services
 Develop feature in system to approve and notify nonlocal maintenance activities
-
-
-
 Implement mechanism in system to capture logs for programs, procedures and system activities
 Develop feature in system to configure attributes, generate and review audit trail to enable analysis and reporting
 Develop feature in system to generate audit records related to user actions and accounts
@@ -140,12 +129,10 @@ Employ mechanism in system to configure audit record storage capacity
 Employ mechanism in system to alert system and application audit failures
 Develop feature in system to analyze, reduce and report audit information
 Implement synchronization clocks for audit records to track time accurately across systems
-
-
 Develop feature to log and alert events on mobile device
 Implement mechanism to log events in containers
 Configure audit record retention period for investigation
-Implement mechanism to restrict or prohibit use of portable storage devices 
+Implement mechanism to restrict or prohibit use of portable storage devices
 Implement mechanisms to protect and control media from unauthorized usage
 Employ mechanisms for sanitization and disposal of media
 Employ media downgrade mechanisms to ensure adherence to security policy
@@ -155,31 +142,28 @@ Employ mechanisms to prohibit direct connection without boundary protection devi
 Configure monitoring of network and encrypt communication traffic to restrict malicious network packets
 Employ barrier device to monitor, control and protect communication over a network
 Configure control networks and implement secure communication channels for cardholder data environment
-Implement network controls and employ mechanism to secure network connections 
+Implement network controls and employ mechanism to secure network connections
 Implement host-based boundary mechanisms to protect applications from attacks
 Route network access through managed interface to prevent attacks
 Perform covert channel analysis to eliminate covert channels
-Employ out-of-band channels for secure transmission of information 
+Employ out-of-band channels for secure transmission of information
 Employ preventive mechanisms in microservices to ensure availability
 Employ alternate security mechanisms for backup and communication protocols when primary mechanism fails
-Implement measures to preserve and restore to a known state during system failures 
+Implement measures to preserve and restore to a known state during system failures
 Design system that responds to failures on time
-Implement mechanism to refresh data only from trusted sources 
+Implement mechanism to refresh data only from trusted sources
 Develop feature in system to maintain, review and update inventory of assets
 Employ mechanisms to correlate information from system monitoring tools to aid investigation
 Detect and analyze network communications traffic to detect malicious packets
-
-
 Employ intrusion detection system to detect attacks
 Employ mechanism in mobile device to detect malicious code
 Develop feature in system to detect malicious code
 Employ mechanism to monitor mobile device and detect policy violations
 Employ tools to monitor and detect anomalies in containers
 Employ tools to detect anomalies in microservices
-Monitor devices/ software/ users/ connections to detect suspicious operations 
+Monitor devices/ software/ users/ connections to detect suspicious operations
 Develop feature to detect and prevent unacceptable mobile code execution
 Employ mechanisms to identify and monitor individuals posing threats to security
-
 Develop feature in system to alert authorized personnel for unusual activities
 Implement mechanisms to monitor third-party services for handling incidents
 Implement secure network for mobile devices
@@ -200,9 +184,9 @@ Implement principle of least functionality in container OS
 Implement hardening in OS/system to apply principle of least functionality
 Develop feature in system to control access to PHI data
 Develop feature to enroll/unenroll mobile device for organization's systems
-Develop feature in bluetooth device to generate PIN for mutual authentication 
+Develop feature in bluetooth device to generate PIN for mutual authentication
 Employ mechanism to change default passwords in cardholder wireless data environment
-Develop feature to manage lock/ unlock code for mobile device 
+Develop feature to manage lock/ unlock code for mobile device
 Implement mechanisms to transmit passwords in a secure manner
 Implement authentication feature in containers to prevent unauthorized access
 Implement screen savers to prevent unauthorized access
@@ -210,7 +194,7 @@ Implement encrypted channels to connect to registry in container
 Employ mechanism to protect data during transmission on mobile device
 Implement cryptographic mechanisms to enforce use of trusted container images
 Develop feature in system to protect integrity of audit logs
-Implement data isolation and security mechanisms  in containers
+Implement data isolation and security mechanisms in containers
 Configure orchestrators to monitor and manage running containers
 Implement registries to manage container images
 Employ mechanisms to implement authorization in containers
@@ -221,7 +205,6 @@ Implement mechanisms in system to handle failures
 Design system with physical locks to protect devices from tampering /unauthorized access
 Employ vulnerability management tool in containers
 Employ anti-malware and anti-spyware tools to protect against malicious attacks
-
 Configure feature in cloud to ensure interoperability and adhere to standard data format
 Employ web application firewalls to monitor traffic and protect against attacks
 Implement network segmentation in containers
@@ -230,5 +213,5 @@ Develop feature to control access for microservices
 Implement trusted key storage on mobile device
 Develop feature in mobile device to maintain asset inventory
 Develop feature for user authentication on mobile device
-Employ authentication and encryption mechanism for wireless devices 
+Employ authentication and encryption mechanism for wireless devices
 Develop feature to establish secure sessions on mobile device
