@@ -4,6 +4,7 @@ import os
 MODEL_SHORT_NAMES = {
     "all-MiniLM-L6-v2": "minilm",
     "all-mpnet-base-v2": "mpnet",
+    "distilbert-base-nli-mean-tokens": "distilbert",
     # Add more mappings as needed
 }
 
@@ -13,6 +14,8 @@ SUPPORTED_MODELS = [
     ("all-mpnet-base-v2", "cosine"),
     ("all-MiniLM-L6-v2", "faiss"),
     ("all-mpnet-base-v2", "faiss"),
+    ("distilbert-base-nli-mean-tokens", "cosine"),
+    ("distilbert-base-nli-mean-tokens", "faiss"),
     # Add more models if needed, e.g., ("all-MiniLM-L6-v2", "faiss")
 ]
 

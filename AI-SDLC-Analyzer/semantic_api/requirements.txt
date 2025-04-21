@@ -10,3 +10,5 @@ annoy
 scikit-learn
 spacy
 psutil
+hnswlib
+annoy

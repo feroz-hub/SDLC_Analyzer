@@ -259,7 +259,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, field_validator
 from models.faiss_model import FaissSearchModel
-from models.cosine_model import CosineSimilarityModel
+from models.cosine_search import CosineSimilarityModel
 from config import EMBEDDING_DIR, MODEL_SHORT_NAMES
 import os
 from preprocess import preprocess_query
@@ -418,4 +418,4 @@ async def search(req: QueryRequest, cache: ModelCache = Depends(get_model_cache)
 #   uvicorn main:app --reload  (single-process, auto-reload for development)
 # For production with higher throughput, test multiprocessing after verifying cleanup:
 #   uvicorn main:app --workers 4  (use number of CPU cores, e.g., 4)
-# Ensure cleanup in basemodel.py, faiss_model.py, and cosine_model.py is robust to prevent semaphore leaks.
+# Ensure cleanup in basemodel.py, faiss_model.py, and cosine_search.py is robust to prevent semaphore leaks.

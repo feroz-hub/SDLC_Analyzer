@@ -39,7 +39,7 @@ from abc import ABC, abstractmethod
 from typing import List, Dict, Union
 from .utils import get_model_key
 import logging
-
+import gc
 logger = logging.getLogger(__name__)
 
 class BaseSearchModel(ABC):
@@ -53,6 +53,7 @@ class BaseSearchModel(ABC):
             self.model = SentenceTransformer(model_name).to(self.device)
         except Exception as e:
             logger.error(f"Failed to load model {model_name}: {str(e)}")
+
             raise RuntimeError(f"❌ Could not load model {model_name}: {str(e)}")
 
     def _select_device(self) -> str:

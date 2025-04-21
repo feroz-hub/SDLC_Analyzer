@@ -81,15 +81,18 @@
 
 import os
 import json
+
+import hnswlib
 import numpy as np
 import faiss
 import pandas as pd
 import re
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Tuple, Optional
+
+from annoy import AnnoyIndex
 from sentence_transformers import SentenceTransformer
-from scripts.config import EXCEL_FILE_PATH, MODEL_PATH, MODEL_NAME_MINILM, MODEL_NAME_MPNET, MODEL_SHORT_NAMES, \
-    MODEL_NAME_T5
+from scripts.config import EXCEL_FILE_PATH, MODEL_PATH, MODEL_NAME_MINILM, MODEL_NAME_MPNET, MODEL_SHORT_NAMES,MODEL_DISTILBERT,MODEL_NAME_T5
 
 
 class TextProcessor:
@@ -165,6 +168,13 @@ class EmbeddingStorage(ABC):
         os.makedirs(output_dir, exist_ok=True)
         return output_dir
 
+
+    def normalize_embeddings(self, embeddings: np.ndarray) -> np.ndarray:
+        """Normalize embeddings for cosine similarity."""
+        norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+        norms[norms == 0] = 1  # Avoid division by zero
+        return embeddings / norms
+
     @abstractmethod
     def save(self, texts: List[str], embeddings: np.ndarray) -> None:
         """Save embeddings in a specific format."""
@@ -214,54 +224,124 @@ class FaissEmbeddingStorage(EmbeddingStorage):
             print(f"✅ FAISS index and files saved successfully at {output_dir}")
         except Exception as e:
             print(f"Error saving FAISS index: {e}")
+#
+# class HNSWEmbeddingStorage(EmbeddingStorage):
+#     """Class for storing embeddings in HNSW format."""
+#     def save(self, texts: List[str], embeddings: np.ndarray) -> None:
+#         output_dir = self.get_output_directory("hnsw")
+#         short_name = self.model_manager.short_name
+#         try:
+#             embeddings = self.normalize_embeddings(embeddings)  # Normalize for cosine
+#             np.save(os.path.join(output_dir, f'{short_name}_embeddings.npy'), embeddings)
+#             with open(os.path.join(output_dir, f'{short_name}_texts.txt'), 'w') as f:
+#                 for line in texts:
+#                     f.write(line + "\n")
+#             dimension = embeddings.shape[1]
+#             index = hnswlib.Index(space='cosine', dim=dimension)
+#             index.init_index(max_elements=len(embeddings), ef_construction=200, M=16)
+#             index.add_items(embeddings, np.arange(len(embeddings)))
+#             index.save_index(os.path.join(output_dir, f'{short_name}_hnsw_index.bin'))
+#             print(f"✅ HNSW index and files saved successfully at {output_dir}")
+#         except Exception as e:
+#             print(f"Error saving HNSW index: {e}")
+#             raise
+#
+# class AnnoyEmbeddingStorage(EmbeddingStorage):
+#     """Class for storing embeddings in Annoy format."""
+#     def save(self, texts: List[str], embeddings: np.ndarray) -> None:
+#         output_dir = self.get_output_directory("annoy")
+#         short_name = self.model_manager.short_name
+#         try:
+#             embeddings = self.normalize_embeddings(embeddings)  # Normalize for cosine
+#             np.save(os.path.join(output_dir, f'{short_name}_embeddings.npy'), embeddings)
+#             with open(os.path.join(output_dir, f'{short_name}_texts.txt'), 'w') as f:
+#                 for line in texts:
+#                     f.write(line + "\n")
+#             dimension = embeddings.shape[1]
+#             index = AnnoyIndex(dimension, 'dot')  # Use dot for cosine similarity
+#             for i, emb in enumerate(embeddings):
+#                 index.add_item(i, emb)
+#             index.build(10)  # 10 trees
+#             index.save(os.path.join(output_dir, f'{short_name}_annoy_index.ann'))
+#             print(f"✅ Annoy index and files saved successfully at {output_dir}")
+#         except Exception as e:
+#             print(f"Error saving Annoy index: {e}")
+#             raise
+#
 
 
+# class EmbeddingPipeline:
+#     """Class that orchestrates the embedding generation and storage process."""
+#
+#     def __init__(self, model_name: str):
+#         self.text_processor = TextProcessor()
+#         self.model_manager = ModelManager(model_name)
+#         self.storage_handlers = {
+#             'json': JsonEmbeddingStorage(self.model_manager),
+#             'faiss': FaissEmbeddingStorage(self.model_manager),
+#             'hnsw': HNSWEmbeddingStorage(self.model_manager),
+#             'annoy': AnnoyEmbeddingStorage(self.model_manager)
+#         }
+#
+#     def run(self, output_formats: Optional[List[str]] = None) -> Tuple[List[str], np.ndarray]:
+#         """
+#         Run the pipeline to generate and save embeddings.
+#
+#         Args:
+#             output_formats: List of formats to output. Options: ['json', 'faiss']
+#
+#         Returns:
+#             Tuple of (texts, embeddings)
+#         """
+#         if output_formats is None:
+#             output_formats = ['json', 'faiss']
+#
+#         # Process texts
+#         texts = self.text_processor.get_processed_texts()
+#
+#         # Generate embeddings
+#         embeddings = self.model_manager.generate_embeddings(texts)
+#
+#         # Save in requested formats
+#         for format_name in output_formats:
+#             if format_name in self.storage_handlers:
+#                 self.storage_handlers[format_name].save(texts, embeddings)
+#             else:
+#                 print(f"Warning: Unsupported format '{format_name}' requested.")
+#
+#         return texts, embeddings
 class EmbeddingPipeline:
     """Class that orchestrates the embedding generation and storage process."""
-
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, index_type: str = 'faiss'):
         self.text_processor = TextProcessor()
         self.model_manager = ModelManager(model_name)
         self.storage_handlers = {
             'json': JsonEmbeddingStorage(self.model_manager),
-            'faiss': FaissEmbeddingStorage(self.model_manager)
+            'faiss': FaissEmbeddingStorage(self.model_manager),
+            # 'hnsw': HNSWEmbeddingStorage(self.model_manager),
+            # 'annoy': AnnoyEmbeddingStorage(self.model_manager)
         }
+        self.index_type = index_type
 
     def run(self, output_formats: Optional[List[str]] = None) -> Tuple[List[str], np.ndarray]:
-        """
-        Run the pipeline to generate and save embeddings.
-
-        Args:
-            output_formats: List of formats to output. Options: ['json', 'faiss']
-
-        Returns:
-            Tuple of (texts, embeddings)
-        """
         if output_formats is None:
-            output_formats = ['json', 'faiss']
-
-        # Process texts
+            output_formats = ['json', self.index_type]
         texts = self.text_processor.get_processed_texts()
-
-        # Generate embeddings
         embeddings = self.model_manager.generate_embeddings(texts)
-
-        # Save in requested formats
         for format_name in output_formats:
-            if format_name in self.storage_handlers:
-                self.storage_handlers[format_name].save(texts, embeddings)
-            else:
-                print(f"Warning: Unsupported format '{format_name}' requested.")
-
+            try:
+                if format_name in self.storage_handlers:
+                    self.storage_handlers[format_name].save(texts, embeddings)
+                else:
+                    print(f"Warning: Unsupported format '{format_name}' requested.")
+            except Exception as e:
+                print(f"Error processing format '{format_name}': {e}")
         return texts, embeddings
 
 
+# === USAGE EXAMPLE === ## === MAIN EXECUTION === #
 # === USAGE EXAMPLE === #
 if __name__ == "__main__":
     # Create and run the pipeline with default settings
-    pipeline = EmbeddingPipeline(MODEL_NAME_T5)
+    pipeline = EmbeddingPipeline(MODEL_DISTILBERT)
     texts, embeddings = pipeline.run()
-
-    # Alternatively, run with specific output format
-    # pipeline.run(['json'])  # Only save as JSON
-    # pipeline.run(['faiss'])  # Only save as FAISS

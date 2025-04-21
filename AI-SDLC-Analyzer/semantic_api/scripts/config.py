@@ -3,15 +3,18 @@ import os
 MODEL_NAME_MINILM = "all-MiniLM-L6-v2"
 MODEL_NAME_MPNET = "all-mpnet-base-v2"
 MODEL_NAME_T5 = "sentence-t5-base"
+MODEL_DISTILBERT="distilbert-base-nli-mean-tokens"
 MODEL_SHORT_NAMES = {
     "all-MiniLM-L6-v2": "minilm",
     "all-mpnet-base-v2": "mpnet",
-    "sentence-t5-base": "t5_base"
+    "sentence-t5-base": "t5_base",
+    "distilbert-base-nli-mean-tokens": "distilbert",
+
     # Add more mappings as needed
 }
 
-short_name = MODEL_SHORT_NAMES.get(MODEL_NAME_T5, MODEL_NAME_T5.split("/")[-1].lower())
-#print(short_name)
+short_name = MODEL_SHORT_NAMES.get(MODEL_DISTILBERT, MODEL_DISTILBERT.split("/")[-1].lower())
+print(short_name)
 
 # Base directory of the semantic_api folder
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))  # Get the absolute path of the current file and its directory
