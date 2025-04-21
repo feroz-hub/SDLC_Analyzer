@@ -1,67 +1,35 @@
-# from abc import ABC, abstractmethod
-#
-# class BaseSearchModel(ABC):
-#     @abstractmethod
-#     def encode(self, text):
-#         pass
-#
-#     @abstractmethod
-#     def search(self, query, top_k=1):
-#         pass
-
-
-# from sentence_transformers import SentenceTransformer
-# import torch
-# from abc import ABC, abstractmethod
-# from typing import List, Dict, Union
-# from .utils import get_model_key
-#
-# class BaseSearchModel(ABC):
-#     def __init__(self, model_name: str):
-#         self.model_name = model_name
-#         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-#         self.model = SentenceTransformer(model_name).to(self.device)
-#         self.model_key = get_model_key(model_name)
-#
-#     def encode(self, text: str | List[str]) -> torch.Tensor:
-#         if isinstance(text, str):
-#             text = [text]
-#         return self.model.encode(text, convert_to_tensor=True, show_progress_bar=False)
-#
-#     @abstractmethod
-#     def search(self, query: str, top_k: int = 3) -> List[Dict[str, Union[str, float]]]:
-#         pass
-
-
 from sentence_transformers import SentenceTransformer
 import torch
 from abc import ABC, abstractmethod
 from typing import List, Dict, Union
-from .utils import get_model_key
+from .utils import get_model_key, get_local_model_path
 import logging
 import gc
 logger = logging.getLogger(__name__)
+
+
+def _select_device() -> str:
+    if torch.cuda.is_available():
+        return 'cuda'
+    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+        return 'mps'
+    return 'cpu'
+
 
 class BaseSearchModel(ABC):
     def __init__(self, model_name: str, clear_cuda_cache: bool = True):
         self.model_name = model_name
         self.model_key = get_model_key(model_name)
         self.clear_cuda_cache = clear_cuda_cache
-        self.device = self._select_device()
+        self.device = _select_device()
         try:
             logger.info(f"Loading SentenceTransformer model: {model_name} on {self.device}")
-            self.model = SentenceTransformer(model_name).to(self.device)
+            model_path_or_name = get_local_model_path(model_name)
+            self.model = SentenceTransformer(model_path_or_name).to(self.device)
         except Exception as e:
             logger.error(f"Failed to load model {model_name}: {str(e)}")
 
             raise RuntimeError(f"❌ Could not load model {model_name}: {str(e)}")
-
-    def _select_device(self) -> str:
-        if torch.cuda.is_available():
-            return 'cuda'
-        elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
-            return 'mps'
-        return 'cpu'
 
     def encode(self, text: str | List[str]) -> torch.Tensor:
         if isinstance(text, str):

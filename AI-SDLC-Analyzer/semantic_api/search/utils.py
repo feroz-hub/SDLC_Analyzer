@@ -23,3 +23,19 @@ def get_model_key(model_name: str) -> str:
 
     # Fallback: remove slashes and lowercase
     return model_name.replace("/", "_").lower()
+
+def get_local_model_path(model_name: str) -> str:
+    from pathlib import Path
+    import os
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    MODEL_DIR_BASE_PATH = os.path.dirname(CURRENT_DIR)
+
+    MODEL_DIR_PATH = os.path.join(MODEL_DIR_BASE_PATH, "models")
+    model_path = Path(os.path.join(MODEL_DIR_PATH, model_name))
+    return str(model_path) if model_path.exists() else model_name  # fallback to remote
+
+
+
+
+
