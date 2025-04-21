@@ -175,7 +175,6 @@
 import os
 import faiss
 import numpy as np
-import torch
 import logging
 from typing import List, Dict, Union
 from .basemodel import BaseSearchModel
