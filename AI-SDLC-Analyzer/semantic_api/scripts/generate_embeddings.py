@@ -173,7 +173,7 @@ class EmbeddingPipeline:
 
 if __name__ == "__main__":
     import sys
-    model_path = MODEL_NAME_MINILM
+    model_path = MODEL_DISTILBERT
     if len(sys.argv) > 1:
         model_choice = sys.argv[1].lower()
         model_map = {
