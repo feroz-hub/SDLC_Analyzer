@@ -1,4 +1,4 @@
-# utils.py
+# search_utils.py
 
 MODEL_SHORT_NAMES = {
     "all-MiniLM-L6-v2": "minilm",

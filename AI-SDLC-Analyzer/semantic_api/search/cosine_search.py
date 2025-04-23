@@ -5,6 +5,7 @@ import torch
 import os
 import logging
 from typing import List, Dict, Union
+from utils import MODEL_SHORT_NAMES
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,7 +13,13 @@ logger = logging.getLogger(__name__)
 class CosineSimilarityModel(BaseSearchModel):
     def __init__(self, model_name: str, json_path: str):
         super().__init__(model_name)
+        logger.info(
+            f"Initialized CosineSimilarityModel with model_name: {self.model_name}, model_key: {self.model_key}")
         self.json_file = os.path.join(json_path, f'{self.model_key}_requirement_embeddings.json')
+        logger.info(f"JSON file path: {self.json_file}")
+        if not os.path.exists(self.json_file):
+            logger.error(f"JSON file not found: {self.json_file}")
+            raise FileNotFoundError(f"❌ JSON file not found: {self.json_file}")
         self.texts = None
         self.vectors = None
 

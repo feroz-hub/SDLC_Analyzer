@@ -6,17 +6,19 @@ import pandas as pd
 import re
 from abc import ABC, abstractmethod
 from typing import List, Tuple, Optional
-from sentence_transformers import SentenceTransformer
-from scripts.config import EXCEL_FILE_PATH, MODELS_DIR,MODEL_PATH, MODEL_SHORT_NAMES
+from scripts.config import EXCEL_FILE,MODEL_PATH
 
-MODEL_NAME_MINILM = os.path.join(MODELS_DIR, "all-MiniLM-L6-v2")
-MODEL_NAME_MPNET = os.path.join(MODELS_DIR, "all-mpnet-base-v2")
-MODEL_DISTILBERT = os.path.join(MODELS_DIR, "distilbert-base-nli-mean-tokens")
+from utils import ModelLoader
+
+
+MODEL_NAME_MINILM = "all-MiniLM-L6-v2"
+MODEL_NAME_MPNET = "all-mpnet-base-v2"
+MODEL_DISTILBERT = "distilbert-base-nli-mean-tokens"
 
 class TextProcessor:
     """Class responsible for loading and processing text data."""
 
-    def __init__(self, excel_path: str = EXCEL_FILE_PATH):
+    def __init__(self, excel_path: str = EXCEL_FILE):
         self.excel_path = excel_path
 
     def get_raw_texts(self, sheet_name: str = 'Unique_Requirements', usecols: str = 'C') -> List[str]:
@@ -43,34 +45,25 @@ class TextProcessor:
         return self.clean_texts(raw_texts)
 
 
+
 class ModelManager:
     """Class responsible for handling embedding search."""
 
     def __init__(self, model_name: str):
-        self.model_name = model_name
-        self.short_name = self._get_short_name()
-        self._model = None
-
-    def _get_short_name(self) -> str:
-        """Get consistent short name for a model."""
-        return MODEL_SHORT_NAMES.get(self.model_name, self.model_name.split("/")[-1].lower())
+        self.model_loader = ModelLoader(model_name)
+        self.short_name = self.model_loader.short_name
 
     @property
     def model(self):
-        """Lazy-load the model only when needed."""
-        if self._model is None:
-            try:
-                self._model = SentenceTransformer(self.model_name)
-                print(f"Model {self.model_name} loaded successfully.")
-            except Exception as e:
-                print(f"Error loading model {self.model_name}: {e}")
-                raise
-        return self._model
+        return self.model_loader.model
 
     def generate_embeddings(self, texts: List[str]) -> np.ndarray:
         """Generate embeddings for texts using the model."""
-        print(f"🔄 Generating embeddings using {self.model_name}...")
+        #print(f"🔄 Generating embeddings using {self.model_name}...")
         return self.model.encode(texts, convert_to_numpy=True)
+
+    def cleanup(self):
+        self.model_loader.cleanup()
 
 
 class EmbeddingStorage(ABC):
@@ -85,13 +78,6 @@ class EmbeddingStorage(ABC):
         output_dir = os.path.join(self.base_path, self.model_manager.short_name, subdir)
         os.makedirs(output_dir, exist_ok=True)
         return output_dir
-
-
-    # def normalize_embeddings(self, embeddings: np.ndarray) -> np.ndarray:
-    #     """Normalize embeddings for cosine similarity."""
-    #     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-    #     norms[norms == 0] = 1  # Avoid division by zero
-    #     return embeddings / norms
 
     @abstractmethod
     def save(self, texts: List[str], embeddings: np.ndarray) -> None:
@@ -157,17 +143,17 @@ class EmbeddingPipeline:
     def run(self, output_formats: Optional[List[str]] = None) -> Tuple[List[str], np.ndarray]:
         if output_formats is None:
             output_formats = ['json', self.index_type]
-        texts = self.text_processor.get_processed_texts()
-        embeddings = self.model_manager.generate_embeddings(texts)
+        requirement_texts = self.text_processor.get_processed_texts()
+        requirement_embeddings = self.model_manager.generate_embeddings(requirement_texts)
         for format_name in output_formats:
             try:
                 if format_name in self.storage_handlers:
-                    self.storage_handlers[format_name].save(texts, embeddings)
+                    self.storage_handlers[format_name].save(requirement_texts, requirement_embeddings)
                 else:
                     print(f"Warning: Unsupported format '{format_name}' requested.")
             except Exception as e:
                 print(f"Error processing format '{format_name}': {e}")
-        return texts, embeddings
+        return requirement_texts, requirement_embeddings
 
 
 

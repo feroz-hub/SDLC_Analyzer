@@ -35,6 +35,7 @@ EXCEL_FILE_PATH = os.path.join(
     "Resources",
     "MLCR_Cybersecurity_Product_Requirements.xlsm"  # The name of the Excel file
 )
+EXCEL_FILE = os.path.normpath(EXCEL_FILE_PATH)
 #print(f"Excel file path: {EXCEL_FILE_PATH}")
 
 # Save directory (to model/)

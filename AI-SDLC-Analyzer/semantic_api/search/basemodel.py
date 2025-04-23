@@ -2,11 +2,11 @@ from sentence_transformers import SentenceTransformer
 import torch
 from abc import ABC, abstractmethod
 from typing import List, Dict, Union
-from .utils import get_model_key, get_local_model_path
+from .search_utils import get_model_key, get_local_model_path
 import logging
 import gc
 logger = logging.getLogger(__name__)
-
+from utils import ModelLoader
 
 def _select_device() -> str:
     if torch.cuda.is_available():
@@ -18,18 +18,20 @@ def _select_device() -> str:
 
 class BaseSearchModel(ABC):
     def __init__(self, model_name: str, clear_cuda_cache: bool = True):
-        self.model_name = model_name
-        self.model_key = get_model_key(model_name)
+        self.model_loader = ModelLoader(model_name)
+        self.model_name = self.model_loader.model_name
+        self.model_key = self.model_loader.short_name
         self.clear_cuda_cache = clear_cuda_cache
-        self.device = _select_device()
-        try:
-            logger.info(f"Loading SentenceTransformer model: {model_name} on {self.device}")
-            model_path_or_name = get_local_model_path(model_name)
-            self.model = SentenceTransformer(model_path_or_name).to(self.device)
-        except Exception as e:
-            logger.error(f"Failed to load model {model_name}: {str(e)}")
-
-            raise RuntimeError(f"❌ Could not load model {model_name}: {str(e)}")
+        self.device = self.model_loader.device
+        self.model = self.model_loader.model
+        # try:
+        #     logger.info(f"Loading SentenceTransformer model: {model_name} on {self.device}")
+        #     model_path_or_name = get_local_model_path(model_name)
+        #     self.model = SentenceTransformer(model_path_or_name).to(self.device)
+        # except Exception as e:
+        #     logger.error(f"Failed to load model {model_name}: {str(e)}")
+        #
+        #     raise RuntimeError(f"❌ Could not load model {model_name}: {str(e)}")
 
     def encode(self, text: str | List[str]) -> torch.Tensor:
         if isinstance(text, str):
@@ -41,31 +43,32 @@ class BaseSearchModel(ABC):
         pass
 
     def cleanup(self):
-        logger.debug(f"Cleaning up model: {self.model_name}")
-        try:
-            if hasattr(self, 'model') and self.model is not None:
-                logger.info(f"Releasing model: {self.model_name}")
-                del self.model
-                self.model = None
-            if self.device == 'cuda' and self.clear_cuda_cache:
-                logger.info("Clearing CUDA cache")
-                torch.cuda.empty_cache()
-            elif self.device == 'mps':
-                logger.info("Attempting to clear MPS cache")
-                try:
-                    # Check if empty_cache exists for MPS
-                    if hasattr(torch.backends.mps, 'empty_cache'):
-                        torch.backends.mps.empty_cache()
-                        logger.debug("MPS cache cleared successfully")
-                    else:
-                        logger.warning("MPS empty_cache not available in this PyTorch version")
-                except Exception as e:
-                    logger.error(f"Failed to clear MPS cache: {str(e)}")
-                # Force garbage collection to release MPS resources
-                gc.collect()
-        except Exception as e:
-            logger.error(f"Failed to clean up model {self.model_name}: {str(e)}")
-        logger.debug(f"Cleanup completed for model: {self.model_name}")
+        self.model_loader.cleanup()
+        # logger.debug(f"Cleaning up model: {self.model_name}")
+        # try:
+        #     if hasattr(self, 'model') and self.model is not None:
+        #         logger.info(f"Releasing model: {self.model_name}")
+        #         del self.model
+        #         self.model = None
+        #     if self.device == 'cuda' and self.clear_cuda_cache:
+        #         logger.info("Clearing CUDA cache")
+        #         torch.cuda.empty_cache()
+        #     elif self.device == 'mps':
+        #         logger.info("Attempting to clear MPS cache")
+        #         try:
+        #             # Check if empty_cache exists for MPS
+        #             if hasattr(torch.backends.mps, 'empty_cache'):
+        #                 torch.backends.mps.empty_cache()
+        #                 logger.debug("MPS cache cleared successfully")
+        #             else:
+        #                 logger.warning("MPS empty_cache not available in this PyTorch version")
+        #         except Exception as e:
+        #             logger.error(f"Failed to clear MPS cache: {str(e)}")
+        #         # Force garbage collection to release MPS resources
+        #         gc.collect()
+        # except Exception as e:
+        #     logger.error(f"Failed to clean up model {self.model_name}: {str(e)}")
+        # logger.debug(f"Cleanup completed for model: {self.model_name}")
 
     def __enter__(self):
         return self
